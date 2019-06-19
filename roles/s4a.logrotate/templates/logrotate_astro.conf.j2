@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+# ------------------------------------------------------
+# This file is a generic logrotate configuration for 
+# astronomical applications which should rotate their logs
+# at midday.
+# It coexists happily with normal logrotate applications.
+# -------------------------------------------------------
+# see "man logrotate" for details
+# rotate log files weekly
+weekly
+
+# keep 4 weeks worth of backlogs
+rotate 4
+
+# create new (empty) log files after rotating old ones
+create
+
+# uncomment this if you want your log files compressed
+#compress
+
+# astro packages drop log rotation information into this directory
+include /etc/logrotate_astro.d
+
+# system-specific logs may be configured here

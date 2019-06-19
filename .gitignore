@@ -1,0 +1,7 @@
+.vault_pass.txt 
+group_vars/all/1credentials.yml
+inventory/hosts
+sftp-config.json
+*.retry
+*~
+my*

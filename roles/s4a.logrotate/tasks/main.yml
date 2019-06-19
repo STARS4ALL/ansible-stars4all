@@ -1,0 +1,32 @@
+---
+# tasks file for roles/nto.logrotate
+
+
+- name: ensure lograte package is at latest version
+  package: name=logrotate state=latest
+
+- name: create alternate logrotate_astro.d
+  file: >
+    path=/etc/logrotate_astro.d
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: install alternate logrotate_astro.conf file
+  template: >
+    dest=/etc/logrotate_astro.conf
+    src=logrotate_astro.conf.j2
+    owner=root
+    group=root
+    mode=0644
+
+- name: install alternate cron entry under cron.d
+  cron: >
+    name="logrotate astro" 
+    hour=12
+    minute=0
+    user=root 
+    job="test -x /usr/sbin/logrotate || exit 0 ; /usr/sbin/logrotate /etc/logrotate_astro.conf"
+    cron_file=logrotate_astro
+
