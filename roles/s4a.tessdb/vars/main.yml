@@ -1,0 +1,4 @@
+---
+# vars file for roles/nto.tessdb
+tessdb_sqlite_Fedora: sqlite
+tessdb_sqlite_Ubuntu: sqlite3

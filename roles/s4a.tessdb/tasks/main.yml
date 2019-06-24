@@ -1,0 +1,8 @@
+---
+# tasks file for roles/nto.tessdb
+
+- include_vars: '{{ ansible_distribution }}.yml'
+
+- include: install.yml
+- include: config.yml
+- include: service.yml

@@ -1,0 +1,5 @@
+---
+# defaults file for roles/nto.reports
+
+reports_dbase_dir: /var/dbase
+reports_user:       root

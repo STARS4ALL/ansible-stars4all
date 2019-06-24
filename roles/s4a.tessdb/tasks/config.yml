@@ -1,0 +1,36 @@
+---
+# tasks file for roles/nto.tessdb
+
+- name: create tessdb config directory if does not exists
+  file: >
+    path=/etc/tessdb
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: copy tessdb main configuration file
+  template: >
+    dest=/etc/tessdb/config
+    src=config.j2
+    owner=root
+    group=root
+    mode=0644
+  #notify: restart tessdb service
+
+- name: create tessdb database directory if does not exists
+  file: >
+    path={{ tessdb_dbase_dir }}
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: Patches tessdb logrotate
+  template: >
+    dest=/etc/logrotate_astro.d/tessdb
+    src=logrotate.j2
+    owner=root
+    group=root
+    mode=0644
+

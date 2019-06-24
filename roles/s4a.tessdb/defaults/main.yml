@@ -1,0 +1,22 @@
+---
+# defaults file for roles/nto.tessdb
+
+# Default installation variables
+# for GitHub checkout
+tessdb_install_dir:  /home/pi
+tessdb_install_user: pi
+
+# Default tessdb Broker used
+# Non default data should be encrypted with Ansible Vault
+tessdb_broker: test.mosquitto.org
+tessdb_port:   1883
+
+tessdb_dbase_dir: /var/dbase
+tess_logfile_dir: /var/log
+
+# Default entries in the configuration file (except username/password)
+tessdb_config:
+  tessdb: {}
+  log:    {}
+  mqtt:   {}
+  dbase:  {}

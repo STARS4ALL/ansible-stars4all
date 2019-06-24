@@ -8,10 +8,9 @@
   - role: s4a.logrotate      
     tags: [ common, logrotate ] 
 
-  # - role: s4a.tessdb          
-  #   tags: [ tessdb ]
+  - role: s4a.tessdb          
+    tags: [ tessdb ]
 
-  # - role: s4a.reports   
-  #   reports_dbase_dir: /home/pi/dbase       
-  #   tags: [ reports ]
+  - role: s4a.reports         
+    tags: [ reports ]
  

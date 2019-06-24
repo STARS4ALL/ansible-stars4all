@@ -1,0 +1,7 @@
+---
+# handlers file for roles/nto.tessdb
+- name: restart tessdb service
+  service: name=tessdb state=restarted
+
+- name: reload tessdb service
+  service: name=tessdb state=reloaded
