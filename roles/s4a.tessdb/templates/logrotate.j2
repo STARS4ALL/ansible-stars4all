@@ -9,7 +9,7 @@
 	notifempty
 	prerotate
 		/usr/local/bin/tessdb_pause > /dev/null 2>/dev/null || true
-		/bin/sleep 2 || true
+		{{ tessdb_sleep | default("/bin/sleep") }} 2 || true
 	endscript
 	postrotate
 		/usr/local/bin/tessdb_resume > /dev/null 2>/dev/null 

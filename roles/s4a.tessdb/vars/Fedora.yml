@@ -1,4 +1,5 @@
 ---
 # vars file for roles/nto.tessdb
 tessdb_sqlite: sqlite 
+tessdb_sleep: /usr/bin/sleep
 
