@@ -75,11 +75,6 @@ tess_whitelist = {{ tessdb_config.mqtt.tess_whitelist | default([]) | join(',') 
 # Reloadable property
 tess_blacklist = {{ tessdb_config.mqtt.tess_blacklist | default([]) | join(',') }}
 
-# MQTT Stats reporting. Either 'condensed' or 'detailed'
-# Leave blank if not needed.
-# Reloadable property
-stats = {{ tessdb_config.mqtt.stats | default('condensed') }}
-
 # namespace log level (debug, info, warn, error, critical)
 # Reloadable property
 log_level = {{ tessdb_config.mqtt.log_level | default('info') }}
@@ -115,7 +110,7 @@ json_dir = {{ tessdb_config.dbase.json_dir | default('/etc/tessdb') }}
 # Not reloadable property.
 # If changed to a lower time span it may be necessary to delete excess rows in the database
 year_start = {{ tessdb_config.dbase.year_start | default(2016) }}
-year_end   = {{ tessdb_config.dbase.year_end   | default(2026) }}
+year_end   = {{ tessdb_config.dbase.year_end   | default(2036) }}
 
 # Date format for the Date dimension (date field)
 # Examples: (%Y/%m/%d => 2015/12/31) (%d/%m/%Y => 31/12/2015)
@@ -165,11 +160,6 @@ location_minimum_batch_size = {{ tessdb_config.dbase.location_minimum_batch_size
 # set of locations (i.e. 10000)
 # Reloadable property
 location_pause = {{ tessdb_config.dbase.location_pause | default(10) }}
-
-# DBase Stats reporting. Either 'condensed' or 'detailed'
-# Leave blank if not needed.
-# Reloadable property
-stats = {{ tessdb_config.dbase.stats | default('condensed') }}
 
 # general dbase namespace log level (debug, info, warn, error, critical)
 # Reloadable property
