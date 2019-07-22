@@ -29,7 +29,7 @@
     update: yes
     version: master
     accept_hostkey: yes
-  #notify: restart tessdb service
+  notify: restart tessdb service
 
 # - name: Install twisted-mqtt by setup.py
 #   shell: python setup.py install
@@ -45,9 +45,9 @@
     dest:   '{{ tessdb_install_dir }}/tessdb'
     clone:  yes
     update: yes
-    version: develop
+    version: master
     accept_hostkey: yes
-  #notify: restart tessdb service
+  notify: restart tessdb service
 
 
 - name: Install tessdb by setup.py

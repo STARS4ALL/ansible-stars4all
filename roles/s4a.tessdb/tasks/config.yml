@@ -16,7 +16,7 @@
     owner=root
     group=root
     mode=0644
-  #notify: restart tessdb service
+  notify: restart tessdb service
 
 - name: create tessdb database directory if does not exists
   file: >

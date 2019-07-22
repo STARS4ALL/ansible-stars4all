@@ -125,6 +125,21 @@ date_fmt = {{ tessdb_config.dbase.date_fmt | default('%d/%m/%Y') }}
 # Not reloadable property.
 secs_resolution = {{ tessdb_config.dbase.secs_resolution | default(1) }}
 
+# --------------- BEGIN RECORDING FILTERS CONFIG ---------------------
+
+#
+#               +-------------+     +-----------------+   
+#  (sample) --> | Auth Filter | --> | Location Filter | --> Database
+#               +-------------+     +-----------------+
+#
+
+# Authorisation filter
+# Each TESS-W photometer must be authorised to write to the database
+# The recommended use is to manually authorise it after the TESS photomenter
+# is in place and measuring properly
+# However, this can be disabled.
+auth_filter =  {{ tessdb_config.dbase.auth_filter | default(True) | ternary('yes','no') }}
+
 # Filter by location sunrise/sunset
 # if set, filtering of readings will be performed for each TESS associated with
 # a given location. 
@@ -160,6 +175,8 @@ location_minimum_batch_size = {{ tessdb_config.dbase.location_minimum_batch_size
 # set of locations (i.e. 10000)
 # Reloadable property
 location_pause = {{ tessdb_config.dbase.location_pause | default(10) }}
+
+# --------------- END RECORDING FILTERS CONFIG ---------------------
 
 # general dbase namespace log level (debug, info, warn, error, critical)
 # Reloadable property

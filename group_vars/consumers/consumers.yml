@@ -22,7 +22,9 @@ tess_logfile_dir   : /var/log
 tessdb_config:
   tessdb: {}
   log:    {}
-  dbase:  {}
+  dbase:  
+    auth_filter:     no
+    location_filter: no
   mqtt: 
     tess_blacklist: ['test5','ema0','ema1','ema3','pruebas2']
     broker:        'tcp:{{ cred_tessdb_broker }}:{{ cred_tessdb_port }}'
