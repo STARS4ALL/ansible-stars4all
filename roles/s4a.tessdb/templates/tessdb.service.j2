@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+[Unit]
+Description=TESS Quality Sky Meter database service
+Documentation=https://github.com/STARS4ALL/tessdb
+
+[Service]
+Type=simple
+User=root
+KillMode=process
+#ExecStart=/bin/sh -c '. {{ tessdb_venv_dir }}/bin/activate && {{ tessdb_venv_dir }}/bin/python3 -m tessdb --config /etc/tessdb/config'
+ExecStart={{ tessdb_venv_dir }}/bin/python3 -m tessdb --config /etc/tessdb/config
+ExecReload=/bin/kill -s HUP -- $MAINPID
+EnvironmentFile=/etc/tessdb/tessdb.env
+#WorkingDirectory={{ tessdb_install_dir }}
+
+[Install]
+WantedBy=multi-user.target

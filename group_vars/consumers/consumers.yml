@@ -7,34 +7,3 @@
 
 # Timezone settings
 timezone_zone: Etc/UTC
-
-# ----------------
-# Role: s4a.tessdb 
-# ----------------
-
-tessdb_install_dir : /home/pi
-tessdb_install_user: pi
-tessdb_dbase_dir   : '{{ tessdb_install_dir }}/dbase'
-tess_logfile_dir   : /var/log
-
-# Default entries for the 
-# /etc/tessdb/config configuration file (except username/password)
-tessdb_config:
-  tessdb: {}
-  log:    {}
-  dbase:  
-    auth_filter:     no
-    location_filter: no
-  mqtt: 
-    tess_blacklist: ['test5','ema0','ema1','ema3','pruebas2']
-    broker:        'tcp:{{ cred_tessdb_broker }}:{{ cred_tessdb_port }}'
-    username:      '{{ cred_tessdb_username }}'
-    password:      '{{ cred_tessdb_password }}'
-
-# -------------------------
-# Role: s4a.reports 
-# -------------------------
-
-reports_dbase_dir: '{{ tessdb_install_dir }}/dbase'
-reports_user:       root
-

@@ -1,57 +1,41 @@
 ---
 # tasks file for roles/nto.tessdb
 
-- name: Install needed packages
-  package: 
-    name={{ item }} 
-    state=latest 
+- name: install twisted-mqtt from PyPi in stars4all python virtual environment
+  become_user: '{{ tessdb_install_user }}'
+  pip:
+    name               : '{{ item }}'
+    virtualenv         : '{{ tessdb_venv_dir }}'
+    virtualenv_command : '{{ tessdb_python3 }} -m venv'
+    state              : latest
   with_items:
+  - twisted-mqtt
+  - tessdb
+
+
+- name: Install other system level needed packages
+  package: 
+    name : '{{ item }}' 
+    state: latest 
+  with_items:
+  - git
   - '{{ tessdb_sqlite }}'
 
 
+# - name: Checkout tessdb from GitHub
+#   become_user: '{{ tessdb_install_user }}'
+#   git: 
+#     repo:   'https://github.com/STARS4ALL/tessdb.git' 
+#     dest:   '{{ tessdb_install_dir }}/tessdb'
+#     clone:  yes
+#     update: yes
+#     version: master
+#     accept_hostkey: yes
+#   notify: restart tessdb service
 
-# - name: Install twisted-mqtt from PyPi
-#   pip: >
-#     name={{ item.pkg }} 
-#     state={{ item.state     | default('latest') }}
-#     version={{ item.version | default(omit) }}
-#   with_items:
-#   - { pkg: twisted-mqtt, state: latest }
- 
 
-- name: Checkout twisted-mqtt from GitHub
-  become: yes
-  become_user: '{{ tessdb_install_user }}'
-  git: 
-    repo:   'https://github.com/astrorafael/twisted-mqtt.git' 
-    dest:   '{{ tessdb_install_dir }}/twisted-mqtt'
-    clone:  yes
-    update: yes
-    version: master
-    accept_hostkey: yes
-  notify: restart tessdb service
-
-# - name: Install twisted-mqtt by setup.py
-#   shell: python setup.py install
+# - name: Install tessdb by setup.py
+#   shell: '. {{ tessdb_venv_dir }}/bin/activate && {{ tessdb_python3 }} setup.py install --user'
 #   args:
-#     chdir:  '{{ tessdb_install_dir }}/twisted-mqtt'
-
-
-- name: Checkout tessdb from GitHub
-  become: yes
-  become_user: '{{ tessdb_install_user }}'
-  git: 
-    repo:   'https://github.com/STARS4ALL/tessdb.git' 
-    dest:   '{{ tessdb_install_dir }}/tessdb'
-    clone:  yes
-    update: yes
-    version: master
-    accept_hostkey: yes
-  notify: restart tessdb service
-
-
-- name: Install tessdb by setup.py
-  shell: python setup.py install
-  args:
-    chdir:  '{{ tessdb_install_dir }}/tessdb'
+#     chdir:  '{{ tessdb_install_dir }}/tessdb'
 

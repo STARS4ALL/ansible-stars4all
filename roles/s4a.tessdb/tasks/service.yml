@@ -1,4 +1,4 @@
 ---
 # tasks file for roles/nto.tessdb
 - name: start tessdb service
-  service: name=tessdb state=started
+  service: name=tessdb state=started enabled=yes

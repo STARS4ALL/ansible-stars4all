@@ -5,6 +5,8 @@
 # for GitHub checkout
 tessdb_install_dir:  /home/pi
 tessdb_install_user: pi
+tessdb_install_venv: myvenv
+
 
 # Default tessdb Broker used
 # Non default data should be encrypted with Ansible Vault
@@ -13,6 +15,8 @@ tessdb_port:   1883
 
 tessdb_dbase_dir: /var/dbase
 tess_logfile_dir: /var/log
+tessdb_venv_dir : '{{ tessdb_install_dir }}/{{ tessdb_install_venv }}'   
+
 
 # Default entries in the configuration file (except username/password)
 tessdb_config:

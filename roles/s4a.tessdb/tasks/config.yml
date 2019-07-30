@@ -34,3 +34,27 @@
     group=root
     mode=0644
 
+- name: Patches tessdb.service to include a virtualenv
+  template: >
+    dest=/lib/systemd/system/tessdb.service
+    src=tessdb.service.j2
+    owner=root
+    group=root
+    mode=0644
+  notify: systemd daemon reload
+
+- name: install environment file for virtualenv
+  template: >
+    dest=/etc/tessdb/tessdb.env
+    src=tessdb.env.j2
+    owner=root
+    group=root
+    mode=0644
+  notify: restart tessdb service
+
+- name: Touch the tess.db database file
+  file:
+    path: '{{ tessdb_dbase_dir }}/tess.db'
+    state: touch
+    mode: '0644'
+

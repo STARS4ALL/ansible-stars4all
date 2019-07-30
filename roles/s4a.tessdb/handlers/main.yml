@@ -5,3 +5,6 @@
 
 - name: reload tessdb service
   service: name=tessdb state=reloaded
+
+- name: systemd daemon reload  
+  command: systemctl daemon-reload
