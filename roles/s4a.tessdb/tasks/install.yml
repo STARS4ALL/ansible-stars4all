@@ -1,7 +1,16 @@
 ---
 # tasks file for roles/nto.tessdb
 
-- name: install twisted-mqtt from PyPi in stars4all python virtual environment
+- name: Install system level needed packages
+  package: 
+    name : '{{ item }}' 
+    state: latest 
+  with_items:
+  - git
+  - '{{ tessdb_sqlite }}'
+
+
+- name: install PyPi packages in a virtual environment
   become_user: '{{ tessdb_install_user }}'
   pip:
     name               : '{{ item }}'
@@ -11,31 +20,3 @@
   with_items:
   - twisted-mqtt
   - tessdb
-
-
-- name: Install other system level needed packages
-  package: 
-    name : '{{ item }}' 
-    state: latest 
-  with_items:
-  - git
-  - '{{ tessdb_sqlite }}'
-
-
-# - name: Checkout tessdb from GitHub
-#   become_user: '{{ tessdb_install_user }}'
-#   git: 
-#     repo:   'https://github.com/STARS4ALL/tessdb.git' 
-#     dest:   '{{ tessdb_install_dir }}/tessdb'
-#     clone:  yes
-#     update: yes
-#     version: master
-#     accept_hostkey: yes
-#   notify: restart tessdb service
-
-
-# - name: Install tessdb by setup.py
-#   shell: '. {{ tessdb_venv_dir }}/bin/activate && {{ tessdb_python3 }} setup.py install --user'
-#   args:
-#     chdir:  '{{ tessdb_install_dir }}/tessdb'
-
