@@ -1,0 +1,46 @@
+---
+# Migrates database from cortex to calyx
+
+- hosts: calyx
+  become: yes
+  tasks:
+    
+  - name: stops tessdb service on dest machine
+    service: name=tessdb state=stopped
+   
+
+- hosts: cortex
+  become: yes
+  vars:
+    
+    src_user: pi
+    src_dbase: /home/pi/dbase/tess.db
+
+    dst_user:  rfg
+    dst_dbase: /var/dbase/tess.db
+    dst_host:  calyx.hst.ucm.es
+
+  tasks:
+
+  - name: pauses tessdb on src machine
+    command: /usr/local/bin/tessdb_pause
+
+  # Make sure the pub ssh of src_user is in 
+  # the authorised_keys of dst_user 
+  - name: synchronizes database on dest machine
+    become_user: '{{ src_user }}'
+    command: rsync -zavh {{ src_dbase }} {{ dst_user }}@{{ dst_host }}:{{ dst_dbase }}
+
+  # ESTE LE TENDRE QUE QUITAR Y PONER UNO DE PARAR DEFINITIVAMENTE
+  - name: resumes tessdb on src machine
+    command: /usr/local/bin/tessdb_resume
+
+- hosts: calyx
+  become: yes
+  gather_facts: false
+
+  tasks:
+
+  - name: starts tessdb service on dest machine
+    service: name=tessdb state=started
+   
