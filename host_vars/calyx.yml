@@ -9,6 +9,10 @@ tessdb_install_venv: stars4all
 tessdb_dbase_dir   : /var/dbase
 tess_logfile_dir   : /var/log
 
+
+# run time user
+tessdb_runtime_user: rfg
+
 # Default entries for the 
 # /etc/tessdb/config configuration file (except username/password)
 tessdb_config:

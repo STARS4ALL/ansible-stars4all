@@ -5,16 +5,16 @@
   file: >
     path=/etc/tessdb
     state=directory
-    owner=root
-    group=root
+    owner={{ tessdb_runtime_user }}
+    group={{ tessdb_runtime_user }}
     mode=0755
 
 - name: copy tessdb main configuration file
   template: >
     dest=/etc/tessdb/config
     src=config.j2
-    owner=root
-    group=root
+    owner={{ tessdb_runtime_user }}
+    group={{ tessdb_runtime_user }}
     mode=0644
   notify: restart tessdb service
 
@@ -22,24 +22,24 @@
   file: >
     path={{ tessdb_dbase_dir }}
     state=directory
-    owner=root
-    group=root
+    owner={{ tessdb_runtime_user }}
+    group={{ tessdb_runtime_user }}
     mode=0755
 
 - name: Patches tessdb logrotate
   template: >
     dest=/etc/logrotate_astro.d/tessdb
     src=logrotate.j2
-    owner=root
-    group=root
+    owner={{ tessdb_runtime_user }}
+    group={{ tessdb_runtime_user }}
     mode=0644
 
 - name: Patches tessdb.service to include a virtualenv
   template: >
     dest=/lib/systemd/system/tessdb.service
     src=tessdb.service.j2
-    owner=root
-    group=root
+    owner={{ tessdb_runtime_user }}
+    group={{ tessdb_runtime_user }}
     mode=0644
   notify: systemd daemon reload
 
@@ -47,8 +47,8 @@
   template: >
     dest=/etc/tessdb/tessdb.env
     src=tessdb.env.j2
-    owner=root
-    group=root
+    owner={{ tessdb_runtime_user }}
+    group={{ tessdb_runtime_user }}
     mode=0644
   notify: restart tessdb service
 
@@ -56,7 +56,7 @@
   file:
     path: '{{ tessdb_dbase_dir }}/tess.db'
     state: touch
-    owner: root
-    group: root
+    owner: '{{ tessdb_runtime_user }}'
+    group: '{{ tessdb_runtime_user }}'
     mode: '0644'
 

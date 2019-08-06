@@ -7,6 +7,8 @@ tessdb_install_dir:  /home/pi
 tessdb_install_user: pi
 tessdb_install_venv: myvenv
 
+# run time user
+tessdb_runtime_user: pi
 
 # Default tessdb Broker used
 # Non default data should be encrypted with Ansible Vault
