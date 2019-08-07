@@ -10,7 +10,7 @@
   - '{{ tessdb_sqlite }}'
 
 
-- name: install PyPi packages in a virtual environment
+- name: install (as user) dependencies packages in a virtual environment
   become_user: '{{ tessdb_install_user }}'
   pip:
     name               : '{{ item }}'
@@ -18,5 +18,15 @@
     virtualenv_command : '{{ tessdb_python3 }} -m venv'
     state              : latest
   with_items:
+  - twisted
   - twisted-mqtt
+  - pyephem
+
+- name: install (as root) tessdb package in a virtual environment
+  pip:
+    name               : '{{ item }}'
+    virtualenv         : '{{ tessdb_venv_dir }}'
+    virtualenv_command : '{{ tessdb_python3 }} -m venv'
+    state              : latest
+  with_items:
   - tessdb

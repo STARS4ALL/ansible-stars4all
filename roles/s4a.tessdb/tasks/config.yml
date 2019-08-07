@@ -41,7 +41,11 @@
     owner={{ tessdb_runtime_user }}
     group={{ tessdb_runtime_user }}
     mode=0644
-  notify: systemd daemon reload
+  register: tessdb_systemd_changed
+
+- name: systemd daemon reload  
+  command: systemctl daemon-reload
+  when: tessdb_systemd_changed
 
 - name: install environment file for virtualenv
   template: >
