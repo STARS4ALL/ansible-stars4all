@@ -1,21 +1,13 @@
 ---
 # Migrates database from cortex to calyx
 
-- hosts: calyx
+- hosts: temporary
   become: yes
-  vars:
-
-    install_user: rfg
-    venv_name: stars4all
-    venv_home: '/home/{{ install_user }}/{{ venv_name }}'
-    dbase_dir: /var/dbase
-
-
   tasks:
 
   
   - name: stops tessdb service on dest machine
-    service: name=tessdb state=stopped enabled=yes
+    service: name=tessdb state=stopped
     ignore_errors: true
 
   - name: Delete systemd tessdb service unit
@@ -44,7 +36,7 @@
 
   - name: Delete all the virtualenv
     file:
-      path: '{{ venv_home }}'
+      path: '{{ tessdb_venv_dir }}'
       state: absent
 
   - name: Delete /etc/tessdb directory
@@ -88,6 +80,6 @@
 
   - name: Delete database dir and contents
     file:
-      path:  '{{ dbase_dir }}'
+      path:  '{{ tessdb_dbase_dir }}'
       state: absent
    

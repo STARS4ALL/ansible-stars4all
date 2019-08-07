@@ -2,9 +2,13 @@
 # Role: s4a.tessdb 
 # ----------------
 
-tessdb_install_user: rfg
-tessdb_venv: stars4all
-tessdb_dbase_dir   : /var/dbase
+tessdb_install_user : rfg
+tessdb_venv         : stars4all
+tessdb_dbase_dir    : /var/dbase
+tessdb_install_dir  : /home/rfg
+tessdb_venv_dir     : /home/pi/stars4all
+
+
 # run time user
 tessdb_runtime_user: rfg
 

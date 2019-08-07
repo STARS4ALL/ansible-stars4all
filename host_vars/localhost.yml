@@ -2,9 +2,12 @@
 # Role: s4a.tessdb 
 # ----------------
 
-tessdb_install_user: rafa
-tessdb_venv        : stars4all
-tessdb_dbase_dir   : /var/dbase
+tessdb_install_user : rafa
+tessdb_venv         : stars4all
+tessdb_dbase_dir    : /var/dbase
+tessdb_install_dir  : /home/rafa
+tessdb_venv_dir     : /home/rafa/stars4all
+
 # run time user
 tessdb_runtime_user: rafa
 tessdb_service_enabled : no

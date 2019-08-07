@@ -2,9 +2,13 @@
 # Role: s4a.tessdb 
 # ----------------
 
-tessdb_install_user: pi
-tessdb_venv: stars4all
-tessdb_dbase_dir   : '{{ tessdb_install_dir }}/dbase'
+tessdb_install_user : pi
+tessdb_venv         : stars4all
+tessdb_dbase_dir    : /home/pi/dbase
+tessdb_install_dir  : /home/pi
+tessdb_venv_dir     : /home/pi/stars4all
+
+
 # run time user
 tessdb_runtime_user: pi
 

@@ -4,7 +4,7 @@
 # Default installation variables
 # for GitHub checkout
 tessdb_install_user:  pi
-tessdb_install_dir : '/home/{{ tessdb_install_user }}'
+tessdb_install_dir : /home/pi
 tessdb_venv:  myvenv
 
 # run time user
@@ -16,7 +16,7 @@ tessdb_broker: test.mosquitto.org
 tessdb_port:   1883
 
 tessdb_dbase_dir: /var/dbase
-tessdb_venv_dir : '{{ tessdb_install_dir }}/{{ tessdb_venv }}'   
+tessdb_venv_dir : /home/pi/myvenv
 
 tessdb_service_enabled: yes
 
