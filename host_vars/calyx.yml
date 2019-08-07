@@ -32,5 +32,9 @@ tessdb_config:
 # -------------------------
 
 reports_dbase_dir: /var/dbase
-reports_user:       root
+reports_user:       rfg
+reports_python3:   /usr/bin/python3
+reports_venv_dir:  /home/rfg/stars4all
+
+
 

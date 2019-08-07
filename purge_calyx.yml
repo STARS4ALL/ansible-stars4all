@@ -1,0 +1,93 @@
+---
+# Migrates database from cortex to calyx
+
+- hosts: calyx
+  become: yes
+  vars:
+
+    install_user: rfg
+    venv_name: stars4all
+    venv_home: '/home/{{ install_user }}/{{ venv_name }}'
+    dbase_dir: /var/dbase
+
+
+  tasks:
+
+  
+  - name: stops tessdb service on dest machine
+    service: name=tessdb state=stopped enabled=yes
+    ignore_errors: true
+
+  - name: Delete systemd tessdb service unit
+    file:
+      path: /lib/systemd/system/tessdb.service
+      state: absent
+    register: systemd_changed
+  
+  - name: systemd daemon reload  
+    command: systemctl daemon-reload
+    when: systemd_changed
+
+  - name: delete system level Pip packages if any
+    pip:
+      name  : '{{ item }}'
+      state : absent
+    with_items:
+    - twisted
+    - twisted-mqtt
+    - pyephem
+    - jinja2
+    - tabulate
+    - pytz
+    ignore_errors: true
+
+
+  - name: Delete all the virtualenv
+    file:
+      path: '{{ venv_home }}'
+      state: absent
+
+  - name: Delete /etc/tessdb directory
+    file:
+      path: /etc/tessdb
+      state: absent
+
+  - name: Delete latest log files entry
+    file:
+      path:  /var/log/tessdb.log
+      state: absent
+
+  - name: find previous log entries
+    find:
+      paths: /var/log
+      patterns: tessdb.log-*
+    register: files_to_delete
+
+  - name: remove previous log entries
+    file:
+      path: '{{ item.path }}'
+      state: absent
+    with_items: '{{ files_to_delete.files }}'
+
+  - name: Delete logrotate entry
+    file:
+      path:  /etc/logrotate_astro.d/tessdb
+      state: absent
+
+  - name: Delete commands
+    file:
+      path:  '/usr/local/bin/{{ item }}'
+      state: absent
+    with_items:
+      - tessdb
+      - tessdb3
+      - tessdb_pause
+      - tessdb_resume
+      - tessdb_index.sh
+      - tess
+
+  - name: Delete database dir and contents
+    file:
+      path:  '{{ dbase_dir }}'
+      state: absent
+   
