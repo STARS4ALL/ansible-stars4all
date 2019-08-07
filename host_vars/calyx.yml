@@ -8,6 +8,8 @@ tessdb_dbase_dir   : /var/dbase
 # run time user
 tessdb_runtime_user: rfg
 
+tessdb_service_enabled : yes
+
 # -------------------------
 # Role: s4a.reports 
 # -------------------------

@@ -2,3 +2,4 @@
 # vars file for roles/nto.tessdb
 tessdb_sqlite: sqlite3
 tessdb_sleep: /usr/bin/sleep
+tessdb_python3: /usr/bin/python3

@@ -18,6 +18,7 @@ tessdb_port:   1883
 tessdb_dbase_dir: /var/dbase
 tessdb_venv_dir : '{{ tessdb_install_dir }}/{{ tessdb_venv }}'   
 
+tessdb_service_enabled: yes
 
 # Default entries in the configuration file (except username/password)
 tessdb_config:

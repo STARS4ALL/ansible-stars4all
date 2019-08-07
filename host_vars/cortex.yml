@@ -8,6 +8,8 @@ tessdb_dbase_dir   : '{{ tessdb_install_dir }}/dbase'
 # run time user
 tessdb_runtime_user: pi
 
+tessdb_service_enabled : no
+
 # -------------------------
 # Role: s4a.reports 
 # -------------------------
