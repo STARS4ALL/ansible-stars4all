@@ -3,3 +3,5 @@
 
 reports_dbase_dir: /var/dbase
 reports_user:       root
+reports_venv_dir:  /root/stars4all
+reports_python3:   /usr/bin/python3

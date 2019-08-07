@@ -12,8 +12,7 @@
         {{ tessdb_sleep | default("/bin/sleep") }} 2 || true
     endscript
     postrotate
-        /usr/local/bin/tessdb_resume > /dev/null 2>/dev/null 
-        /usr/local/bin/tessdb_index.sh {{ tessdb_dbase_dir }}/tess.db-\* > /dev/null 2>/dev/null || true
+        /usr/local/bin/tessdb_resume > /dev/null 2>/dev/null
     endscript
 }
 
