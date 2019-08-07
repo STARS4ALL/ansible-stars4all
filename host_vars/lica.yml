@@ -2,20 +2,20 @@
 # Role: s4a.tessdb 
 # ----------------
 
-tessdb_install_user: rfg
+tessdb_install_user: rafa
 tessdb_venv: stars4all
 tessdb_dbase_dir   : /var/dbase
 # run time user
-tessdb_runtime_user: rfg
+tessdb_runtime_user: rafa
 
 # -------------------------
 # Role: s4a.reports 
 # -------------------------
 
 reports_dbase_dir: /var/dbase
-reports_user:       rfg
+reports_user:       rafa
 reports_python3:   /usr/bin/python3
-reports_venv_dir:  /home/rfg/stars4all
+reports_venv_dir:  /home/rafa/stars4all
 
 
 
