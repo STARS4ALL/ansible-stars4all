@@ -1,0 +1,8 @@
+---
+
+# -------------------------
+# Role: tersmitten.timezone 
+# -------------------------
+
+# Timezone settings
+timezone_zone: Etc/UTC

@@ -5,6 +5,9 @@
 
   roles:
 
+  - role: tersmitten.timezone 
+    tags: [ common, timezone ] 
+
   - role: s4a.logrotate      
     tags: [ common, logrotate ] 
 
