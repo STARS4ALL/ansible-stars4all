@@ -28,7 +28,9 @@
     become_user: '{{ tessdb_install_user }}'
     command: rsync -zavh {{ tessdb_dbase_dir }}/tess.db {{ dst_user }}@{{ dst_host }}:{{ dst_dbase_dir }}/tess.db
 
-  # ESTE LE TENDRE QUE QUITAR Y PONER UNO DE PARAR DEFINITIVAMENTE
+  # CUANDO ESTEMOS YA SEGUROS PARARLO MANUALMENTE CON:
+  # - sudo service tessdb stop
+  # - sudo systemctl disable sendmail.service
   - name: resumes tessdb on src machine
     command: /usr/local/bin/tessdb_resume
 
