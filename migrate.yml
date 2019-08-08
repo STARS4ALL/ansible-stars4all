@@ -30,7 +30,7 @@
 
   # CUANDO ESTEMOS YA SEGUROS PARARLO MANUALMENTE CON:
   # - sudo service tessdb stop
-  # - sudo systemctl disable sendmail.service
+  # - sudo systemctl disable tessdb.service
   - name: resumes tessdb on src machine
     command: /usr/local/bin/tessdb_resume
 
