@@ -1,7 +1,7 @@
 ---
-# Migrates database from cortex to calyx
+# Migrates database from migration_src group to migration_dst group
 
-- hosts: calyx
+- hosts: migration_dst
   become: yes
   tasks:
     
@@ -9,16 +9,13 @@
     service: name=tessdb state=stopped
    
 
-- hosts: cortex
+- hosts: migration_src
   become: yes
   vars:
-    
-    src_user: pi
-    src_dbase: /home/pi/dbase/tess.db
 
-    dst_user:  rfg
-    dst_dbase: /var/dbase/tess.db
-    dst_host:  calyx.hst.ucm.es
+    dst_user      : rfg
+    dst_dbase_dir : /var/dbase/tess.db
+    dst_host      : calyx.hst.ucm.es
 
   tasks:
 
@@ -28,19 +25,19 @@
   # Make sure the pub ssh of src_user is in 
   # the authorised_keys of dst_user 
   - name: synchronizes database on dest machine
-    become_user: '{{ src_user }}'
-    command: rsync -zavh {{ src_dbase }} {{ dst_user }}@{{ dst_host }}:{{ dst_dbase }}
+    become_user: '{{ tessdb_install_user }}'
+    command: rsync -zavh {{ tessdb_dbase_dir }}/tess.db {{ dst_user }}@{{ dst_host }}:{{ dst_dbase_dir }}/tess.db
 
   # ESTE LE TENDRE QUE QUITAR Y PONER UNO DE PARAR DEFINITIVAMENTE
   - name: resumes tessdb on src machine
     command: /usr/local/bin/tessdb_resume
 
-- hosts: calyx
+- hosts: migration_dst
   become: yes
   gather_facts: false
 
   tasks:
 
-  - name: starts tessdb service on dest machine
+  - name: starts tessdb service on dst machine
     service: name=tessdb state=started
    
