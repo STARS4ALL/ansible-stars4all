@@ -14,7 +14,7 @@
   vars:
 
     dst_user      : rfg
-    dst_dbase_dir : /var/dbase/tess.db
+    dst_dbase_dir : /var/dbase
     dst_host      : calyx.hst.ucm.es
 
   tasks:
