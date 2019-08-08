@@ -1,0 +1,25 @@
+---
+# tasks file for roles/nto.reports
+
+- name: install (as user) PyPi dependencies in a virtual environment
+  become_user: '{{ tessdb_install_user }}'
+  pip:
+    name               : '{{ item }}'
+    virtualenv         : '{{ reports_venv_dir }}'
+    virtualenv_command : '{{ reports_python3 }} -m venv'
+    state              : latest
+  with_items:
+  - pyephem
+  - tabulate
+  - pytz
+  - jinja2
+
+# We install it as root because it copies files to /usr/local/bin
+- name: install (as root) PyPi tessdb-reports package in a virtual environment
+  pip:
+    name               : '{{ item }}'
+    virtualenv         : '{{ tessdb_venv_dir }}'
+    virtualenv_command : '{{ reports_python3 }} -m venv'
+    state              : latest
+  with_items:
+  - tessdb-reports

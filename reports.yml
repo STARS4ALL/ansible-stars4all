@@ -1,6 +1,6 @@
 ---
 
-- hosts: consumers
+- hosts: reports
   become: yes
 
   roles:
