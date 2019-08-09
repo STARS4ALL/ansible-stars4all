@@ -86,6 +86,24 @@ protocol_log_level = {{ tessdb_config.mqtt.protocol_log_level | default('info') 
 
 #------------------------------------------------------------------------#
 
+[filter]
+
+# Filter depth
+# How many consecutive samples must be analyzed to discard invalid data
+# Not reloadable property
+depth = {{ tessdb_config.filter.depth | default(3) }}
+
+# Enable flag
+# If not enabled, the new reading is passed directly to the database input queue
+# Reloadable property
+enabled = {{ tessdb_config.filter.enabled | default(False) | ternary('yes','no') }}
+
+# namespace log level (debug, info, warn, error, critical)
+# Reloadable property
+log_level = {{ tessdb_config.filter.log_level | default('info') }}
+
+#------------------------------------------------------------------------#
+
 # Database configuration section
 [dbase]
 
@@ -125,7 +143,7 @@ date_fmt = {{ tessdb_config.dbase.date_fmt | default('%d/%m/%Y') }}
 # Not reloadable property.
 secs_resolution = {{ tessdb_config.dbase.secs_resolution | default(1) }}
 
-# --------------- BEGIN RECORDING FILTERS CONFIG ---------------------
+# --------------- BEGIN DATABASE RECORDING FILTERS CONFIG ---------------------
 
 #
 #               +-------------+     +-----------------+   
@@ -176,7 +194,7 @@ location_minimum_batch_size = {{ tessdb_config.dbase.location_minimum_batch_size
 # Reloadable property
 location_pause = {{ tessdb_config.dbase.location_pause | default(10) }}
 
-# --------------- END RECORDING FILTERS CONFIG ---------------------
+# --------------- END DATABASE RECORDING FILTERS CONFIG ---------------------
 
 # general dbase namespace log level (debug, info, warn, error, critical)
 # Reloadable property

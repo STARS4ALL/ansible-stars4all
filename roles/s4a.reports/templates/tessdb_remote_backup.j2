@@ -1,0 +1,20 @@
+#!/bin/bash
+# {{ ansible_managed }}
+
+DEFAULT_SRC_USER="pi"
+DEFAULT_SRC_HOST="cortex.fis.ucm.es"
+DEFAULT_SRC_DIR="/var/dbase"
+DEFAULT_DST_DIR="/var/dbase"
+
+# Arguments from the command line & default values
+SRC_USER="${1:-$DEFAULT_SRC_USER}"
+SRC_HOST="${2:-$DEFAULT_SRC_HOST}"
+SRC_DIR="${3:-$DEFAULT_SRC_DIR}"
+DST_DIR="${4:-$DEFAULT_DST_DIR}"
+DATE=$(/usr/bin/date +%Y%m%d)
+
+#getting remote backup copy
+/usr/bin/rsync -zavh ${SRC_USER}@${SRC_HOST}:${SRC_DIR}/tess.db-${DATE} ${DST_DIR}/tess.db
+
+#indexing this copy
+/usr/local/bin/tessdb_index.sh  ${DST_DIR}/tess.db

@@ -3,3 +3,5 @@
 
 - include: install.yml
 - include: config.yml
+- include: backup.yml
+  when: reports_remote_backup

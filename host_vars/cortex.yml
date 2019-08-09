@@ -18,7 +18,16 @@ tessdb_service_enabled : no
 # Role: s4a.reports 
 # -------------------------
 
-reports_dbase_dir: '{{ tessdb_install_dir }}/dbase'
-reports_user:       root
-eports_python3:    /usr/bin/python3
-reports_venv_dir:  /home/pi/stars4all
+reports_dbase_dir : '{{ tessdb_install_dir }}/dbase'
+reports_user      : root
+reports_python3   : /usr/bin/python3
+reports_venv_dir  :  /home/pi/stars4all
+
+# Flag allowing remote backup configuration via rsync
+reports_remote_backup: yes
+# Source host data where to get tess.db database
+reports_src_host : calyx.hst.ucm.es 
+reports_src_user : rfg
+reports_src_dir  : /var/dbase
+reports_src_hour : 12
+reports_src_min  : 30

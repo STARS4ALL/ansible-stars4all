@@ -21,5 +21,12 @@ reports_user     : rafa
 reports_python3  : /usr/bin/python3
 reports_venv_dir : /home/rafa/stars4all
 
+# Flag allowing remote backup configuration via rsync
+reports_remote_backup: no
 
-
+# Source host data where to get tess.db database
+reports_src_host : calyx.hst.ucm.es 
+reports_src_user : rfg
+reports_src_dir  : /var/dbase
+reports_src_hour : 12
+reports_src_min  : 40

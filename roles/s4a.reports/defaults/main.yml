@@ -5,3 +5,18 @@ reports_dbase_dir: /var/dbase
 reports_user:       root
 reports_venv_dir:  /root/stars4all
 reports_python3:   /usr/bin/python3
+
+# ----------------------------------------------------
+# Configure for remote backup from one host to another
+# via rsync
+# ----------------------------------------------------
+
+# Flag allowing this configuration
+reports_remote_backup: no
+
+# Source host data
+reports_src_host : localhost 
+reports_src_user : pi
+reports_src_dir  : /var/dbase
+reports_src_hour : 12
+reports_src_min  : 30

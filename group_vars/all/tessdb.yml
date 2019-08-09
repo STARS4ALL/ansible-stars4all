@@ -13,3 +13,5 @@ tessdb_config:
     broker:        'tcp:{{ cred_tessdb_broker }}:{{ cred_tessdb_port }}'
     username:      '{{ cred_tessdb_username }}'
     password:      '{{ cred_tessdb_password }}'
+  filter:
+    enabled : yes
