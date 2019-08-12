@@ -1,5 +1,5 @@
 ---
-# Migrates database from cortex to calyx
+# Purges stars4all tessdb 
 
 - hosts: temporary
   become: yes
