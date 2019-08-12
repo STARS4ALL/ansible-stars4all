@@ -86,10 +86,10 @@ protocol_log_level = {{ tessdb_config.mqtt.protocol_log_level | default('info') 
 
 #------------------------------------------------------------------------#
 
+[filter]
 # Invalid samples filter
 # This module filters out invalid incoming data by analyzing a window
 # of samples before and after a given one.
-[filter]
 
 # Filter depth (window size)
 # Should be an odd, number, minimun 3, recommended 7.
