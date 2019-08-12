@@ -86,12 +86,18 @@ protocol_log_level = {{ tessdb_config.mqtt.protocol_log_level | default('info') 
 
 #------------------------------------------------------------------------#
 
+# Invalid samples filter
+# This module filters out invalid incoming data by analyzing a window
+# of samples before and after a given one.
 [filter]
 
-# Filter depth
-# How many consecutive samples must be analyzed to discard invalid data
+# Filter depth (window size)
+# Should be an odd, number, minimun 3, recommended 7.
+# depth = 3 -> keep 1 invalid sample  after the valid ones
+# depth = 5 -> keep 2 invalid samples after the valid ones
+# depth = 7 -> keep 3 invalid samples after the valid ones
 # Not reloadable property
-depth = {{ tessdb_config.filter.depth | default(3) }}
+depth = {{ tessdb_config.filter.depth | default(7) }}
 
 # Enable flag
 # If not enabled, the new reading is passed directly to the database input queue
