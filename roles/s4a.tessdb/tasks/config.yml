@@ -73,7 +73,5 @@
   when: tessdb_selinux_enabled
 
 - name: Apply SELinux file context changes
-  command:  '{{ item }}'
-  with_items:
-    - 'restorecon -v {{ tessdb_dbase_dir | quote }}/tess.db'
+  command: restorecon -v {{ tessdb_dbase_dir | quote }}/tess.db
   when: tessdb_selinux_enabled and tessdb_selinux_context is changed
