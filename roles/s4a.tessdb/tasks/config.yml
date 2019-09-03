@@ -26,12 +26,14 @@
     group={{ tessdb_runtime_user }}
     mode=0755
 
+# File owner for this logrotate spec should be root
+# as discovered by manually running logrotate
 - name: Patches tessdb logrotate
   template: >
     dest=/etc/logrotate_astro.d/tessdb
     src=logrotate.j2
-    owner={{ tessdb_runtime_user }}
-    group={{ tessdb_runtime_user }}
+    owner=root
+    group=root
     mode=0644
 
 - name: Patches tessdb.service to include a virtualenv
