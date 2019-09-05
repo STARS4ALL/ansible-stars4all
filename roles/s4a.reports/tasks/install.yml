@@ -1,8 +1,16 @@
 ---
-# tasks file for roles/nto.reports
+# tasks file for roles/s4a.reports
+
+- name: Install system level needed packages
+  package: 
+    name : '{{ item }}' 
+    state: latest 
+  with_items:
+  - git
+  - '{{ reports_sqlite }}'
 
 - name: install (as user) PyPi dependencies in a virtual environment
-  become_user: '{{ tessdb_install_user }}'
+  become_user: '{{ reports_user }}'
   pip:
     name               : '{{ item }}'
     virtualenv         : '{{ reports_venv_dir }}'
@@ -18,7 +26,7 @@
 - name: install (as root) PyPi tessdb-reports package in a virtual environment
   pip:
     name               : '{{ item }}'
-    virtualenv         : '{{ tessdb_venv_dir }}'
+    virtualenv         : '{{ reports_venv_dir }}'
     virtualenv_command : '{{ reports_python3 }} -m venv'
     state              : latest
   with_items:

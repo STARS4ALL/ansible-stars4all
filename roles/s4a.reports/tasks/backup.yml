@@ -5,8 +5,8 @@
   template: >
     dest=/usr/local/bin/tessdb_remote_backup
     src=tessdb_remote_backup.j2
-    owner='{{ reports_user }}'
-    group='{{ reports_user }}'
+    owner=root
+    group=root
     mode=0755
 
 - name: install tess daily remote backup cron job

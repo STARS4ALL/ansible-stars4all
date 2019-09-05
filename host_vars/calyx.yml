@@ -14,15 +14,3 @@ tessdb_runtime_user: rfg
 
 tessdb_service_enabled : yes
 
-# -------------------------
-# Role: s4a.reports 
-# -------------------------
-
-reports_dbase_dir: /var/dbase
-reports_user:       rfg
-reports_python3:   /usr/bin/python3
-reports_venv_dir:  /home/rfg/stars4all
-
-# Flag allowing remote backup configuration via rsync
-reports_remote_backup: no
-

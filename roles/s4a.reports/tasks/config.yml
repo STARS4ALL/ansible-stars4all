@@ -10,6 +10,7 @@
     group={{ reports_user }}
     mode=0755
   with_items:
+  - '{{ reports_dbase_dir }}'
   - '{{ reports_dbase_dir }}/reports'
   - '{{ reports_dbase_dir }}/reports/IDA'
 

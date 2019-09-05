@@ -1,0 +1,4 @@
+---
+# vars file for roles/s4a.reports
+reports_sqlite: sqlite 
+reports_python3: /usr/bin/python3
