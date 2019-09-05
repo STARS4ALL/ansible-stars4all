@@ -76,10 +76,26 @@
     group: '{{ tessdb_runtime_user }}'
     mode: '0644'
 
+- name: Manage the SELinux state of /var/dbase
+  sefcontext:
+    target: '{{ tessdb_dbase_dir }}'
+    ftype: d
+    setype: var_log_t
+    seuser: unconfined_u
+    state: present
+  register: tessdb_selinux_context
+  when: tessdb_selinux_enabled
+
+- name: Apply SELinux file context changes
+  command: restorecon -v {{ tessdb_dbase_dir | quote }}
+  when: tessdb_selinux_enabled and tessdb_selinux_context is changed
+
 - name: Manage the SELinux state of tess.db
   sefcontext:
     target: '{{ tessdb_dbase_dir }}/tess.db'
+    ftype: a
     setype: var_log_t
+    seuser: unconfined_u
     state: present
   register: tessdb_selinux_context
   when: tessdb_selinux_enabled
