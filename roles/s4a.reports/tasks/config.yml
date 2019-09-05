@@ -14,7 +14,7 @@
   - '{{ reports_dbase_dir }}/reports'
   - '{{ reports_dbase_dir }}/reports/IDA'
 
-- name: patched tess_ida script to use a virtualenv
+- name: patches tess_ida to use a virtualenv
   template: >
     dest=/usr/local/bin/{{ item }}
     src={{ item }}.j2

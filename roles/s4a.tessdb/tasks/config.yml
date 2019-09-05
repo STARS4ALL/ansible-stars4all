@@ -45,6 +45,16 @@
     mode=0644
   register: tessdb_systemd_changed
 
+- name: patches tess utility to use a virtualenv
+  template: >
+    dest=/usr/local/bin/{{ item }}
+    src={{ item }}.j2
+    owner=root
+    group=root
+    mode=0755
+  with_items:
+  - tess
+
 - name: systemd daemon reload  
   command: systemctl daemon-reload
   when: tessdb_systemd_changed

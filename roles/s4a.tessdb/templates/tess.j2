@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+# ----------------------------------------------------------------------
+# Copyright (c) 2019 Rafael Gonzalez.
+#
+# See the LICENSE file for details
+# ----------------------------------------------------------------------
+export VIRTUAL_ENV={{ tessdb_venv_dir }}
+{{ tessdb_venv_dir }}/bin/python3 -m tess "$@"
