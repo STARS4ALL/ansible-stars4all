@@ -61,7 +61,7 @@
 
 - name: systemd daemon reload  
   command: systemctl daemon-reload
-  when: tessdb_systemd_changed
+  when: tessdb_systemd_changed is changed
 
 - name: patches tess utility to use a virtualenv
   template: >
