@@ -26,6 +26,20 @@
     group={{ tessdb_runtime_user }}
     mode=0755
 
+- name: Manage the SELinux state of database directory
+  sefcontext:
+    target: '{{ tessdb_dbase_dir }}'
+    ftype: d
+    setype: var_log_t
+    seuser: unconfined_u
+    state: present
+  register: tessdb_selinux_context
+  when: tessdb_selinux_enabled
+
+- name: Apply SELinux context changes
+  command: restorecon -v {{ tessdb_dbase_dir | quote }}
+  when: tessdb_selinux_enabled and tessdb_selinux_context is changed
+
 # File owner for this logrotate spec should be root
 # as discovered by manually running logrotate
 - name: Patches tessdb logrotate
@@ -45,6 +59,10 @@
     mode=0644
   register: tessdb_systemd_changed
 
+- name: systemd daemon reload  
+  command: systemctl daemon-reload
+  when: tessdb_systemd_changed
+
 - name: patches tess utility to use a virtualenv
   template: >
     dest=/usr/local/bin/{{ item }}
@@ -54,10 +72,6 @@
     mode=0755
   with_items:
   - tess
-
-- name: systemd daemon reload  
-  command: systemctl daemon-reload
-  when: tessdb_systemd_changed
 
 - name: install environment file for virtualenv
   template: >
@@ -75,31 +89,3 @@
     owner: '{{ tessdb_runtime_user }}'
     group: '{{ tessdb_runtime_user }}'
     mode: '0644'
-
-- name: Manage the SELinux state of /var/dbase
-  sefcontext:
-    target: '{{ tessdb_dbase_dir }}'
-    ftype: d
-    setype: var_log_t
-    seuser: unconfined_u
-    state: present
-  register: tessdb_selinux_context
-  when: tessdb_selinux_enabled
-
-- name: Apply SELinux file context changes
-  command: restorecon -v {{ tessdb_dbase_dir | quote }}
-  when: tessdb_selinux_enabled and tessdb_selinux_context is changed
-
-- name: Manage the SELinux state of tess.db
-  sefcontext:
-    target: '{{ tessdb_dbase_dir }}/tess.db'
-    ftype: a
-    setype: var_log_t
-    seuser: unconfined_u
-    state: present
-  register: tessdb_selinux_context
-  when: tessdb_selinux_enabled
-
-- name: Apply SELinux file context changes
-  command: restorecon -v {{ tessdb_dbase_dir | quote }}/tess.db
-  when: tessdb_selinux_enabled and tessdb_selinux_context is changed
