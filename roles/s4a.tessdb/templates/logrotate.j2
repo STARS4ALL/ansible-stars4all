@@ -20,7 +20,7 @@
     su root root
     daily
     dateext
-    rotate 30
+    rotate {{ tessdb_log_rotate | default(30) }}
     missingok
     notifempty
 #   compress

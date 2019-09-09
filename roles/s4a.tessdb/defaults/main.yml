@@ -20,6 +20,10 @@ tessdb_venv_dir : /home/pi/myvenv
 
 tessdb_service_enabled: yes
 
+# log rotate configuration
+# how many copioes of backup logfiles
+tessdb_log_rotate: 30
+
 # Default entries in the configuration file (except username/password)
 tessdb_config:
   tessdb: {}
