@@ -8,6 +8,7 @@
   with_items:
   - git
   - '{{ reports_sqlite }}'
+  tags: [install]
 
 - name: install (as user) PyPi dependencies in a virtual environment
   become_user: '{{ reports_user }}'
@@ -21,6 +22,7 @@
   - tabulate
   - pytz
   - jinja2
+  tags: [install]
 
 # We install it as root because it copies files to /usr/local/bin
 - name: install (as root) PyPi tessdb-reports package in a virtual environment
@@ -31,3 +33,4 @@
     state              : latest
   with_items:
   - tessdb-reports
+  tags: [install]

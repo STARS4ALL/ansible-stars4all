@@ -13,6 +13,7 @@
   - '{{ reports_dbase_dir }}'
   - '{{ reports_dbase_dir }}/reports'
   - '{{ reports_dbase_dir }}/reports/IDA'
+  tags: [config]
 
 - name: patches tess_ida to use a virtualenv
   template: >
@@ -23,6 +24,7 @@
     mode=0755
   with_items:
   - tess_ida
+  tags: [config]
 
 - name: copy additional SQL report files
   template: >
@@ -34,6 +36,7 @@
   with_items:
   - tess_catalog.sh
   - tess_changelog.sh
+  tags: [config]
 
 
 - name: install tess daily cron jobs
@@ -46,13 +49,15 @@
     job="/usr/local/bin/{{ item.name }}.sh {{ reports_dbase_dir }}/{{ item.dbase }} {{ reports_dbase_dir }}/{{ item.subdir }} {{ item.arg3 }}"
     cron_file={{ item.name }}
   with_items:
-  - { name: tess_sunrise_sunset, state: present, hour: 12, minute: 45, dbase: tess.db, subdir: reports, arg3: '' }
-  - { name: tess_catalog,        state: present ,hour: 12, minute: 50, dbase: tess.db, subdir: reports, arg3: '' }
-  - { name: tess_changelog,      state: present, hour: 13, minute: 00, dbase: tess.db, subdir: reports, arg3: '' }
-  - { name: tess_life_span,      state: present, hour: 13, minute: 15, dbase: tess.db, subdir: reports, arg3: '' }
-  - { name: tess_daily_summary,  state: present, hour: 13, minute: 30, dbase: tess.db, subdir: reports, arg3: '' }
-  - { name: tess_ida_bulk_dump,  state: present, hour: 13, minute: 45, dbase: tess.db, subdir: reports/IDA, arg3: 'latest' }
-  - { name: tess_bulk_dump,      state: present, hour: 14, minute: 15, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_sunrise_sunset,  state: present, hour: 12, minute: 45, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_catalog,         state: present ,hour: 12, minute: 50, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_changelog,       state: present, hour: 13, minute: 00, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_life_span,       state: present, hour: 13, minute: 15, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_live_unassigned, state: present, hour: 13, minute: 22, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_daily_summary,   state: present, hour: 13, minute: 30, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_ida_bulk_dump,   state: present, hour: 13, minute: 45, dbase: tess.db, subdir: reports/IDA, arg3: 'latest' }
+  - { name: tess_bulk_dump,       state: present, hour: 14, minute: 15, dbase: tess.db, subdir: reports, arg3: '' }
+  tags: [config]
 
 
 - name: install tess monthly cron jobs to run on 1st of each month
@@ -67,4 +72,5 @@
     cron_file={{ item.name }}
   with_items: 
   - { name: tess_ida_monthly,  state: present, hour: 15, minute: 00, dbase: tess.db, subdir: reports/IDA, arg3: 'previous' }
+  tags: [config]
  
