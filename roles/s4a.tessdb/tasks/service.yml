@@ -5,3 +5,4 @@
     name   : tessdb 
     state  : started 
     enabled: '{{ tessdb_service_enabled }}'
+  tags: [service]

@@ -8,6 +8,7 @@
     owner={{ tessdb_runtime_user }}
     group={{ tessdb_runtime_user }}
     mode=0755
+  tags: [config]
 
 - name: copy tessdb main configuration file
   template: >
@@ -17,6 +18,7 @@
     group={{ tessdb_runtime_user }}
     mode=0644
   notify: restart tessdb service
+  tags: [config]
 
 - name: create tessdb database directory if does not exists
   file: >
@@ -25,6 +27,7 @@
     owner={{ tessdb_runtime_user }}
     group={{ tessdb_runtime_user }}
     mode=0755
+  tags: [config]
 
 - name: Manage the SELinux state of database directory
   sefcontext:
@@ -35,10 +38,12 @@
     state: present
   register: tessdb_selinux_context
   when: tessdb_selinux_enabled
+  tags: [config]
 
 - name: Apply SELinux context changes
   command: restorecon -v {{ tessdb_dbase_dir | quote }}
   when: tessdb_selinux_enabled and tessdb_selinux_context is changed
+  tags: [config]
 
 # File owner for this logrotate spec should be root
 # as discovered by manually running logrotate
@@ -49,6 +54,7 @@
     owner=root
     group=root
     mode=0644
+  tags: [config]
 
 - name: Patches tessdb.service to include a virtualenv
   template: >
@@ -58,10 +64,12 @@
     group={{ tessdb_runtime_user }}
     mode=0644
   register: tessdb_systemd_changed
+  tags: [config]
 
 - name: systemd daemon reload  
   command: systemctl daemon-reload
   when: tessdb_systemd_changed is changed
+  tags: [config]
 
 - name: patches tess utility to use a virtualenv
   template: >
@@ -72,6 +80,7 @@
     mode=0755
   with_items:
   - tess
+  tags: [config]
 
 - name: install environment file for virtualenv
   template: >
@@ -81,6 +90,7 @@
     group={{ tessdb_runtime_user }}
     mode=0644
   notify: restart tessdb service
+  tags: [config]
 
 - name: Touch the tess.db database file
   file:
@@ -89,3 +99,4 @@
     owner: '{{ tessdb_runtime_user }}'
     group: '{{ tessdb_runtime_user }}'
     mode: '0644'
+  tags: [config]

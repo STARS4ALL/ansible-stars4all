@@ -8,6 +8,7 @@
   with_items:
   - git
   - '{{ tessdb_sqlite }}'
+  tags: [install]
 
 
 - name: install (as user) dependencies packages in a virtual environment
@@ -21,6 +22,7 @@
   - twisted
   - twisted-mqtt
   - pyephem
+  tags: [install]
 
 - name: install (as root) tessdb package in a virtual environment
   pip:
@@ -30,3 +32,4 @@
     state              : latest
   with_items:
   - tessdb
+  tags: [install]
