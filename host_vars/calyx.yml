@@ -15,4 +15,4 @@ tessdb_runtime_user: rfg
 tessdb_service_enabled : yes
 
 # Days of backup logfiles
-tessdb_log_rotate: 90
+tessdb_log_rotate: 365
