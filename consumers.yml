@@ -1,5 +1,6 @@
 ---
 
+# Hosts where MQTT consumers reside
 - hosts: consumers
   become: yes
 
@@ -14,3 +15,17 @@
   - role: s4a.tessdb          
     tags: [ tessdb ]
 
+# Hosts where Reports builder are installed
+- hosts: reports
+  become: yes
+
+  roles:
+
+  - role: tersmitten.timezone 
+    tags: [ common, timezone ] 
+
+  - role: s4a.logrotate      
+    tags: [ common, logrotate ] 
+
+  - role: s4a.reports         
+    tags: [ reports ]
