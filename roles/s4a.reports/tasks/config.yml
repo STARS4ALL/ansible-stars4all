@@ -50,7 +50,7 @@
     cron_file={{ item.name }}
   with_items:
   - { name: tess_sunrise_sunset,  state: absent , hour: 12, minute: 45, dbase: tess.db, subdir: reports, arg3: '' }
-  - { name: tess_orphaned_names,  state: present, hour: 12, minute: 47, dbase: tess.db, subdir: reports, arg3: '' }
+  - { name: tess_names_history,   state: present, hour: 12, minute: 47, dbase: tess.db, subdir: reports, arg3: '' }
   - { name: tess_catalog,         state: present ,hour: 12, minute: 50, dbase: tess.db, subdir: reports, arg3: '' }
   - { name: tess_changelog,       state: present, hour: 13, minute: 00, dbase: tess.db, subdir: reports, arg3: '' }
   - { name: tess_life_span,       state: present, hour: 13, minute: 15, dbase: tess.db, subdir: reports, arg3: '' }
