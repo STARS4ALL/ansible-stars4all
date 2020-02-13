@@ -31,6 +31,6 @@
     virtualenv_command : '{{ tessdb_python3 }} -m venv'
     state              : latest
   with_items:
-  - tessdb
+  - tessdb-server
   - tessdb-cmdline
   tags: [install]
