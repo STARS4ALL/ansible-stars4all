@@ -33,4 +33,5 @@
     state              : latest
   with_items:
   - tessdb-reports
+  - tessdb-cmdline
   tags: [install]
