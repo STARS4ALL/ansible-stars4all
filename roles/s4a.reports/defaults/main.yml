@@ -19,3 +19,5 @@ reports_src_user : pi
 reports_src_dir  : /var/dbase
 reports_src_hour : 12
 reports_src_min  : 30
+
+reports_tess_ida_logrotate_days: 30

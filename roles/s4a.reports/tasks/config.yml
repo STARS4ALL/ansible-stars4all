@@ -26,6 +26,15 @@
   - tess_ida
   tags: [config]
 
+- name: install tess_ida logrotate spec
+  template: >
+    dest=/etc/logrotate.d/tess_ida
+    src=tess_ida_logrotate.j2
+    owner=root
+    group=root
+    mode=0644
+  tags: [config]
+
 - name: copy additional SQL report files
   template: >
     dest=/usr/local/bin/{{ item }}
@@ -72,4 +81,19 @@
   with_items: 
   - { name: tess_ida_monthly,  state: present, hour: 15, minute: 00, dbase: tess.db, subdir: reports/IDA, arg3: 'previous' }
   tags: [config]
+
+- name: install tess_ida cron job to run on 1st of each month
+  cron: >
+    name="cron job for {{ item.name }}"
+    state={{ item.state }}
+    minute={{ item.minute }}
+    hour={{ item.hour }}
+    day=1
+    user={{ reports_user }} 
+    job="/usr/local/bin/{{ item.name }}.sh {{ reports_dbase_dir }}/{{ item.dbase }} {{ reports_dbase_dir }}/{{ item.subdir }} {{ item.arg3 }}"
+    cron_file={{ item.name }}
+  with_items: 
+  - { name: tess_ida_monthly,  state: present, hour: 15, minute: 00, dbase: tess.db, subdir: reports/IDA, arg3: 'previous' }
+  tags: [config]
+ 
  

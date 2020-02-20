@@ -27,5 +27,6 @@
   - role: s4a.logrotate      
     tags: [ common, logrotate ] 
 
-  - role: s4a.reports         
+  - role: s4a.reports    
+    reports_tess_ida_logrotate_days: 365   
     tags: [ reports ]
