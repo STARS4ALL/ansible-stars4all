@@ -109,6 +109,6 @@
     minute=05
     hour=12
     user={{ tessdb_runtime_user }} 
-    job="/usr/local/bin/tess_event --automatic -d /var/dbase/tess.db >> /var/log/tess_event.log 2>&1"
+    job="/usr/local/bin/tess_event /var/dbase/tess.db --automatic >> /var/log/tess_event.log 2>&1"
     cron_file=tess_event
   tags: [config]
