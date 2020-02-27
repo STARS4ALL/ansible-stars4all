@@ -149,58 +149,12 @@ date_fmt = {{ tessdb_config.dbase.date_fmt | default('%d/%m/%Y') }}
 # Not reloadable property.
 secs_resolution = {{ tessdb_config.dbase.secs_resolution | default(1) }}
 
-# --------------- BEGIN DATABASE RECORDING FILTERS CONFIG ---------------------
-
-#
-#               +-------------+     +-----------------+   
-#  (sample) --> | Auth Filter | --> | Location Filter | --> Database
-#               +-------------+     +-----------------+
-#
-
 # Authorisation filter
 # Each TESS-W photometer must be authorised to write to the database
 # The recommended use is to manually authorise it after the TESS photomenter
 # is in place and measuring properly
 # However, this can be disabled.
 auth_filter =  {{ tessdb_config.dbase.auth_filter | default(True) | ternary('yes','no') }}
-
-# Filter by location sunrise/sunset
-# if set, filtering of readings will be performed for each TESS associated with
-# a given location. 
-# Readings received when at daytime in that location will be discarded.
-# A TESS associated with the UNKNOWN location (id=-1) will have all its readings
-# discarded regardless being day/night.
-# Reloadable property.
-location_filter = {{ tessdb_config.dbase.location_filter | default(True) | ternary('yes','no') }}
-
-# Local Horizon threshold for sunrise/sunset, used for the day/night test.
-# Format DD:MM:SS or -DD:MM:SS
-# Reloadable property.
-location_horizon = {{ tessdb_config.dbase.location_batch_size | default('-00:34') }}
-
-# How many locations to process in a batch. Measured in %. 
-# It can be floating point
-# To avoid long CPU and I/O peaks with a large set of locations (i.e. 10000), 
-# their sunrise/sunset timestamps are proceses in batches.
-# A good rule of thumb is 10%
-# Reloadable property
-location_batch_size = {{ tessdb_config.dbase.location_batch_size | default(10) }}
-
-# How many locations should be process in a batch at a minimun.
-# Using percentages specifying the batch size may lead 
-# to lopping over very small batches. 
-# This property sets the minimun batch size
-# A good rule of thumb is 100 locations
-# Reloadable property
-location_minimum_batch_size = {{ tessdb_config.dbase.location_minimum_batch_size | default(100) }}
-
-# Wait time in seconds between two batches.
-# To smooth CPU and I/O peaks computing sunrise/sunset for large 
-# set of locations (i.e. 10000)
-# Reloadable property
-location_pause = {{ tessdb_config.dbase.location_pause | default(10) }}
-
-# --------------- END DATABASE RECORDING FILTERS CONFIG ---------------------
 
 # general dbase namespace log level (debug, info, warn, error, critical)
 # Reloadable property

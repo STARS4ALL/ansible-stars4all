@@ -7,7 +7,6 @@ tessdb_config:
   dbase:  
     auth_filter      : no
     close_when_pause : yes
-    location_filter  : no
   mqtt: 
     tess_blacklist: ['test5','ema0','ema1','ema3','pruebas2']
     broker:        'tcp:{{ cred_tessdb_broker }}:{{ cred_tessdb_port }}'
