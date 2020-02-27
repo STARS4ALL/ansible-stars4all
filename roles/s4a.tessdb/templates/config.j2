@@ -10,11 +10,6 @@
 
 # Global section
 
-# File where log is stored, if any
-# Leave blank if no logfile is desired
-# Not reloadable property
-log_file = {{ tessdb_config.log.path | default('/var/log/tessdb.log') }}
-
 # namespace log level (debug, info, warn, error, critical)
 # Reloadable property
 log_level = {{ tessdb_config.tessdb.log_level | default('info') }}

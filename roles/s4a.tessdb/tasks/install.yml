@@ -24,13 +24,20 @@
   - pyephem
   tags: [install]
 
-- name: install (as root) tessdb packages in a virtual environment
+- name: install (as root) tessdb-server in a virtual environment
   pip:
-    name               : '{{ item }}'
+    name               : tessdb-server
     virtualenv         : '{{ tessdb_venv_dir }}'
     virtualenv_command : '{{ tessdb_python3 }} -m venv'
     state              : latest
-  with_items:
-  - tessdb-server
-  - tessdb-cmdline
+  notify: restart tessdb service
   tags: [install]
+
+- name: install (as root) tessdb-cmdline in a virtual environment
+  pip:
+    name               : tessdb-cmdline
+    virtualenv         : '{{ tessdb_venv_dir }}'
+    virtualenv_command : '{{ tessdb_python3 }} -m venv'
+    state              : latest
+  tags: [install]
+
