@@ -73,14 +73,11 @@
 
 - name: patches tess utility to use a virtualenv
   template: >
-    dest=/usr/local/bin/{{ item }}
-    src={{ item }}.j2
+    dest=/usr/local/bin/tess
+    src=tess.j2
     owner=root
     group=root
     mode=0755
-  with_items:
-  - tess
-  - tess_event
   tags: [config]
 
 - name: install environment file for virtualenv
