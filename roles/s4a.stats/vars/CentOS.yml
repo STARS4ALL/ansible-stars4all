@@ -1,0 +1,7 @@
+---
+# vars file for roles/nto.tessdb
+stats_sqlite: sqlite 
+stats_sleep: /usr/bin/sleep
+stats_python3: /usr/bin/python3
+
+

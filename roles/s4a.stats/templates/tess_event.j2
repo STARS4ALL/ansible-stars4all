@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+# ----------------------------------------------------------------------
+# Copyright (c) 2019 Rafael Gonzalez.
+#
+# See the LICENSE file for details
+# ----------------------------------------------------------------------
+
+DEFAULT_DATABASE="/var/dbase/tessdb-stats.db"
+DEFAULT_FLAGS=""
+
+# Arguments from the command line & default values
+
+# Either the default or the rotated tess.db-* database
+dbase="${1:-$DEFAULT_DATABASE}"
+flags="${2:-$DEFAULT_FLAGS}"
+
+# get the name from the script name without extensions
+name=$(basename ${0%.sh})
+
+if  [[ ! -f $dbase || ! -r $dbase ]]; then
+        echo "Database file $dbase does not exists or is not readable."
+        echo "Exiting"
+        exit 1
+fi
+
+export VIRTUAL_ENV={{ tessdb_venv_dir }}
+echo "{{ tessdb_venv_dir }}/bin/python3 -m tess_event -d ${dbase} ${flags}"
+{{ tessdb_venv_dir }}/bin/python3 -m tess_event -d ${dbase} ${flags}
+

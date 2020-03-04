@@ -11,8 +11,15 @@ tessdb_venv_dir     : /home/rfg/stars4all
 
 # run time user
 tessdb_runtime_user: rfg
-
 tessdb_service_enabled : yes
-
 # Days of backup logfiles
 tessdb_log_rotate: 365
+
+# ----------------
+# Role: s4a.stats 
+# ----------------
+
+# run time user
+stats_runtime_user: '{{ tessdb_runtime_user }}'
+stats_dbase_dir:    '{{ tessdb_dbase_dir }}'
+stats_venv_dir :    '{{ tessdb_venv_dir }}'

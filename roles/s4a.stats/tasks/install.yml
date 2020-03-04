@@ -1,0 +1,11 @@
+---
+# tasks file for roles/nto.tessdb
+
+- name: install (as root) tessdb-stats in a virtual environment
+  pip:
+    name               : tessdb-stats
+    virtualenv         : '{{ stats_venv_dir }}'
+    virtualenv_command : '{{ stats_python3 }} -m venv'
+    state              : latest
+  tags: [install]
+

@@ -1,0 +1,49 @@
+---
+# tasks file for roles/nto.tessdb
+
+- name: create tessdb database directory if does not exists
+  file: >
+    path={{ stats_dbase_dir }}
+    state=directory
+    owner={{ stats_runtime_user }}
+    group={{ stats_runtime_user }}
+    mode=0755
+  tags: [config]
+
+- name: Creates the tessdb-stats.db database file
+  file:
+    path: '{{ stats_dbase_dir }}/tessdb-stats.db'
+    state: touch
+    owner: '{{ stats_runtime_user }}'
+    group: '{{ stats_runtime_user }}'
+    mode: '0644'
+  tags: [config]
+
+- name: Creates the tess_event logfile file
+  file:
+    path: /var/log/tess_event.log
+    state: touch
+    owner: '{{ stats_runtime_user }}'
+    group: '{{ stats_runtime_user }}'
+    mode: '0644'
+  tags: [config]
+
+- name: patches tess_event utility to use a virtualenv
+  template: >
+    dest=/usr/local/bin/tess_event
+    src=tess_event.j2
+    owner=root
+    group=root
+    mode=0755
+  tags: [config]
+
+- name: install tess_event cron job
+  cron: >
+    name="cron job for tess_event"
+    state=present
+    minute=05
+    hour=12
+    user={{ stats_runtime_user }} 
+    job="/usr/local/bin/tess_event /var/dbase/tessdb-stats.db --automatic >> /var/log/tess_event.log 2>&1"
+    cron_file=tess_event
+  tags: [config]

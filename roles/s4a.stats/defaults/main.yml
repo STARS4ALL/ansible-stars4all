@@ -1,0 +1,10 @@
+---
+# defaults file for roles/s4a.stats
+
+# run time user
+stats_runtime_user: pi
+
+stats_dbase_dir: /var/dbase
+stats_venv_dir : /home/pi/myvenv
+
+
