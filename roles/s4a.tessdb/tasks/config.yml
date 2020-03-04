@@ -101,14 +101,3 @@
     group: '{{ tessdb_runtime_user }}'
     mode: '0644'
   tags: [config]
-
-- name: install tess_event cron job
-  cron: >
-    name="cron job for tess_event"
-    state=present
-    minute=05
-    hour=12
-    user={{ tessdb_runtime_user }} 
-    job="/usr/local/bin/tess_event /var/dbase/tess.db --automatic >> /var/log/tess_event.log 2>&1"
-    cron_file=tess_event
-  tags: [config]
