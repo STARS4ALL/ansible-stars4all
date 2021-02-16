@@ -8,7 +8,7 @@ tessdb_config:
     auth_filter      : no
     close_when_pause : yes
   mqtt: 
-    tess_blacklist: ['stars14', 'test5','ema0','ema1','ema3','pruebas2','sqm-1738']
+    tess_blacklist: ['stars14', 'test5','ema0','ema1','ema3','pruebas2','sqm-1738','stars556']
     broker:        'tcp:{{ cred_tessdb_broker }}:{{ cred_tessdb_port }}'
     username:      '{{ cred_tessdb_username }}'
     password:      '{{ cred_tessdb_password }}'
