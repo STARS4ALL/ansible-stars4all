@@ -8,12 +8,14 @@
   with_items:
   - git
   - '{{ reports_sqlite }}'
+  - gcc
+  - python3-devel
   tags: [install]
 
 - name: install (as user) PyPi dependencies in a virtual environment
   become_user: '{{ reports_user }}'
   pip:
-    name               : '{{ item }}'
+    name               : [pyephem,tabulate,pytz,jinja2]
     virtualenv         : '{{ reports_venv_dir }}'
     virtualenv_command : '{{ reports_python3 }} -m venv'
     state              : latest

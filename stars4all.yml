@@ -23,9 +23,9 @@
   become: yes
 
   roles:
-
-  - role: tersmitten.timezone 
-    tags: [ common, timezone ] 
+  # A peticion de Sergio
+  # - role: tersmitten.timezone 
+  #   tags: [ common, timezone ] 
 
   - role: s4a.logrotate      
     tags: [ common, logrotate ] 
