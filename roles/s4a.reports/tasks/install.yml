@@ -10,16 +10,18 @@
   - '{{ reports_sqlite }}'
   - gcc
   - python3-devel
+  - python-pip
   tags: [install]
 
 - name: install (as user) PyPi dependencies in a virtual environment
   become_user: '{{ reports_user }}'
   pip:
-    name               : [pyephem,tabulate,pytz,jinja2]
+    name               : '{{item}}'
     virtualenv         : '{{ reports_venv_dir }}'
     virtualenv_command : '{{ reports_python3 }} -m venv'
     state              : latest
   with_items:
+  - setuptools
   - pyephem
   - tabulate
   - pytz
