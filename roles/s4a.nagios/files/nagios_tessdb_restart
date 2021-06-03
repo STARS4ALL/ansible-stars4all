@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo -n "restarting tessdb ..."
+systemctl restart tessdb.service
+echo "done!"

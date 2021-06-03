@@ -1,2 +1,11 @@
 ---
 # defaults file for s4a.nagios
+
+check_logfiles_state_dir:    '/opt/nagios/var/tmp'
+check_logfiles_protocol_dir: '/opt/nagios/var/tmp'
+nagios_exec_dir:             '/usr/local/nagios/libexec'
+
+nagios_config_dir:   '/etc/nagios/'
+nagios_config2_dir:  '/usr/local/nagios/etc'
+
+nrpe_config_dir:     '/etc/nrpe.d'

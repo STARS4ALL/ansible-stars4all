@@ -1,38 +1,9 @@
 ---
 # tasks file for s4a.nagios
 
-- name: Install system level needed packages
-  package: 
-    name : '{{ item }}' 
-    state: latest 
-  with_items:
-  - perl-Data-Dumper
-  - perl-Digest-MD5
-  tags: [install]
+- include_vars: '{{ ansible_distribution }}.yml'
 
+- include: install.yml
+- include: config.yml
+- include: service.yml
 
-- name: Copy check_logfiles source code
-  unarchive:
-    src: check_logfiles-4.0.1.tar.gz
-    dest:  '{{ tessdb_install_dir }}'
-    owner: '{{ tessdb_install_user }}'
-    group: '{{ tessdb_install_user }}'
-    mode: '0755'
-
-- name: configure check_logfiles Makefile
-  become:  yes
-  become_user: '{{ tessdb_install_user }}'
-  shell: './configure'
-  args:
-    chdir:   '{{ tessdb_install_dir }}/check_logfiles-4.0.1'
-    creates: '{{ tessdb_install_dir }}/check_logfiles-4.0.1/Makefile'
-  ignore_errors: yes
-
-- name: build check_logfiles
-  become:  yes
-  become_user: '{{ tessdb_install_user }}'
-  shell: 'make'
-  args:
-    chdir:   '{{ tessdb_install_dir }}/check_logfiles-4.0.1'
-    creates: '{{ tessdb_install_dir }}/check_logfiles-4.0.1/plugins-scripts/check_logfiles'
-  ignore_errors: yes

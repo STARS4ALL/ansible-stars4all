@@ -1,2 +1,8 @@
 ---
 # handlers file for s4a.nagios
+
+- name: restart nrpe service
+  service: 
+    name: nrpe 
+    state: restarted
+

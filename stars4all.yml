@@ -15,7 +15,7 @@
   - role: s4a.tessdb          
     tags: [ tessdb ]
 
-  - role: s4a.nagios          
+  - role: s4a.nagios
     tags: [ nagios ]
 
   - role: s4a.stats          

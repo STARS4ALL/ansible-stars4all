@@ -1,0 +1,8 @@
+---
+# tasks file for s4a.nagios
+- name: start nrpe service
+  service: 
+    name   : nrpe 
+    state  : started 
+    enabled: yes
+  tags: [service]

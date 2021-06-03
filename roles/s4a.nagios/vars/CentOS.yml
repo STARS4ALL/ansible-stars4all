@@ -1,0 +1,9 @@
+---
+
+nagios_plugin_pkgs:
+- nrpe
+- nagios-plugins
+
+check_logfile_prerrequiste_pkgs:
+- perl-Data-Dumper
+- perl-Digest-MD5
