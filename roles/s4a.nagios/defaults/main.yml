@@ -4,8 +4,8 @@
 check_logfiles_install_dir: /home/rfg
 check_logfiles_install_user: rfg
 
-check_logfiles_state_dir:    '/opt/nagios/var/tmp'
-check_logfiles_protocol_dir: '/opt/nagios/var/tmp'
+check_logfiles_state_dir:    '/usr/local/nagios/var/tmp'
+check_logfiles_protocol_dir: '/usr/local/nagios/var/tmp'
 nagios_exec_dir:             '/usr/local/nagios/libexec'
 
 nagios_config_dir:   '/etc/nagios/'

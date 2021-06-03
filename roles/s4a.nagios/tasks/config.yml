@@ -45,7 +45,7 @@
 - name: copy check_logfiles configuration file for tessdb
   template: 
     src:  check_logfiles.cfg.j2
-    dest: '{{ nagios_config2_dir }}/'
+    dest: '{{ nagios_config2_dir }}/check_logfiles.cfg'
     owner: root
     group: root
     mode: '0644'
