@@ -17,7 +17,7 @@
     owner={{ tessdb_runtime_user }}
     group={{ tessdb_runtime_user }}
     mode=0644
-  notify: restart tessdb service
+  notify: reload tessdb service
   tags: [config]
 
 - name: create tessdb database directory if does not exists
