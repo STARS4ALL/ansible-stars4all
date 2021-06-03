@@ -18,32 +18,32 @@
 - name: Copy check_logfiles source code
   unarchive:
     src: check_logfiles-4.0.1.tar.gz
-    dest:  '{{ tessdb_install_dir }}'
-    owner: '{{ tessdb_install_user }}'
-    group: '{{ tessdb_install_user }}'
+    dest:  '{{ check_logfiles_install_dir }}'
+    owner: '{{ check_logfiles_install_user }}'
+    group: '{{ check_logfiles_install_user }}'
     mode: '0755'
 
 - name: configure check_logfiles Makefile
   become:  yes
-  become_user: '{{ tessdb_install_user }}'
+  become_user: '{{ check_logfiles_install_user }}'
   shell: './configure'
   args:
-    chdir:   '{{ tessdb_install_dir }}/check_logfiles-4.0.1'
-    creates: '{{ tessdb_install_dir }}/check_logfiles-4.0.1/Makefile'
+    chdir:   '{{ check_logfiles_install_dir }}/check_logfiles-4.0.1'
+    creates: '{{ check_logfiles_install_dir }}/check_logfiles-4.0.1/Makefile'
   ignore_errors: yes
 
 - name: build check_logfiles
   become:  yes
-  become_user: '{{ tessdb_install_user }}'
+  become_user: '{{ check_logfiles_install_user }}'
   shell: 'make'
   args:
-    chdir:   '{{ tessdb_install_dir }}/check_logfiles-4.0.1'
-    creates: '{{ tessdb_install_dir }}/check_logfiles-4.0.1/plugins-scripts/check_logfiles'
+    chdir:   '{{ check_logfiles_install_dir }}/check_logfiles-4.0.1'
+    creates: '{{ check_logfiles_install_dir }}/check_logfiles-4.0.1/plugins-scripts/check_logfiles'
   ignore_errors: yes
 
 - name: install check_logfiles
   shell: 'make install'
   args:
-    chdir:   '{{ tessdb_install_dir }}/check_logfiles-4.0.1'
-    creates: '/usr/local/nagios/libexec/check_logfiles'
+    chdir:   '{{ check_logfiles_install_dir }}/check_logfiles-4.0.1'
+    creates: '{{ nagios_exec_dir }}/check_logfiles'
   ignore_errors: yes
