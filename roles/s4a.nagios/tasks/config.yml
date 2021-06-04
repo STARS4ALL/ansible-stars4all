@@ -1,14 +1,14 @@
 ---
 # tasks file for s4a.nagios
 
-- name: Copy NRPE global configuration file from template
-  template: 
-    src:  nrpe.cfg.j2
-    dest: '{{ nagios_config_dir }}'
-    owner: root
-    group: root
-    mode: '0644'
-  notify: restart nrpe service
+# - name: Copy NRPE global configuration file from template
+#   template: 
+#     src:  nrpe.cfg.j2
+#     dest: '{{ nagios_config_dir }}'
+#     owner: root
+#     group: root
+#     mode: '0644'
+#   notify: restart nrpe service
 
 - name: copy NRPE configuration file for check_logfiles
   template: 
@@ -22,24 +22,32 @@
   file:
     path: '{{ check_logfiles_state_dir }}'
     state: directory
+    owner: nrpe
+    group: nrpe
     mode: '0755'
 
 - name: create a protocol directory for check_logfiles
   file:
     path: '{{ check_logfiles_protocol_dir }}'
     state: directory
+    owner: nrpe
+    group: nrpe
     mode: '0755'
 
 - name: create an additional nagios executables directory
   file:
     path: '{{ nagios_exec_dir }}'
     state: directory
+    owner: root
+    group: root
     mode: '0755'
 
 - name: create an additional nagios config directory
   file:
     path: '{{ nagios_config2_dir }}'
     state: directory
+    owner: root
+    group: root
     mode: '0755'
 
 - name: copy check_logfiles configuration file for tessdb
@@ -54,8 +62,8 @@
   copy: 
     src:  nagios_tessdb_restart
     dest: '{{ nagios_exec_dir }}'
-    owner: root
-    group: root
+    owner: nrpe
+    group: nrpe
     mode: '0755'
 
 
