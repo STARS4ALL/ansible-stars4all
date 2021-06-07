@@ -1,9 +1,9 @@
 ## {{ ansible_managed }}
 
-$seekfilesdir = '{{ check_logfiles_state_dir  }}';
+$seekfilesdir = '{{ check_logfiles_state_dir }}';
 # where the state information will be saved.
 
-$protocolsdir = {{ check_logfiles_protocol_dir  }}';
+$protocolsdir = '{{ check_logfiles_protocol_dir }}';
 # where protocols with found patterns will be stored.
 
 $scriptpath = '{{ nagios_exec_dir }}';
@@ -15,7 +15,7 @@ $scriptpath = '{{ nagios_exec_dir }}';
     logfile => '/var/log/tessdb.log',
     rotation => 'tessdb\.log-\d{8}',
     criticalpatterns => ['DB Stats Readings \[Total, OK, NOK\] = \(0, 0, 0\)'],
-    okpatterns => ['starting \d{1,2}\.\d{1,2}\.\d{1,2} on Twisted \d{1,2}\.\d{1,2}\.\d{1,2}, Python \d\.\d{1,2}'] 
+    okpatterns => ['starting \d{1,2}\.\d{1,2}\.\d{1,2} on Twisted \d{1,2}\.\d{1,2}\.\d{1,2}, Python \d\.\d{1,2}'],
     options => 'script,protocol,nocount,sticky',
     script => 'nagios_tessdb_restart',
     scriptdelay => 60
