@@ -6,4 +6,4 @@
 # See the LICENSE file for details
 # ----------------------------------------------------------------------
 export VIRTUAL_ENV={{ reports_venv_dir }}
-{{ reports_venv_dir }}/bin/python3 -m tess_ida "$@"
+/usr/bin/nice -n 19 {{ reports_venv_dir }}/bin/python3 -m tess_ida "$@"

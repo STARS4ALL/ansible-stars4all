@@ -15,11 +15,11 @@ DST_DIR="${4:-$DEFAULT_DST_DIR}"
 DATE="${5:-$DEFAULT_DATE}"
 
 #getting remote backup copy
-echo "/usr/bin/rsync -zavh ${SRC_USER}@${SRC_HOST}:${SRC_DIR}/tess.db-${DATE} ${DST_DIR}/tess.rsync.db"
-/usr/bin/rsync -zavh ${SRC_USER}@${SRC_HOST}:${SRC_DIR}/tess.db-${DATE} ${DST_DIR}/tess.rsync.db
+echo "/usr/bin/nice -n 19 /usr/bin/rsync -zavh ${SRC_USER}@${SRC_HOST}:${SRC_DIR}/tess.db-${DATE} ${DST_DIR}/tess.rsync.db"
+/usr/bin/nice -n 19 /usr/bin/rsync -zavh ${SRC_USER}@${SRC_HOST}:${SRC_DIR}/tess.db-${DATE} ${DST_DIR}/tess.rsync.db
 
-echo "cp ${DST_DIR}/tess.rsync.db ${DST_DIR}/tess.db" 
-cp ${DST_DIR}/tess.rsync.db ${DST_DIR}/tess.db
+echo "/usr/bin/nice -n 19 cp ${DST_DIR}/tess.rsync.db ${DST_DIR}/tess.db" 
+/usr/bin/nice -n 19 cp ${DST_DIR}/tess.rsync.db ${DST_DIR}/tess.db
 
 #indexing this copy
 echo "Indexing a new copy"
