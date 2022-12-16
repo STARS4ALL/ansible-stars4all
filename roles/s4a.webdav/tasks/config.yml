@@ -1,0 +1,60 @@
+---
+# tasks file for roles/s4a.webdav
+
+# ---------------------
+# WEBDAV CONFIGURATION
+# ---------------------
+
+- name: adding '{{ webdav_runtime_user }}' to group davfs2
+  user:
+    name: '{{ webdav_runtime_user }}'
+    groups: davfs2
+    append: yes
+
+- name: create some webdav specific directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ webdav_runtime_user }}'
+    group: '{{ webdav_runtime_user }}'
+    mode: '0755'
+  with_items:
+    - '{{ webdav_mnt_dir }}'
+    - '{{ webdav_cfg_dir }}'
+  
+
+- name: Copy secrets template to ~/.davfs2
+  template:
+    src       : secrets.j2
+    dest      : '{{ webdav_cfg_dir }}/secrets'
+    owner     : '{{ webdav_runtime_user }}'
+    group     : '{{ webdav_runtime_user }}'
+    mode      : '0600'
+  
+
+- name: Customized davfs2.conf config file to /etc/davfs2
+  template:
+    src       : davfs2.j2
+    dest      : /etc/davfs2/davfs2.conf
+    owner     : root
+    group     : root
+    mode      : '0644'
+  
+
+- name: Copy X509 public server certificate
+  copy:
+    src       : '{{ webdav_host_fqdn }}.pem'
+    dest      : /etc/davfs2/certs/{{ webdav_host_fqdn }}.pem
+    owner     : root
+    group     : root
+    mode      : '0644'
+  
+
+- name: Generate an entry in fstab
+  mount:
+    path  : '{{ webdav_mnt_dir }}'
+    src   : https://{{ webdav_host_fqdn }}/nextcloud/remote.php/dav/files/{{ webdav_username }}/
+    fstype: davfs
+    opts  : user,rw,auto
+    state : present
+  

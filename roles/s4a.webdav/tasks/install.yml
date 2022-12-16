@@ -1,0 +1,9 @@
+---
+# tasks file for roles/s4a.webdav
+
+- name: Install system level needed packages
+  package: 
+    name : '{{ item }}' 
+    state: latest 
+  with_items:
+  - '{{ webdav_pkg }}'

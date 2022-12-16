@@ -1,0 +1,12 @@
+---
+
+# Hosts where to mount a webdav file systems
+- hosts: reflex
+  become: yes
+  roles:
+  - role: s4a.webdav
+    webdav_runtime_user: '<UNIX username on the client host>'
+    webdav_username:    '<nextcloud username goes here>'
+    webdav_password:    '<nextcloud username goes here>'
+    webdav_host_fqdn:   '<nextcloud FQDN goes here>'
+    tags: [ webdav ]
