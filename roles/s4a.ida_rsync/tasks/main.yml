@@ -1,0 +1,31 @@
+---
+# tasks file for roles/s4a.ida_rsync
+
+- name: ensure reports dest dir is created
+  file:
+    dest: '{{ ida_rsync_dst_dir }}'
+    state: directory
+    owner: '{{ ida_rsync_runtime_user }}'
+    group: '{{ ida_rsync_runtime_user }}'
+    mode: '0755'
+  tags: [config]
+
+- name: copy IDA rsync script
+  copy: 
+    dest: /usr/local/bin/ida_rsync
+    src: ida_rsync
+    owner: root
+    group: root
+    mode: '0755'
+  tags: [config]
+
+- name: install IDA rsync script cron job
+  cron: 
+    name: "cron job for IDA publication in public file shares"
+    state: present
+    minute: 13
+    hour: 14
+    user: rfg
+    job: "/usr/local/bin/ida_rsync {{ ida_rsync_src_dir }} {{ ida_rsync_dst_dir }}"
+    cron_file: ida_rsync
+  tags: [config]

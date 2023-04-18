@@ -51,9 +51,9 @@
   
 
 - name: Generate an entry in fstab
-  mount:
+  mount:   
     path  : '{{ webdav_mnt_dir }}'
-    src   : https://{{ webdav_host_fqdn }}/nextcloud/remote.php/dav/files/{{ webdav_username }}/
+    src   : '{{ webdav_url }}'
     fstype: davfs
     opts  : user,rw,auto
     state : present

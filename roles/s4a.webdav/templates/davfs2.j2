@@ -47,6 +47,7 @@ use_locks        {{ webdav_config.use_locks | default(1) }}
 # n_cookies       0
 # precheck        1
 # ignore_dav_header 0
+ignore_dav_header {{ webdav_config.ignore_dav_header | default(0) }}
 # use_compression 0
 # min_propset     0
 # follow_redirect 0

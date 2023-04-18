@@ -1,0 +1,16 @@
+DEFAULT_SRC_DIR="/home/rfg/dbase/reports/IDA"
+DEFAULT_DST_DIR="/home/rfg/webdav"
+FLAGS="-av --delete --size-only --no-whole-file --inplace"
+
+# Some commands
+NICE=$(which nice)
+RSYNC=$(which rsync)
+
+# Arguments from the command line & default values
+
+SRC_DIR="${1:-$DEFAULT_SRC_DIR}"
+DST_DIR="${2:-$DEFAULT_DST_DIR}"
+
+#getting remote backup copy
+echo "${NICE} -n 19 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}"
+${NICE} -n 19 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}
