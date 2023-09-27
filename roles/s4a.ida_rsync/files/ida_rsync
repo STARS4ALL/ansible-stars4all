@@ -1,0 +1,25 @@
+DEFAULT_SRC_DIR="/home/rfg/dbase/reports/IDA"
+DEFAULT_DST_DIR="/home/rfg/webdav"
+FLAGS="-av --delete --size-only --no-whole-file"
+
+
+# Comments
+# --size-only because most webdav implementation do not accept setting modification time
+# --no-whole-file to tell rsync its handling a remote filesystem
+# --inplace having rsync replacing files directly, instead of uploading an then replacing
+#    This later option is only useful for transferring large files with block-based changes or appended data, 
+#    and also on systems that are disk bound, not network bound
+
+
+# Some commands
+NICE=$(which nice)
+RSYNC=$(which rsync)
+
+# Arguments from the command line & default values
+
+SRC_DIR="${1:-$DEFAULT_SRC_DIR}"
+DST_DIR="${2:-$DEFAULT_DST_DIR}"
+
+#getting remote backup copy
+echo "${NICE} -n 19 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}"
+${NICE} -n 19 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}

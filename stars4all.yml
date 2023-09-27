@@ -34,5 +34,7 @@
     tags: [ common, logrotate ] 
 
   - role: s4a.reports    
-    reports_tess_ida_logrotate_days: 365   
+    reports_tess_ida_logrotate_days: 365 
+    reports_dbase_dir: /home/rfg/dbase  
+    reports_remote_backup: yes
     tags: [ reports ]

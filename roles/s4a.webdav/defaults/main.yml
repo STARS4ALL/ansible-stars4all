@@ -1,0 +1,12 @@
+---
+# defaults file for roles/act.webdav
+
+webdav_runtime_user : ''
+webdav_mnt_dir      : /home/{{ webdav_runtime_user }}/webdav
+webdav_cfg_dir      : /home/{{ webdav_runtime_user }}/.davfs2
+
+# WebDAV client credentials
+webdav_username: ''
+webdav_password: ''
+
+webdav_url: https://{{ webdav_host_fqdn }}/nextcloud/remote.php/dav/files/{{ webdav_username }}/

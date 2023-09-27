@@ -1,0 +1,13 @@
+---
+# tasks file for roles/s4a.webdav
+
+- include_vars: '{{ ansible_distribution }}.yml'
+  tags: [install, config]
+
+- include: install.yml
+  tags: [install]
+
+- include: config.yml
+  tags: [config]
+#- include: service.yml
+ 
