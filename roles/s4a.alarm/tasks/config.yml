@@ -1,0 +1,31 @@
+---
+# tasks file for roles/s4a.alarm
+
+- name: PATH enviromental variable for tessdb-alarm in crontab
+  ansible.builtin.cron:
+    name: PATH
+    env: yes
+    job: '{{ alarm_install_dir }}/.venv/bin'
+
+- name: VIRTUAL_ENV enviromental variable
+  ansible.builtin.cron:
+    name: VIRTUAL_ENV
+    env: yes
+    job: '{{ alarm_install_dir }}/.venv'
+    insertafter: PATH
+
+- name: copy .env file
+  template: 
+    src:  .env.j2
+    dest: '{{ alarm_install_dir }}/.env'
+    mode: '0400'
+
+- name: install azotea-client cron job as a crontab entry
+  cron:
+    name: cron job for tessdb-alarm
+    minute: '*'
+    hour:   '*'
+    user: '{{ alarm_runtime_user }}'
+    job:  "cd {{ alarm_install_dir }}; dbalarm --log-file alarm.log detect -f /var/log/tessdb.log"
+    state: 'present' 
+  tags: [cron]

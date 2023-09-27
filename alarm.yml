@@ -1,0 +1,8 @@
+---
+
+# Hosts where MQTT consumers reside
+- hosts: consumers
+
+  roles:
+  - role: s4a.alarm      
+    tags: [ tessdb ] 

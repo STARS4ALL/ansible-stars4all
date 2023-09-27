@@ -1,0 +1,6 @@
+---
+# tasks file for roles/s4a.alarm
+- include_vars: '{{ ansible_distribution }}.yml'
+
+- import_tasks: install.yml
+- import_tasks: config.yml

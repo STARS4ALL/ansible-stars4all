@@ -1,0 +1,6 @@
+---
+# defaults file for roles/s4a.alarm
+
+alarm_install_user: rfg
+alarm_runtime_user: rfg
+alarm_install_dir: /home/rfg/repos/tessdb-alarm

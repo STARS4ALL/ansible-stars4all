@@ -1,0 +1,15 @@
+---
+# tasks file for roles/s4a.alarm
+- name: (optional) Git checkout
+  ansible.builtin.git:
+    repo: 'https://github.com/STARS4ALL/tessdb-alarm.git'
+    dest: '{{ alarm_install_dir }}'
+    version: main
+
+- name: install tessdb-alarm in a virtual environment
+  pip:
+    name               : git+http://github.com/STARS4ALL/tessdb-alarm.git@main
+    virtualenv         : '{{ alarm_install_dir }}/.venv'
+    virtualenv_command : '{{ alarm_python3 }} -m venv'
+    state              : latest
+  tags: [install]
