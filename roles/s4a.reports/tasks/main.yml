@@ -1,7 +1,6 @@
 ---
 - include_vars: '{{ ansible_distribution }}.yml'
 
-- include: install.yml
-- include: config.yml
-- include: backup.yml
-  when: reports_remote_backup
+- include_tasks: install.yml
+- include_tasks: config.yml
+- include_tasks: backup.yml
