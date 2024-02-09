@@ -10,20 +10,6 @@
   - '{{ tessdb_sqlite }}'
   tags: [install]
 
-
-- name: install (as user) dependencies packages in a virtual environment
-  become_user: '{{ tessdb_install_user }}'
-  pip:
-    name               : '{{ item }}'
-    virtualenv         : '{{ tessdb_venv_dir }}'
-    virtualenv_command : '{{ tessdb_python3 }} -m venv'
-    state              : latest
-  with_items:
-  - twisted
-  - twisted-mqtt
-  - pyephem
-  tags: [install]
-
 - name: install (as root) tessdb-server in a virtual environment
   pip:
     name               : tessdb-server
@@ -32,12 +18,3 @@
     state              : latest
   notify: restart tessdb service
   tags: [install]
-
-- name: install (as root) tessdb-cmdline in a virtual environment
-  pip:
-    name               : tessdb-cmdline
-    virtualenv         : '{{ tessdb_venv_dir }}'
-    virtualenv_command : '{{ tessdb_python3 }} -m venv'
-    state              : latest
-  tags: [install]
-

@@ -18,6 +18,7 @@ log_level = {{ tessdb_config.tessdb.log_level | default('info') }}
 # as opossed to the general log
 # comma separated list of TESS instrument names.
 # Leave blank if not used
+# Reloadable property
 log_selected = {{ tessdb_config.tessdb.tess_dbglist | default([]) | join(',') }}
 
 #------------------------------------------------------------------------#
@@ -35,6 +36,9 @@ broker = {{ tessdb_config.mqtt.broker | default('tcp:test.mosquitto.org:1883') }
 username = {{ tessdb_config.mqtt.username | default('') }}
 password = {{ tessdb_config.mqtt.password | default('') }}
 
+# Client ID to use when connecting to MQTT broker
+client_id = {{ tessdb_config.mqtt.client_id | default('tessdb-server') }}
+
 # Keepalive connection (in seconds)
 # Not reloadable property
 keepalive = {{ tessdb_config.mqtt.keepalive | default(60) }}
@@ -47,10 +51,6 @@ tess_topic_register = {{ tessdb_config.mqtt.tess_topic_register | default('STARS
 # MQTT topics to subscribe for readings
 # Reloadable property
 tess_topics = {{ tessdb_config.mqtt.tess_topics | default(['STARS4ALL/+/reading']) | join(',') }} 
-
-# MQTT payload validation
-# Reloadable property
-validation = {{ tessdb_config.mqtt.validation | default(True) | ternary('yes','no') }}
 
 # Instrument White List.
 # Discards instruments readings and registrations 
@@ -108,10 +108,6 @@ log_level = {{ tessdb_config.filter.log_level | default('info') }}
 # Database configuration section
 [dbase]
 
-# Database type. Currently it only supports sqlite3
-# Reloadable property, but see below
-type = {{ tessdb_config.dbase.type | default('sqlite3') }}
-
 # For SQLite, this is the full path name to the database file
 # Not reloadable property
 connection_string = {{ tessdb_config.dbase.connection_string | default(tessdb_dbase_dir + '/tess.db') }}
@@ -120,22 +116,6 @@ connection_string = {{ tessdb_config.dbase.connection_string | default(tessdb_db
 # This is useful for special situations (i.e. moving an SQLite3 database file)
 # Reloadable property
 close_when_pause = {{ tessdb_config.dbase.close_when_pause | default(False) | ternary('yes','no') }}
-
-# Directory where JSON data is located
-# Not reloadable property
-json_dir = {{ tessdb_config.dbase.json_dir | default('/etc/tessdb') }}
-
-# Limit years (included) for the Date dimension (from Jan 1 to Dec 12)
-# Not reloadable property.
-# If changed to a lower time span it may be necessary to delete excess rows in the database
-year_start = {{ tessdb_config.dbase.year_start | default(2016) }}
-year_end   = {{ tessdb_config.dbase.year_end   | default(2036) }}
-
-# Date format for the Date dimension (date field)
-# Examples: (%Y/%m/%d => 2015/12/31) (%d/%m/%Y => 31/12/2015)
-# Not reloadable property
-# If changed to a different format, rows with the old format are kept unchanged
-date_fmt = {{ tessdb_config.dbase.date_fmt | default('%d/%m/%Y') }}
 
 # Day resolution (in seconds)
 # Must be one of 60, 30, 20, 15, 12, 10, 6, 5, 4, 3, 2, 1

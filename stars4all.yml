@@ -6,8 +6,8 @@
 
   roles:
 
-  - role: tersmitten.timezone 
-    tags: [ common, timezone ] 
+  # - role: tersmitten.timezone 
+  #   tags: [ common, timezone ] 
 
   - role: s4a.logrotate      
     tags: [ common, logrotate ] 
@@ -15,11 +15,11 @@
   - role: s4a.tessdb          
     tags: [ tessdb ]
 
-  - role: s4a.nagios
-    tags: [ nagios ]
+  # - role: s4a.nagios
+  #   tags: [ nagios ]
 
-  - role: s4a.stats          
-    tags: [ stats ]
+  # - role: s4a.stats          
+  #   tags: [ stats ]
 
 # Hosts where Reports builder are installed
 - hosts: reports
