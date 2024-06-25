@@ -24,3 +24,4 @@ DST_DIR="${2:-$DEFAULT_DST_DIR}"
 #getting remote backup copy
 echo "${NICE} -n 19 ${IONICE} -c3 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}"
 ${NICE} -n 19 ${IONICE} -c3 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}
+exit $?

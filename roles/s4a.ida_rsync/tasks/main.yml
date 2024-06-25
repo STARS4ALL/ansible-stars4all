@@ -12,20 +12,37 @@
 
 - name: copy IDA rsync script
   copy: 
-    dest: /usr/local/bin/ida_rsync
-    src: ida_rsync
+    dest: '{{ item.dest }}'
+    src:  '{{ item.src }}'
     owner: root
     group: root
     mode: '0755'
+  loop:
+    - src: ida_rsync
+      dest: /usr/local/bin/ida_rsync
+    - src: ida_rclone
+      dest: /usr/local/bin/ida_rclone
   tags: [config]
 
 - name: install IDA rsync script cron job
   cron: 
     name: "cron job for IDA publication in public file shares by WebDAV"
-    state: present
+    state: absent
     minute: '13'
     hour: '14'
     user: rfg
     job: "/usr/local/bin/ida_rsync {{ ida_rsync_src_dir }} {{ ida_rsync_dst_dir }}"
     cron_file: ida_rsync
   tags: [config]
+
+- name: install IDA rclone script cron job
+  cron: 
+    name: "rclone cron job for IDA publication in public file shares by WebDAV"
+    state: present
+    minute: '13'
+    hour: '14'
+    user: rfg
+    job: "/usr/local/bin/ida_rclone"
+    cron_file: ida_rsync
+  tags: [config]
+
