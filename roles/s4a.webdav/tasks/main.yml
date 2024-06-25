@@ -4,10 +4,9 @@
 - include_vars: '{{ ansible_distribution }}.yml'
   tags: [install, config]
 
-- include: install.yml
+- import_tasks: install.yml
   tags: [install]
 
-- include: config.yml
+- import_tasks: config.yml
   tags: [config]
-#- include: service.yml
  

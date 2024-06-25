@@ -13,6 +13,7 @@ FLAGS="-av --delete --size-only --no-whole-file"
 
 # Some commands
 NICE=$(which nice)
+IONICE=$(which ionice)
 RSYNC=$(which rsync)
 
 # Arguments from the command line & default values
@@ -21,5 +22,5 @@ SRC_DIR="${1:-$DEFAULT_SRC_DIR}"
 DST_DIR="${2:-$DEFAULT_DST_DIR}"
 
 #getting remote backup copy
-echo "${NICE} -n 19 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}"
-${NICE} -n 19 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}
+echo "${NICE} -n 19 ${IONICE} -c3 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}"
+${NICE} -n 19 ${IONICE} -c3 ${RSYNC} ${FLAGS} ${SRC_DIR} ${DST_DIR}
