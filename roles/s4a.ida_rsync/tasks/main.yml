@@ -21,10 +21,10 @@
 
 - name: install IDA rsync script cron job
   cron: 
-    name: "cron job for IDA publication in public file shares"
+    name: "cron job for IDA publication in public file shares by WebDAV"
     state: present
-    minute: 13
-    hour: 14
+    minute: '13'
+    hour: '14'
     user: rfg
     job: "/usr/local/bin/ida_rsync {{ ida_rsync_src_dir }} {{ ida_rsync_dst_dir }}"
     cron_file: ida_rsync
