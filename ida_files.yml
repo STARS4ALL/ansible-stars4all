@@ -4,13 +4,14 @@
 - hosts: reflex
   become: yes
   roles:
-  - role: s4a.webdav
-    webdav_runtime_user: '{{ cred_webdav_runtime_user }}'
-    webdav_username:    '{{ cred_webdav_username }}'
-    webdav_password:    '{{ cred_webdav_password }}'
-    webdav_host_fqdn:   '{{ cred_webdav_host_fqdn }}'
-    webdav_url:         'https://{{ webdav_host_fqdn }}/remote.php/dav/files/{{ webdav_username }}/'
-    tags: [ webdav ]
+  # With rclone, we don't need to mount a WebDAV Filesystem
+  # - role: s4a.webdav
+  #   webdav_runtime_user: '{{ cred_webdav_runtime_user }}'
+  #   webdav_username:    '{{ cred_webdav_username }}'
+  #   webdav_password:    '{{ cred_webdav_password }}'
+  #   webdav_host_fqdn:   '{{ cred_webdav_host_fqdn }}'
+  #   webdav_url:         'https://{{ webdav_host_fqdn }}/remote.php/dav/files/{{ webdav_username }}/'
+  #   tags: [ webdav ]
 
   - role: s4a.ida_rsync
     tags: [ ida ]
