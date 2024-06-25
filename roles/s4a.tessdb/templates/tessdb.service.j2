@@ -9,7 +9,7 @@ Type=simple
 # We use root to write to /var/log
 User=root
 KillMode=process
-ExecStart={{ tessdb_venv_dir }}/bin/python3 -m tessdb --config /etc/tessdb/config --log-file /var/log/tessdb.log
+ExecStart={{ tessdb_venv_dir }}/bin/tessdb --config /etc/tessdb/config --log-file /var/log/tessdb.log
 ExecReload=/bin/kill -s HUP -- $MAINPID
 EnvironmentFile=/etc/tessdb/tessdb.env
 #WorkingDirectory={{ tessdb_install_dir }}

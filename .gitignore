@@ -7,3 +7,6 @@ temporary.yml
 *.retry
 *~
 my*
+.venv
+.env
+

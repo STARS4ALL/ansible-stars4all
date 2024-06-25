@@ -2,17 +2,26 @@
 # tasks file for roles/nto.reports
 
 - name: copy remote backup script
-  template: >
-    dest=/usr/local/bin/tessdb_remote_backup
-    src=tessdb_remote_backup.j2
-    owner=root
-    group=root
-    mode=0755
+  template:
+    dest: /usr/local/bin/tessdb_remote_backup
+    src: tessdb_remote_backup.j2
+    owner: root
+    group: root
+    mode: '0755'
   tags: [backup]
+  when: reports_remote_backup
+
+- name: delete remote backup script
+  file:
+    dest: /usr/local/bin/tessdb_remote_backup
+    state: absent
+  tags: [backup]
+  when: not reports_remote_backup
 
 - name: install tess daily remote backup cron job
   cron: 
-    name     : "cron job for tess remote backup" 
+    name     : "cron job for tess remote backup"
+    state    : "{{ reports_remote_backup | ternary('present','absent') }}"
     minute   : '{{ reports_src_min }}'
     hour     : '{{ reports_src_hour }}'
     user     : '{{ reports_user }}' 

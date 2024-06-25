@@ -56,7 +56,7 @@
     mode=0644
   tags: [config]
 
-- name: Patches tessdb.service to include a virtualenv
+- name: Install a tessdb.service
   template: >
     dest=/lib/systemd/system/tessdb.service
     src=tessdb.service.j2
@@ -64,20 +64,6 @@
     group={{ tessdb_runtime_user }}
     mode=0644
   register: tessdb_systemd_changed
-  tags: [config]
-
-- name: systemd daemon reload  
-  command: systemctl daemon-reload
-  when: tessdb_systemd_changed is changed
-  tags: [config]
-
-- name: patches tess utility to use a virtualenv
-  template: >
-    dest=/usr/local/bin/tess
-    src=tess.j2
-    owner=root
-    group=root
-    mode=0755
   tags: [config]
 
 - name: install environment file for virtualenv
@@ -90,11 +76,8 @@
   notify: restart tessdb service
   tags: [config]
 
-- name: Touch the tess.db database file
-  file:
-    path: '{{ tessdb_dbase_dir }}/tess.db'
-    state: touch
-    owner: '{{ tessdb_runtime_user }}'
-    group: '{{ tessdb_runtime_user }}'
-    mode: '0644'
+- name: systemd daemon reload  
+  command: systemctl daemon-reload
+  when: tessdb_systemd_changed is changed
   tags: [config]
+
