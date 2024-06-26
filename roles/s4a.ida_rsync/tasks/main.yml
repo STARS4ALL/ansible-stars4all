@@ -10,7 +10,7 @@
     mode: '0755'
   tags: [config]
 
-- name: copy IDA rsync script
+- name: copy WebDAV IDA rsync script
   copy: 
     dest: '{{ item.dest }}'
     src:  '{{ item.src }}'
@@ -20,8 +20,8 @@
   loop:
     - src: ida_rsync
       dest: /usr/local/bin/ida_rsync
-    - src: ida_rclone
-      dest: /usr/local/bin/ida_rclone
+    - src: webdav_ida_rclone
+      dest: /usr/local/bin/webdav_ida_rclone
   tags: [config]
 
 - name: install IDA rclone script cron job
@@ -31,7 +31,7 @@
     minute: '13'
     hour: '14'
     user: rfg
-    job: "/usr/local/bin/ida_rclone"
-    cron_file: ida_rsync
+    job: "/usr/local/bin/webdav_ida_rclone"
+    cron_file: webdav_ida_rsync
   tags: [config]
 
