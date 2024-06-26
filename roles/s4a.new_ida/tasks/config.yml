@@ -66,7 +66,7 @@
       state: absent
       day: '*'
       hour: '13'
-      minute: '45'
+      minute: '00'
       job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} latest >>/var/log/tess_ida.log 2>&1'
 
     - name: "cron job for tess_ida_monthly"
@@ -82,5 +82,5 @@
       state: present
       day: '*'
       hour: '14'
-      minute: '13'
+      minute: '15'
       job: '{{ new_ida_bin_dir }}/webdav_ida_rclone {{ new_ida_reports_dir }} {{ new_ida_cloud_dir }}  {{ new_ida_cloud_tag }}'
