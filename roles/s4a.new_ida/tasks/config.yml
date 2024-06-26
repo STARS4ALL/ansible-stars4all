@@ -21,14 +21,24 @@
       dest: '{{ new_ida_bin_dir }}/tessdb_remote_backup'
     - src: tessdb_index
       dest: '{{ new_ida_bin_dir }}/tessdb_index'
-    - src: tess_ida
-      dest: '{{ new_ida_bin_dir }}/tess_ida'
     - src: tess_ida_bulk_dump
       dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump'
     - src: tess_ida_bulk_dump_all
       dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_all'
-    - src: tess_ida
+    - src: webdav_ida_rclone
       dest: '{{ new_ida_bin_dir }}/webdav_ida_rclone'  
+  tags: [config]
+
+- name: copy various templated scripts for use in cron jobs
+  template: 
+    dest: '{{ item.dest }}'
+    src:  '{{ item.src }}'
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - src: tess_ida.j2
+      dest: '{{ new_ida_bin_dir }}/tess_ida' 
   tags: [config]
 
 - name: install various cron jobs

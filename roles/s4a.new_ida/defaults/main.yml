@@ -11,3 +11,5 @@ new_ida_cloud_dir: bar
 new_ida_remote_user: '{{ new_ida_runtime_user }}'
 new_ida_remote_host: localhost
 new_ida_remote_dir: foo
+
+new_ida_virtual_env: /tmp
