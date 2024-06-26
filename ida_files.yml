@@ -22,12 +22,12 @@
 
   - role: s4a.new_ida
     new_ida_uninstall: no
-    new_ida_runtime_user: rfg
-    new_ida_base_dir: /home/rfg
-    new_ida_virtual_env: /home/rfg/stars4all
-    new_ida_remote_user: rfg
-    new_ida_remote_host: calyx.hst.ucm.es
-    new_ida_remote_dir: /var/dbase
+    new_ida_runtime_user: '{{ cred_ida_runtime_user }}'
+    new_ida_base_dir: /home/{{ cred_ida_runtime_user }}
+    new_ida_virtual_env: /home/{{ cred_ida_runtime_user }}/stars4all
+    new_ida_remote_user: '{{ cred_ida_runtime_user }}'
+    new_ida_remote_host: '{{ cred_ida_remote_host }}'
+    new_ida_remote_dir: '{{ cred_ida_remote_dir }}'
     new_ida_cloud_tag: IDA
     new_ida_cloud_dir: IDA
 
