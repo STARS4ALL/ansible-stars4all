@@ -1,0 +1,8 @@
+#!/bin/bash
+
+NICE=$(which nice)
+IONICE=$(which ionice)
+
+export VIRTUAL_ENV=/home/rfg/stars4all
+echo "${NICE} -n 19 ${IONICE} -c3 ${VIRTUAL_ENV}/bin/python3 -m tess_ida $@"
+${NICE} -n 19 ${IONICE} -c3 ${VIRTUAL_ENV}/bin/python3 -m tess_ida "$@"

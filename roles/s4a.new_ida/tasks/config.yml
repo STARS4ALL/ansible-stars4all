@@ -1,0 +1,76 @@
+---
+# tasks file for roles/s4a.new_ida
+- name: ensure reports and parents dirs are created
+  file:
+    dest: '{{ new_ida_reports_dir }}'
+    state: directory
+    owner: '{{ new_ida_runtime_user }}'
+    group: '{{ new_ida_runtime_user }}'
+    mode: '0755'
+  tags: [config]
+
+- name: copy various scripts for use in cron jobs
+  copy: 
+    dest: '{{ item.dest }}'
+    src:  '{{ item.src }}'
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - src: tessdb_remote_backup
+      dest: '{{ new_ida_bin_dir }}/tessdb_remote_backup'
+    - src: tessdb_index
+      dest: '{{ new_ida_bin_dir }}/tessdb_index'
+    - src: tess_ida
+      dest: '{{ new_ida_bin_dir }}/tess_ida'
+    - src: tess_ida_bulk_dump
+      dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump'
+    - src: tess_ida_bulk_dump_all
+      dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_all'
+    - src: tess_ida
+      dest: '{{ new_ida_bin_dir }}/webdav_ida_rclone'  
+  tags: [config]
+
+- name: install TESSDB remote backup job
+  cron: 
+    name: '{{ item.name }}'
+    state: '{{ item.state }}'
+    day: '{{ item.day }}'
+    hour: '{{ item.hour }}'
+    minute: '{{ item.minute }}'
+    cron_file: '{{ item.cron_file }}'
+    job: '{{ item.job }}'
+    user: '{{ new_ida_runtime_user }}'
+  tags: [config]
+  loop:
+    - name: "cron job for tessdb remote backup"
+      state: absent
+      day: '*'
+      hour: '12'
+      minute: '20'
+      cron_file: tessdb_remote_backup
+      job: '{{ new_ida_bin_dir }}/tessdb_remote_backup {{ new_ida_remote_user }} {{ new_ida_remote_host }} {{ new_ida_remote_dir }} {{ new_ida_database_dir }}'
+
+    - name: "cron job for tess_ida_bulk_dump"
+      state: absent
+      day: '*'
+      hour: '13'
+      minute: '45'
+      cron_file: tess_ida_bulk_dump
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} latest >>/var/log/tess_ida.log 2>&1'
+
+    - name: "cron job for tess_ida_monthly"
+      state: absent
+      day: '1'
+      hour: '15'
+      minute: '0'
+      cron_file: tess_ida_monthly
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} previous >>/var/log/tess_ida.log 2>&1'
+
+    - name: "rclone cron job for IDA publication in public file shares by WebDAV"
+      state: present
+      day: '*'
+      hour: '14'
+      minute: '13'
+      cron_file: webdav_ida_rsync
+      job: '{{ new_ida_bin_dir }}/webdav_ida_rclone {{ new_ida_reports_dir }} {{ new_ida_cloud_dir }}  {{ new_ida_cloud_tag }}'

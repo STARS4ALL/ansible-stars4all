@@ -1,0 +1,6 @@
+---
+# vars file for roles/s4a.new_ida
+
+new_ida_bin_dir: /usr/local/bin
+new_ida_database_dir: '{{ new_ida_base_dir }}/dbase'
+new_ida_reports_dir: '{{ new_ida_base_dir }}/dbase/reports/IDA'

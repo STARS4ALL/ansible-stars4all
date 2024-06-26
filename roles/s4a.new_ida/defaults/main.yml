@@ -1,0 +1,11 @@
+---
+# defaults file for roles/s4a.new_ida
+new_ida_runtime_user: root
+new_ida_base_dir: /tmp
+
+new_ida_cloud_tag: foo
+new_ida_cloud_dir: bar
+
+new_ida_remote_user: '{{ new_ida_runtime_user }}'
+new_ida_remote_host: localhost
+new_ida_remote_dir: foo

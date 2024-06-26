@@ -13,10 +13,20 @@
   #   webdav_url:         'https://{{ webdav_host_fqdn }}/remote.php/dav/files/{{ webdav_username }}/'
   #   tags: [ webdav ]
 
-  - role: s4a.ida_rsync
-    tags: [ ida ]
-    ida_rsync_runtime_user: '{{ cred_webdav_runtime_user }}'
-    ida_rsync_src_dir: /home/{{ cred_webdav_runtime_user }}/dbase/reports/IDA
-    ida_rsync_dst_dir: /home/{{ cred_webdav_runtime_user }}/webdav
+  # OBSOLETE
+  # - role: s4a.ida_rsync
+  #   tags: [ ida ]
+  #   ida_rsync_runtime_user: '{{ cred_webdav_runtime_user }}'
+  #   ida_rsync_src_dir: /home/{{ cred_webdav_runtime_user }}/dbase/reports/IDA
+  #   ida_rsync_dst_dir: /home/{{ cred_webdav_runtime_user }}/webdav
+
+  - role: s4a.new_ida
+    new_ida_runtime_user: rfg
+    new_ida_base_dir: /home/rfg
+    new_ida_remote_user: rfg
+    new_ida_remote_host: calyx.hst.ucm.es
+    new_ida_remote_dir: /var/dbase
+    new_ida_cloud_tag: IDA
+    new_ida_cloud_dir: IDA
 
   
