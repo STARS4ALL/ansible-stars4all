@@ -11,7 +11,7 @@ DEFAULT_DATE=$(/usr/bin/date +%Y%m%d)
 NICE=$(which nice)
 IONICE=$(which ionice)
 RSYNC=$(which rsync)
-TESSDB_INDEX=$(which tessdb_index)
+TESSDB_INDEX=/usr/local/bin/tessdb_index
 
 # Arguments from the command line & default values
 SRC_USER="${1:-$DEFAULT_SRC_USER}"

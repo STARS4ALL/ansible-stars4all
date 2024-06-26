@@ -7,9 +7,15 @@
 - include_vars: '{{ ansible_distribution }}.yml'
   tags: [install, config]
 
-- import_tasks: install.yml
+- include_tasks: install.yml
   tags: [install]
+  when: not new_ida_uninstall
 
-- import_tasks: config.yml
+- include_tasks: config.yml
   tags: [config]
- 
+  when: not new_ida_uninstall
+
+- include_tasks: uninstall.yml
+  tags: [config]
+  when: new_ida_uninstall
+

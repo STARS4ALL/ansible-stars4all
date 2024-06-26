@@ -1,0 +1,32 @@
+---
+# tasks file for roles/s4a.new_ida
+
+- name: uninstall various cron jobs
+  cron: 
+    cron_file: '{{ item.cron_file }}'
+    name: '{{ item.name }}'
+    state: absent
+  loop:
+    - cron_file: webdav_ida_rsync
+      name: "rclone cron job for IDA publication in public file shares by WebDAV"
+    - cron_file: tess_ida_monthly
+      name: "cron job for tess_ida_monthly"
+    - cron_file: tess_ida_bulk_dump
+      name: "cron job for tess_ida_bulk_dump"
+    - cron_file: tessdb_remote_backup
+      name: "cron job for tessdb remote backup"
+  tags: [config]
+
+
+- name: uninstall various scripts
+  file:
+    dest: '{{ new_ida_bin_dir }}/{{ item.name }}'
+    state: absent
+  loop:
+    - name: tessdb_remote_backup
+    - name: tessdb_index
+    - name: tess_ida
+    - name: tess_ida_bulk_dump
+    - name: tess_ida_bulk_dump_all
+    - name: webdav_ida_rclone
+  tags: [config]

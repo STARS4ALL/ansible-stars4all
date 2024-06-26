@@ -21,6 +21,7 @@
   #   ida_rsync_dst_dir: /home/{{ cred_webdav_runtime_user }}/webdav
 
   - role: s4a.new_ida
+    new_ida_uninstall: no
     new_ida_runtime_user: rfg
     new_ida_base_dir: /home/rfg
     new_ida_remote_user: rfg

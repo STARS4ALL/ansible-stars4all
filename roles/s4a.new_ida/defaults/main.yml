@@ -1,5 +1,7 @@
 ---
 # defaults file for roles/s4a.new_ida
+new_ida_uninstall: no
+
 new_ida_runtime_user: root
 new_ida_base_dir: /tmp
 
