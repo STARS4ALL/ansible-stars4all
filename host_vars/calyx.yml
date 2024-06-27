@@ -6,7 +6,7 @@ tessdb_install_user : rfg
 tessdb_venv         : stars4all
 tessdb_dbase_dir    : /var/dbase
 tessdb_install_dir  : /home/rfg
-tessdb_venv_dir     : /home/rfg/stars4all
+tessdb_venv_dir     : /opt/stars4all
 
 
 # run time user
