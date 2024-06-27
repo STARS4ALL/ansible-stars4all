@@ -1,3 +1,9 @@
+# -----------------
+# Role: s4a.new_ida 
+# -----------------
+
+global_python: /usr/bin/python3
+
 # ----------------
 # Role: s4a.tessdb 
 # ----------------

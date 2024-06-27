@@ -1,18 +1,5 @@
-# -------------------------
-# Role: s4a.reports 
-# -------------------------
+# -----------------
+# Role: s4a.new_ida 
+# -----------------
 
-reports_dbase_dir : /var/dbase
-reports_user      : rfg
-reports_venv_dir  : /home/rfg/stars4all
-
-# Flag allowing remote backup configuration via rsync
-reports_remote_backup: yes
-
-
-# Source host data where to get tess.db database
-reports_src_host : calyx.hst.ucm.es 
-reports_src_user : rfg
-reports_src_dir  : /var/dbase
-reports_src_hour : 12
-reports_src_min  : 30
+global_python: /usr/local/bin/python3
