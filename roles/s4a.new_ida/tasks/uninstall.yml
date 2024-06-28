@@ -25,7 +25,7 @@
   loop:
     - name: tessdb_remote_backup
     - name: tessdb_index
-    - name: tess_ida
+    - name: tess-ida
     - name: tess_ida_bulk_dump
     - name: tess_ida_bulk_dump_all
     - name: webdav_ida_rclone

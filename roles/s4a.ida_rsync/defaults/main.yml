@@ -1,5 +1,0 @@
----
-# defaults file for roles/s4a.ida_rsync
-ida_rsync_runtime_user: root
-ida_rsync_src_dir: /tmp
-ida_rsync_dst_dir: /tmp

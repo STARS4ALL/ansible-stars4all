@@ -4,3 +4,5 @@
 new_ida_bin_dir: /usr/local/bin
 new_ida_database_dir: '{{ new_ida_base_dir }}/dbase'
 new_ida_reports_dir: '{{ new_ida_base_dir }}/dbase/reports/IDA'
+
+new_ida_selinux_enabled: ansible_selinux is defined and ansible_selinux and ansible_selinux.status == 'enabled'

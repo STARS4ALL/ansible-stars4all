@@ -1,6 +1,16 @@
 ---
 # tasks file for roles/s4a.new_ida
 
+- name: Install system level needed packages
+  package: 
+    name :
+    - git
+    - '{{ new_ida_sqlite }}'
+    - gcc
+    - python3-devel
+    - python-pip
+    state: latest 
+  tags: [install]
 
 # We install it as root because it copies files to /usr/local/bin
 - name: install tessdb-cmdline in a virtual environment
@@ -11,4 +21,4 @@
     virtualenv_command : '{{ global_python }} -m venv'
     state              : latest
   tags: [install]
-  when: True
+

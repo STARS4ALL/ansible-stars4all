@@ -1,3 +1,0 @@
----
-# vars file for roles/s4a.reports
-reports_selinux_enabled: ansible_selinux is defined and ansible_selinux and ansible_selinux.status == 'enabled'

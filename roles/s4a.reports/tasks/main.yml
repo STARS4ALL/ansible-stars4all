@@ -1,6 +1,0 @@
----
-- include_vars: '{{ ansible_distribution }}.yml'
-
-- include_tasks: install.yml
-- include_tasks: config.yml
-- include_tasks: backup.yml
