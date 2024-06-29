@@ -58,7 +58,7 @@
   loop:
     - name: "cron job for tessdb remote backup"
       cron_file: tessdb_remote_backup
-      state: present
+      state: absent
       day: '*'
       hour: '12'
       minute: '15'
@@ -82,7 +82,7 @@
 
     - name: "rclone cron job for IDA publication in public file shares by WebDAV"
       cron_file: webdav_ida_rsync
-      state: present
+      state: absent
       day: '*'
       hour: '14'
       minute: '15'
