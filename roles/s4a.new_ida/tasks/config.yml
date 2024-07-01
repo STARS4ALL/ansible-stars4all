@@ -38,6 +38,8 @@
       dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump'
     - src:  '{{ new_ida_virtual_env }}/bin/tess_ida_bulk_dump_all'
       dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_all'
+    - src:  '{{ new_ida_virtual_env }}/bin/tess_ida_bulk_dump_selective'
+      dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_selective'
     - src:  '{{ new_ida_virtual_env }}/bin/webdav_ida_rclone'
       dest: '{{ new_ida_bin_dir }}/webdav_ida_rclone'  
   tags: [config]
@@ -87,3 +89,11 @@
       hour: '14'
       minute: '15'
       job: '{{ new_ida_bin_dir }}/webdav_ida_rclone {{ new_ida_reports_dir }} {{ new_ida_cloud_dir }}  {{ new_ida_cloud_tag }}'
+
+    - name: "Selective regeneration of monthly IDA files after manual fix"
+      cron_file: tess_ida_bulk_dump_selective
+      state: present
+      day: '*'
+      hour: '0'
+      minute: '15'
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_selective {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }}'
