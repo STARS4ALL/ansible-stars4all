@@ -6,6 +6,7 @@
     name :
     - git
     - '{{ new_ida_sqlite }}'
+    - '{{ new_ida_crond }}'
     - gcc
     - python3-devel
     - python-pip
