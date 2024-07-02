@@ -92,7 +92,7 @@
 
     - name: "Selective regeneration of monthly IDA files after manual fix"
       cron_file: tess_ida_bulk_dump_selective
-      state: present
+      state: absent
       day: '*'
       hour: '0'
       minute: '15'
