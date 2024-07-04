@@ -13,3 +13,5 @@ new_ida_remote_host: localhost
 new_ida_remote_dir: foo
 
 new_ida_virtual_env: /tmp
+
+new_ida_enable_cron_jobs: false

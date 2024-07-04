@@ -57,7 +57,8 @@
   loop:
     - name: "cron job for tessdb remote backup"
       cron_file: tessdb_remote_backup
-      state: absent
+      state: present
+      state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
       hour: '12'
       minute: '15'
@@ -65,7 +66,7 @@
 
     - name: "cron job for tess_ida_bulk_dump"
       cron_file: tess_ida_bulk_dump
-      state: absent
+      state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
       hour: '13'
       minute: '00'
@@ -73,7 +74,7 @@
 
     - name: "cron job for tess_ida_monthly"
       cron_file: tess_ida_monthly
-      state: absent
+      state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '1'
       hour: '15'
       minute: '0'
@@ -81,7 +82,7 @@
 
     - name: "rclone cron job for IDA publication in public file shares by WebDAV"
       cron_file: webdav_ida_rsync
-      state: absent
+      state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
       hour: '14'
       minute: '15'
@@ -89,7 +90,7 @@
 
     - name: "Selective regeneration of monthly IDA files after manual fix"
       cron_file: tess_ida_bulk_dump_selective
-      state: absent
+      state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
       hour: '0'
       minute: '15'
