@@ -43,31 +43,6 @@
   tags: [config]
 
 
-# - name: copy various scripts for use in cron jobs
-#   copy: 
-#     dest: '{{ item.dest }}'
-#     src:  '{{ item.src }}'
-#     owner: root
-#     group: root
-#     remote_src: yes
-#     mode: preserve
-#   loop:
-#     - src:  '{{ new_ida_virtual_env }}/bin/tessdb_remote_backup'
-#       dest: '{{ new_ida_bin_dir }}/tessdb_remote_backup'
-#     - src:  '{{ new_ida_virtual_env }}/bin/tessdb_index'
-#       dest: '{{ new_ida_bin_dir }}/tessdb_index'
-#     - src:  '{{ new_ida_virtual_env }}/bin/tess_ida_bulk_dump'
-#       dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump'
-#     - src:  '{{ new_ida_virtual_env }}/bin/tess_ida_bulk_dump_all'
-#       dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_all'
-#     - src:  '{{ new_ida_virtual_env }}/bin/tess_ida_bulk_dump_selective'
-#       dest: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_selective'
-#     - src:  '{{ new_ida_virtual_env }}/bin/webdav_ida_rclone'
-#       dest: '{{ new_ida_bin_dir }}/webdav_ida_rclone'  
-#   tags: [config]
-
-
-
 - name: install various cron jobs
   cron: 
     name: '{{ item.name }}'
