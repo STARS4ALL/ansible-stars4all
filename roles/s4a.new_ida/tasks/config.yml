@@ -1,12 +1,15 @@
 ---
 # tasks file for roles/s4a.new_ida
-- name: ensure reports and parents dirs are created
+- name: ensure logs & reports directories are created
   file:
-    dest: '{{ new_ida_reports_dir }}'
+    dest: '{{ item }}'
     state: directory
     owner: '{{ new_ida_runtime_user }}'
     group: '{{ new_ida_runtime_user }}'
     mode: '0755'
+  loop:
+    - '{{ new_ida_reports_dir }}'
+    - '{{ new_ida_logs_dir }}'
   tags: [config]
 
 - name: copy the underlying IDA generation script
@@ -56,7 +59,7 @@
   tags: [config]
   loop:
     - name: "cron job for tessdb remote backup"
-      cron_file: tessdb_remote_backup
+      cron_file: tessdb_daily_remote_backup
       state: present
       state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
@@ -65,23 +68,23 @@
       job: '{{ new_ida_bin_dir }}/tessdb_remote_backup {{ new_ida_remote_user }} {{ new_ida_remote_host }} {{ new_ida_remote_dir }} {{ new_ida_database_dir }}'
 
     - name: "cron job for tess_ida_bulk_dump"
-      cron_file: tess_ida_bulk_dump
+      cron_file: ida_daily
       state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
       hour: '13'
       minute: '00'
-      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} latest >>/var/log/tess_ida.log 2>&1'
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} latest'
 
     - name: "cron job for tess_ida_monthly"
-      cron_file: tess_ida_monthly
+      cron_file: ida_monthly
       state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '1'
       hour: '15'
       minute: '0'
-      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} previous >>/var/log/tess_ida.log 2>&1'
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} previous'
 
     - name: "rclone cron job for IDA publication in public file shares by WebDAV"
-      cron_file: webdav_ida_rsync
+      cron_file: ida_webdav_daily
       state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
       hour: '14'
@@ -89,9 +92,9 @@
       job: '{{ new_ida_bin_dir }}/webdav_ida_rclone {{ new_ida_reports_dir }} {{ new_ida_cloud_dir }}  {{ new_ida_cloud_tag }}'
 
     - name: "Selective regeneration of monthly IDA files after manual fix"
-      cron_file: tess_ida_bulk_dump_selective
+      cron_file: ida_bulk_dump_selective
       state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
-      hour: '0'
+      hour: '16'
       minute: '15'
       job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_selective {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }}'
