@@ -73,7 +73,7 @@
       day: '*'
       hour: '13'
       minute: '00'
-      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }} latest'
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump -d {{ new_ida_database_dir }}/tess.db -o {{ new_ida_reports_dir }} -m latest -l {{ new_ida_logs_dir }}/ida_daily'
 
     - name: "cron job for tess_ida_monthly"
       cron_file: ida_monthly
