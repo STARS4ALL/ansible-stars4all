@@ -65,7 +65,7 @@
       day: '*'
       hour: '12'
       minute: '15'
-      job: '{{ new_ida_bin_dir }}/tessdb_remote_backup {{ new_ida_remote_user }} {{ new_ida_remote_host }} {{ new_ida_remote_dir }} {{ new_ida_database_dir }}'
+      job: '{{ new_ida_bin_dir }}/tessdb_remote_backup -u {{ new_ida_remote_user }} -s {{ new_ida_remote_host }} -i {{ new_ida_remote_dir }} -o {{ new_ida_database_dir }} -l {{ new_ida_logs_dir }}/ida_daily'
 
     - name: "cron job for tess_ida_bulk_dump"
       cron_file: ida_daily
@@ -89,7 +89,7 @@
       day: '*'
       hour: '14'
       minute: '15'
-      job: '{{ new_ida_bin_dir }}/webdav_ida_rclone {{ new_ida_reports_dir }} {{ new_ida_cloud_dir }}  {{ new_ida_cloud_tag }}'
+      job: '{{ new_ida_bin_dir }}/webdav_ida_rclone -i {{ new_ida_reports_dir }} -o {{ new_ida_cloud_dir }} -t {{ new_ida_cloud_tag }} -l {{ new_ida_logs_dir }}/ida_daily'
 
     - name: "Selective regeneration of monthly IDA files after manual fix"
       cron_file: ida_bulk_dump_selective
