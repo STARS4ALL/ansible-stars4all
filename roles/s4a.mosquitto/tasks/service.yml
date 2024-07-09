@@ -1,0 +1,13 @@
+---
+
+- name: Starting mosquitto service {{ mosquitto_role }}
+  debug:
+    msg:
+    - "{{ mosquitto_role }} service has been started."
+
+# tasks file for roles/s4a.mosquitto
+# - name: Enable service httpd, and not touch the state
+#   service:
+#     name: mosquitto-{{ mosquitto_role }}
+#     enabled: yes
+#     state: '{{ mosquitto_service_state }}'

@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Mosquitto MQTT Broker ({{ mosquitto_role }})
+Documentation=man:mosquitto.conf(5) man:mosquitto(8)
+After=network.target
+Wants=network.target
+
+[Service]
+Type=notify
+NotifyAccess=main
+ExecStart=/usr/sbin/mosquitto -c /etc/mosquitto/mosquitto-{{ mosquitto_role }}.conf
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+ExecStartPre=/bin/mkdir -m 740 -p /var/log/mosquitto-{{ mosquitto_role }}
+ExecStartPre=/bin/chown mosquitto:mosquitto /var/log/mosquitto-{{ mosquitto_role }}
+ExecStartPre=/bin/mkdir -m 740 -p /run/mosquitto-{{ mosquitto_role }}
+ExecStartPre=/bin/chown mosquitto:mosquitto /run/mosquitto-{{ mosquitto_role }}
+
+[Install]
+WantedBy=multi-user.target

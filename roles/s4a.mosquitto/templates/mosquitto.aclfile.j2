@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+{% for user in mosquitto_acl_users -%}
+# -----------------
+user {{ user.user }}
+{% for topic in user.topics -%}
+topic {{ topic.perm }} {{ topic.name }}
+{% endfor -%}
+{% endfor -%}
+
+# This affects all clients.
+pattern write $SYS/broker/connection/%c/state

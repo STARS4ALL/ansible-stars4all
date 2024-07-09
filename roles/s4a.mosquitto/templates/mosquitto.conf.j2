@@ -1,0 +1,49 @@
+# {{ ansible_managed }}
+autosave_interval 1800
+persistence true
+persistence_location /var/lib/mosquitto-{{ mosquitto_role }}/
+
+log_timestamp false
+allow_anonymous false
+
+password_file /etc/mosquitto/pwfile-{{ mosquitto_role }}
+acl_file /etc/mosquitto/aclfile-{{ mosquitto_role }}
+
+{% if mosquitto_role == 'primary' -%}
+listener 1883
+{% else -%}
+listener 8883
+{% endif -%}
+
+# require_certificate true
+# use_identity_as_username true
+
+{% if mosquitto_role == 'primary' -%}
+keyfile /etc/pki/mosquitto/astrix.key
+certfile /etc/pki/mosquitto/astrix-new.crt
+{% else -%}
+certfile /etc/pki/mosquitto/apex-new.crt
+keyfile /etc/pki/mosquitto/apex.key
+{% endif -%}
+cafile /etc/pki/mosquitto/ca-bundle.crt
+
+{# ###################################### #}
+{# This is specific to the secondary role #}
+{# ###################################### #}
+
+{% if mosquitto_role == 'secondary' -%}
+connection bridge-tls
+address astrix.fis.ucm.es:8883
+bridge_cafile /etc/pki/mosquitto/ca-bundle.crt
+
+# The cleansession option seems to remove messages arriving 
+# on unexpected topics when using incoming topics.
+# https://mosquitto.org/man/mosquitto-conf-5.html
+cleansession true
+
+topic SQM/# in
+topic STARS4ALL/+/reading in
+
+remote_username bridge
+remote_password C71fvje5o8TKyk
+{% endif -%}

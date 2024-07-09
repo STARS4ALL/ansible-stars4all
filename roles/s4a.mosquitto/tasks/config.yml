@@ -1,0 +1,38 @@
+---
+# tasks file for roles/s4a.mosquitto
+- name: copy the mosquitto service file
+  template: 
+    dest: '{{ item.dest }}'
+    src: '{{ item.src }}'
+    owner: '{{ item.owner }}'
+    group: '{{ item.group }}'
+    mode: '{{ item.mode }}'
+  loop:
+    - src: mosquitto.service.j2
+      dest: /usr/lib/systemd/system/mosquitto-{{ mosquitto_role }}.service
+      owner: root
+      group: root
+      mode: '0644'
+    - src: mosquitto.conf.j2
+      dest: /etc/mosquitto/mosquitto-{{ mosquitto_role }}.conf
+      owner: mosquitto
+      group: mosquitto
+      mode: '0644'
+    - src: mosquitto.aclfile.j2
+      dest: /etc/mosquitto/aclfile-{{ mosquitto_role }}
+      owner: mosquitto
+      group: mosquitto
+      mode: '0640'
+  tags: [config]
+
+- name: Manage mosquitto {{ mosquitto_role }} password file
+  debug:
+    msg:
+    - "pwfile-{{ mosquitto_role }} has been copied locally."
+
+- name: Change pwfile-{{ mosquitto_role }} file ownership, group and permissions
+  file:
+    path: /etc/mosquitto/pwfile-{{ mosquitto_role }}
+    owner: mosquitto
+    group: mosquitto
+    mode: '0640'

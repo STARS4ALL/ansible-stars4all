@@ -1,0 +1,26 @@
+---
+# tasks file for roles/s4a.mosquitto
+
+- include_vars: main.yml
+  tags: [install, config]
+
+# use ansible_os_family instead of ansible_distribution
+- include_vars: '{{ ansible_os_family }}.yml'
+  tags: [install, config]
+
+- include_tasks: install.yml
+  tags: [install]
+  when: not mosquitto_uninstall
+
+- include_tasks: config.yml
+  tags: [config]
+  when: not mosquitto_uninstall
+
+- include_tasks: service.yml
+  tags: [config]
+  when: not mosquitto_uninstall and mosquito_manage_service
+
+- include_tasks: uninstall.yml
+  tags: [config]
+  when: mosquitto_uninstall
+

@@ -1,0 +1,8 @@
+---
+# tasks file for roles/s4a.mosquitto
+- name: Install system level needed packages
+  package: 
+    name :
+    - mosquitto
+    state: present 
+  tags: [install]

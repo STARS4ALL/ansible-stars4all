@@ -1,0 +1,27 @@
+---
+
+# Hosts where to mount a webdav file systems
+- hosts: mosquitto_primary
+  become: yes
+  roles:
+  - role: s4a.mosquitto
+    mosquitto_uninstall: no
+    mosquitto_role: primary
+    mosquitto_acl_users: '{{ cred_mosquitto_users_primary }}'
+    mosquito_manage_service: yes
+    mosquitto_service_state: started
+    tags: [primary]
+
+- hosts: mosquitto_secondary
+  become: yes
+  roles:
+  - role: s4a.mosquitto
+    mosquitto_uninstall: no
+    mosquitto_role: secondary
+    mosquitto_acl_users: '{{ cred_mosquitto_users_secondary }}'
+    mosquito_manage_service: no
+    mosquitto_service_started: started
+    tags: [secondary]
+
+
+  
