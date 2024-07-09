@@ -8,7 +8,6 @@
     mosquitto_uninstall: yes
     mosquitto_role: primary
     mosquitto_acl_users: '{{ cred_mosquitto_users_primary }}'
-    mosquito_manage_service: yes
     mosquitto_service_state: started
     tags: [primary]
 
@@ -19,7 +18,6 @@
     mosquitto_uninstall: yes
     mosquitto_role: secondary
     mosquitto_acl_users: '{{ cred_mosquitto_users_secondary }}'
-    mosquito_manage_service: no
     mosquitto_service_started: started
     tags: [secondary]
 
