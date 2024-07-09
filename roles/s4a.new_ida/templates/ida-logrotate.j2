@@ -1,0 +1,30 @@
+# {{ ansible_managed }}
+{{ new_ida_logs_dir }}/ida_daily.log {
+	copytruncate
+	daily
+	dateext
+	rotate 32
+	missingok
+	notifempty
+	compress
+}
+
+{{ new_ida_logs_dir }}/ida_monthly.log {
+	copytruncate
+	monthly
+	dateext
+	rotate 12
+	missingok
+	notifempty
+	compress
+}
+
+{{ new_ida_logs_dir }}/ida_fix.log {
+	copytruncate
+	daily
+	dateext
+	rotate 32
+	missingok
+	notifempty
+	compress
+}

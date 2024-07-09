@@ -25,7 +25,17 @@
   tags: [config]
 
 
-- name: copy various scripts for use in cron jobs
+- name: copy the logrotate spec for the cron jobs
+  template: 
+    dest: /etc/logrotate.d/ida
+    src:  ida-logrotate.j2
+    owner: root
+    group: root
+    mode: '0644'
+  tags: [config]
+
+
+- name: make a soft link for various scripts to use in cron jobs
   file: 
     dest: '{{ item.dest }}'
     src:  '{{ item.src }}'
@@ -60,12 +70,11 @@
   loop:
     - name: "cron job for tessdb remote backup"
       cron_file: tessdb_daily_remote_backup
-      state: present
       state: "{{ new_ida_enable_cron_jobs | ternary('present', 'absent') }}"
       day: '*'
       hour: '12'
       minute: '15'
-      job: '{{ new_ida_bin_dir }}/tessdb_remote_backup -u {{ new_ida_remote_user }} -s {{ new_ida_remote_host }} -i {{ new_ida_remote_dir }} -o {{ new_ida_database_dir }} -l {{ new_ida_logs_dir }}/ida_daily'
+      job: '{{ new_ida_bin_dir }}/tessdb_remote_backup -u {{ new_ida_remote_user }} -s {{ new_ida_remote_host }} -i {{ new_ida_remote_dir }} -o {{ new_ida_database_dir }} -l {{ new_ida_logs_dir }}/ida_daily.log'
 
     - name: "cron job for tess_ida_bulk_dump"
       cron_file: ida_daily
@@ -73,7 +82,7 @@
       day: '*'
       hour: '13'
       minute: '00'
-      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump -d {{ new_ida_database_dir }}/tess.db -o {{ new_ida_reports_dir }} -m latest -l {{ new_ida_logs_dir }}/ida_daily'
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump -d {{ new_ida_database_dir }}/tess.db -o {{ new_ida_reports_dir }} -m latest -l {{ new_ida_logs_dir }}/ida_daily.log'
 
     - name: "cron job for tess_ida_monthly"
       cron_file: ida_monthly
@@ -81,7 +90,7 @@
       day: '1'
       hour: '15'
       minute: '0'
-      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump -d {{ new_ida_database_dir }}/tess.db -o {{ new_ida_reports_dir }} -m previous -l {{ new_ida_logs_dir }}/ida_monthly'
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump -d {{ new_ida_database_dir }}/tess.db -o {{ new_ida_reports_dir }} -m previous -l {{ new_ida_logs_dir }}/ida_monthly.log'
 
     - name: "rclone cron job for IDA publication in public file shares by WebDAV"
       cron_file: ida_webdav_daily
@@ -89,7 +98,7 @@
       day: '*'
       hour: '14'
       minute: '15'
-      job: '{{ new_ida_bin_dir }}/webdav_ida_rclone -i {{ new_ida_reports_dir }} -o {{ new_ida_cloud_dir }} -t {{ new_ida_cloud_tag }} -l {{ new_ida_logs_dir }}/ida_daily'
+      job: '{{ new_ida_bin_dir }}/webdav_ida_rclone -i {{ new_ida_reports_dir }} -o {{ new_ida_cloud_dir }} -t {{ new_ida_cloud_tag }} -l {{ new_ida_logs_dir }}/ida_daily.log'
 
     - name: "Selective regeneration of monthly IDA files after manual fix"
       cron_file: ida_bulk_dump_selective
@@ -97,4 +106,4 @@
       day: '*'
       hour: '16'
       minute: '15'
-      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_selective {{ new_ida_database_dir }}/tess.db {{ new_ida_reports_dir }}'
+      job: '{{ new_ida_bin_dir }}/tess_ida_bulk_dump_selective -d {{ new_ida_database_dir }}/tess.db -o {{ new_ida_reports_dir }} -r {{ new_ida_base_dir}}/regenerate.ida.d -l {{ new_ida_logs_dir }}/ida_fix.log'
