@@ -9,4 +9,5 @@ temporary.yml
 my*
 .venv
 .env
-
+*.key
+*.crt

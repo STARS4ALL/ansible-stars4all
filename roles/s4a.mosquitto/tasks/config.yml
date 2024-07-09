@@ -1,6 +1,6 @@
 ---
 # tasks file for roles/s4a.mosquitto
-- name: copy the mosquitto service file
+- name: copy mosquitto configuration files
   template: 
     dest: '{{ item.dest }}'
     src: '{{ item.src }}'
@@ -36,3 +36,34 @@
     owner: mosquitto
     group: mosquitto
     mode: '0640'
+
+- name: Make sure mosquitto certificates directory exists
+  file:
+    path: /etc/pki/mosquitto
+    state: directory
+    mode: '0755'
+
+- name: copy mosquitto {{ mosquitto_role }} certificates
+  copy: 
+    dest: '{{ item.dest }}'
+    src: '{{ item.src }}'
+    owner: '{{ item.owner }}'
+    group: '{{ item.group }}'
+    mode: '{{ item.mode }}'
+  loop:
+    - src: '{{ mosquitto_role }}.key'
+      dest: /etc/pki/mosquitto/{{ mosquitto_role }}.key
+      owner: mosquitto
+      group: mosquitto
+      mode: '0600'
+    - src: '{{ mosquitto_role }}.crt'
+      dest: /etc/pki/mosquitto/{{ mosquitto_role }}.crt
+      owner: mosquitto
+      group: mosquitto
+      mode: '0644'
+    - src: ca-bundle.crt
+      dest: /etc/pki/mosquitto/ca-bundle.crt
+      owner: mosquitto
+      group: mosquitto
+      mode: '0644'
+  tags: [config]

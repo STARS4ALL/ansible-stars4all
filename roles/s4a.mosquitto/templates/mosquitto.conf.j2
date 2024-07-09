@@ -18,13 +18,8 @@ listener 8883
 # require_certificate true
 # use_identity_as_username true
 
-{% if mosquitto_role == 'primary' -%}
-keyfile /etc/pki/mosquitto/astrix.key
-certfile /etc/pki/mosquitto/astrix-new.crt
-{% else -%}
-certfile /etc/pki/mosquitto/apex-new.crt
-keyfile /etc/pki/mosquitto/apex.key
-{% endif -%}
+keyfile /etc/pki/mosquitto/{{ mosquitto_role }}.key
+certfile /etc/pki/mosquitto/{{ mosquitto_role }}.crt
 cafile /etc/pki/mosquitto/ca-bundle.crt
 
 {# ###################################### #}
