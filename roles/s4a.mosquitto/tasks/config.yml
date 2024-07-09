@@ -25,17 +25,15 @@
       mode: '0640'
   tags: [config]
 
-- name: Manage mosquitto {{ mosquitto_role }} password file
-  debug:
-    msg:
-    - "pwfile-{{ mosquitto_role }} has been copied locally."
 
-- name: Change pwfile-{{ mosquitto_role }} file ownership, group and permissions
-  file:
-    path: /etc/mosquitto/pwfile-{{ mosquitto_role }}
+- name: copy mosquitto {{ mosquitto_role }} password file
+  copy: 
+    dest: /etc/mosquitto/pwfile-{{ mosquitto_role }}
+    src:  pwfile-{{ mosquitto_role }}
     owner: mosquitto
     group: mosquitto
     mode: '0640'
+  tags: [config]
 
 - name: Make sure mosquitto certificates directory exists
   file:

@@ -1,2 +1,21 @@
 ---
 # tasks file for roles/s4a.mosquitto
+
+- name: Stop mosquitto-{{ mosquitto_role }} service
+  service:
+    name: mosquitto-{{ mosquitto_role }}
+    enabled: no
+    state: stopped
+  ignore_errors: yes
+
+- name: Delete {{ mosquitto_role }} files
+  file:
+    path: '{{ item }}'
+    state: absent
+  loop:
+    - /usr/lib/systemd/system/mosquitto-{{ mosquitto_role }}.service
+    - /etc/mosquitto/mosquitto-{{ mosquitto_role }}.conf
+    - /etc/mosquitto/pwfile-{{ mosquitto_role }}
+    - /etc/mosquitto/aclfile-{{ mosquitto_role }}
+    - /etc/pki/mosquitto/{{ mosquitto_role }}.key
+    - /etc/pki/mosquitto/{{ mosquitto_role }}.crt

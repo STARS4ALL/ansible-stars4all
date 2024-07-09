@@ -11,3 +11,4 @@ my*
 .env
 *.key
 *.crt
+pwfile*
