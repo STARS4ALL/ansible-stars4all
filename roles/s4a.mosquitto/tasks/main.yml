@@ -18,7 +18,7 @@
 
 - include_tasks: service.yml
   tags: [config]
-  when: not mosquitto_uninstall and mosquito_manage_service
+  when: not mosquitto_uninstall
 
 - include_tasks: uninstall.yml
   tags: [config]

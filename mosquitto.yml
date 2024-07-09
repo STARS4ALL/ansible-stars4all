@@ -5,7 +5,7 @@
   become: yes
   roles:
   - role: s4a.mosquitto
-    mosquitto_uninstall: no
+    mosquitto_uninstall: yes
     mosquitto_role: primary
     mosquitto_acl_users: '{{ cred_mosquitto_users_primary }}'
     mosquito_manage_service: yes
@@ -16,7 +16,7 @@
   become: yes
   roles:
   - role: s4a.mosquitto
-    mosquitto_uninstall: no
+    mosquitto_uninstall: yes
     mosquitto_role: secondary
     mosquitto_acl_users: '{{ cred_mosquitto_users_secondary }}'
     mosquito_manage_service: no

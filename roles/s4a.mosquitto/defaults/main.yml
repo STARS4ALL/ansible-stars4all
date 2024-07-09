@@ -1,7 +1,6 @@
 ---
 # defaults file for roles/s4a.mosquitto
-mosquitto_uninstall: no
+mosquitto_uninstall: yes
 mosquitto_role: primary
 mosquitto_acl_users: []
-mosquito_manage_service: no
 mosquitto_service_state: stopped

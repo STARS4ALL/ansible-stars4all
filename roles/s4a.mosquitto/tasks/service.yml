@@ -1,13 +1,6 @@
 ---
-
-- name: Enable and make mosquitto-{{ mosquitto_role }} service {{ mosquitto_service_state }}
-  debug:
-    msg:
-    - "mosquitto-{{ mosquitto_role }} service has been {{ mosquitto_service_state }}."
-
-# tasks file for roles/s4a.mosquitto
-# - name: Enable and make mosquitto-{{ mosquitto_role }} {{ mosquitto_service_state }}
-#   service:
-#     name: mosquitto-{{ mosquitto_role }}
-#     enabled: yes
-#     state: '{{ mosquitto_service_state }}'
+- name: Enable and make mosquitto-{{ mosquitto_role }} {{ mosquitto_service_state }}
+  service:
+    name: mosquitto-{{ mosquitto_role }}
+    enabled: yes
+    state: '{{ mosquitto_service_state }}'
