@@ -1,7 +1,8 @@
 # {{ ansible_managed }}
 autosave_interval 1800
 persistence true
-persistence_location /var/lib/mosquitto-{{ mosquitto_role }}/
+persistence_location /var/lib/mosquitto
+persistence_file mosquitto-{{ mosquitto_role }}.db
 
 log_timestamp false
 allow_anonymous false
@@ -15,18 +16,23 @@ listener 1883
 listener 8883
 {% endif -%}
 
-# require_certificate true
-# use_identity_as_username true
-
-keyfile /etc/pki/mosquitto/{{ mosquitto_role }}.key
-certfile /etc/pki/mosquitto/{{ mosquitto_role }}.crt
-cafile /etc/pki/mosquitto/ca-bundle.crt
+# handling logging info
+log_type {{ mosquitto_log_level }}
+{% if mosquitto_log_level in ('info','debug') -%}
+connection_messages true
+{% else -%}
+connection_messages false
+{% endif -%}
 
 {# ###################################### #}
 {# This is specific to the secondary role #}
 {# ###################################### #}
 
 {% if mosquitto_role == 'secondary' -%}
+keyfile /etc/pki/mosquitto/{{ mosquitto_role }}.key
+certfile /etc/pki/mosquitto/{{ mosquitto_role }}.crt
+cafile /etc/pki/mosquitto/ca-bundle.crt
+
 connection bridge-tls
 address astrix.fis.ucm.es:8883
 bridge_cafile /etc/pki/mosquitto/ca-bundle.crt

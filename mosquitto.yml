@@ -5,20 +5,22 @@
   become: yes
   roles:
   - role: s4a.mosquitto
-    mosquitto_uninstall: yes
+    mosquitto_uninstall: no
     mosquitto_role: primary
     mosquitto_acl_users: '{{ cred_mosquitto_users_primary }}'
     mosquitto_service_state: started
+    mosquitto_log_level: information
     tags: [primary]
 
 - hosts: mosquitto_secondary
   become: yes
   roles:
   - role: s4a.mosquitto
-    mosquitto_uninstall: yes
+    mosquitto_uninstall: no
     mosquitto_role: secondary
     mosquitto_acl_users: '{{ cred_mosquitto_users_secondary }}'
-    mosquitto_service_started: started
+    mosquitto_service_started: stopped
+    mosquitto_log_level: debug
     tags: [secondary]
 
 

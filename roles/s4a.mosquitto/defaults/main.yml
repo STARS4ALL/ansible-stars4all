@@ -4,3 +4,5 @@ mosquitto_uninstall: yes
 mosquitto_role: primary
 mosquitto_acl_users: []
 mosquitto_service_state: stopped
+# allowed values: none error warning notice information debug
+mosquitto_log_level: error

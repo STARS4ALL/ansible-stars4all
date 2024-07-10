@@ -1,2 +1,7 @@
 ---
 # handlers file for roles/s4a.mosquitto
+
+- name: Restart mosquitto {{ mosquitto_role }}
+  ansible.builtin.service:
+    name: "mosquitto-{{  mosquitto_role }}"
+    state: restarted

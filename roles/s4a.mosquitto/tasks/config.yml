@@ -9,7 +9,7 @@
     mode: '{{ item.mode }}'
   loop:
     - src: mosquitto.service.j2
-      dest: /usr/lib/systemd/system/mosquitto-{{ mosquitto_role }}.service
+      dest: /etc/systemd/system/mosquitto-{{ mosquitto_role }}.service
       owner: root
       group: root
       mode: '0644'
@@ -23,6 +23,7 @@
       owner: mosquitto
       group: mosquitto
       mode: '0640'
+  notify: Restart mosquitto {{ mosquitto_role }}
   tags: [config]
 
 

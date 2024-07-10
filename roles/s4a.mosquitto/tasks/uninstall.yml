@@ -13,7 +13,7 @@
     path: '{{ item }}'
     state: absent
   loop:
-    - /usr/lib/systemd/system/mosquitto-{{ mosquitto_role }}.service
+    - /etc/systemd/system/mosquitto-{{ mosquitto_role }}.service
     - /etc/mosquitto/mosquitto-{{ mosquitto_role }}.conf
     - /etc/mosquitto/pwfile-{{ mosquitto_role }}
     - /etc/mosquitto/aclfile-{{ mosquitto_role }}
