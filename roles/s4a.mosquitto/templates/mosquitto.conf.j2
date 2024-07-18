@@ -34,7 +34,8 @@ certfile /etc/pki/mosquitto/{{ mosquitto_role }}.crt
 cafile /etc/pki/mosquitto/ca-bundle.crt
 
 connection bridge-tls
-address astrix.fis.ucm.es:8883
+#address astrix.fis.ucm.es:8883 # cuando corren en maquina separadas
+address astrix.fis.ucm.es:1883 # cuando corren en la misma maquina
 bridge_cafile /etc/pki/mosquitto/ca-bundle.crt
 
 # The cleansession option seems to remove messages arriving 
