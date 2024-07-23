@@ -5,3 +5,8 @@
   ansible.builtin.service:
     name: "mosquitto-{{  mosquitto_role }}"
     state: restarted
+
+- name: Reload mosquitto {{ mosquitto_role }}
+  ansible.builtin.service:
+    name: "mosquitto-{{  mosquitto_role }}"
+    state: reloaded
