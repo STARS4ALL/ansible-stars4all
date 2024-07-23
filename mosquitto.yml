@@ -19,7 +19,7 @@
     mosquitto_uninstall: no
     mosquitto_role: secondary
     mosquitto_acl_users: '{{ cred_mosquitto_users_secondary }}'
-    mosquitto_service_started: stopped
+    mosquitto_service_started: started
     mosquitto_log_level: debug
     tags: [secondary]
 

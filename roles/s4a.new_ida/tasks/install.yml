@@ -8,8 +8,8 @@
     - '{{ new_ida_sqlite }}'
     - '{{ new_ida_crond }}'
     - gcc
-    - python3-devel
-    - python-pip
+    #- python3-devel
+    #- python-pip
     - logrotate
     state: latest 
   tags: [install]
