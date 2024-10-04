@@ -2,32 +2,32 @@
 # tasks file for roles/nto.tessdb
 
 - name: create tessdb config directory if does not exists
-  file: >
-    path=/etc/tessdb
-    state=directory
-    owner={{ tessdb_runtime_user }}
-    group={{ tessdb_runtime_user }}
-    mode=0755
-  tags: [config]
+  file: 
+    path: '{{ tessdb_etc_dir }}'
+    state: directory
+    owner: '{{ tessdb_runtime_user }}'
+    group: '{{ tessdb_runtime_user }}'
+    mode: '0755'
+
 
 - name: copy tessdb main configuration file
-  template: >
-    dest=/etc/tessdb/config
-    src=config.j2
-    owner={{ tessdb_runtime_user }}
-    group={{ tessdb_runtime_user }}
-    mode=0644
+  template:
+    dest: '{{ tessdb_etc_dir }}/config'
+    src: config.j2
+    owner: '{{ tessdb_runtime_user }}'
+    group: '{{ tessdb_runtime_user }}'
+    mode: '0644'
   notify: reload tessdb service
-  tags: [config]
+
 
 - name: create tessdb database directory if does not exists
-  file: >
-    path={{ tessdb_dbase_dir }}
-    state=directory
-    owner={{ tessdb_runtime_user }}
-    group={{ tessdb_runtime_user }}
-    mode=0755
-  tags: [config]
+  file: 
+    path: '{{ tessdb_dbase_dir }}'
+    state: directory
+    owner: '{{ tessdb_runtime_user }}'
+    group: '{{ tessdb_runtime_user }}'
+    mode: '0755'
+
 
 - name: Manage the SELinux state of database directory
   sefcontext:
@@ -43,41 +43,48 @@
 - name: Apply SELinux context changes
   command: restorecon -v {{ tessdb_dbase_dir | quote }}
   when: tessdb_selinux_enabled and tessdb_selinux_context is changed
-  tags: [config]
+
 
 # File owner for this logrotate spec should be root
 # as discovered by manually running logrotate
 - name: Patches tessdb logrotate
-  template: >
-    dest=/etc/logrotate_astro.d/tessdb
-    src=logrotate.j2
-    owner=root
-    group=root
-    mode=0644
-  tags: [config]
+  template: 
+    dest: /etc/logrotate_astro.d/tessdb
+    src: logrotate.j2
+    owner: root
+    group: root
+    mode: '0644'
 
-- name: Install a tessdb.service
-  template: >
-    dest=/lib/systemd/system/tessdb.service
-    src=tessdb.service.j2
-    owner={{ tessdb_runtime_user }}
-    group={{ tessdb_runtime_user }}
-    mode=0644
+
+- name: Makes sure {{ tessdb_service_dir }} exists
+  file: 
+    path: '{{ tessdb_service_dir }}'
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+
+- name: Install a tessdb service unit
+  template:
+    dest: '{{ tessdb_service_dir }}/tessdb.service'
+    src: tessdb.service.j2
+    owner: root
+    group: root
+    mode: '0644'
   register: tessdb_systemd_changed
-  tags: [config]
+
+# This was necesary pre ansible 2.2
+#- name: systemd daemon reload  
+#  command: systemctl daemon-reload
+#  when: tessdb_systemd_changed is changed
+
 
 - name: install environment file for virtualenv
-  template: >
-    dest=/etc/tessdb/tessdb.env
-    src=tessdb.env.j2
-    owner={{ tessdb_runtime_user }}
-    group={{ tessdb_runtime_user }}
-    mode=0644
+  template:
+    dest: '{{ tessdb_etc_dir }}/tessdb.env'
+    src: tessdb.env.j2
+    owner: '{{ tessdb_runtime_user }}'
+    group: '{{ tessdb_runtime_user }}'
+    mode: '0644'
   notify: restart tessdb service
-  tags: [config]
-
-- name: systemd daemon reload  
-  command: systemctl daemon-reload
-  when: tessdb_systemd_changed is changed
-  tags: [config]
-

@@ -4,14 +4,30 @@
 tessdb_config:
   tessdb: {}
   log:    {}
-  dbase:  
+  dbase:
+    connection_string: '{{ cred_tessdb_connection_string }}'  
     auth_filter      : no
     close_when_pause : yes
+    buffer_size      : 50
+    zp_threshold     : 10
   mqtt: 
-    tess_blacklist: [test5','ema0','ema1','ema3','pruebas2','sqm-1738','Pru4c','Prub4c','Pru4cb','starsD1','Prueba']
+    client_id:      prod-tessdb
+    tess_blacklist: 
+      - test5
+      - ema0
+      - ema1
+      - ema3
+      - pruebas2
+      - sqm-1738
+      - Pru4c
+      - Prub4c
+      - Pru4cb
+      - starsD1
+      - Prueba
     broker:        'tcp:{{ cred_tessdb_broker }}:{{ cred_tessdb_port }}'
     username:      '{{ cred_tessdb_username }}'
     password:      '{{ cred_tessdb_password }}'
   filter:
     enabled : yes
     depth   : 7
+    log_level: warn

@@ -3,12 +3,12 @@
 
 - name: Install system level needed packages
   package: 
-    name : '{{ item }}' 
+    name :
+    - git
+    - logrotate
+    - '{{ tessdb_sqlite_pkg }}'
     state: latest 
-  with_items:
-  - git
-  - '{{ tessdb_sqlite }}'
-  tags: [install]
+
 
 - name: install (as root) tessdb-server in a virtual environment
   pip:
@@ -17,4 +17,4 @@
     virtualenv_command : '{{ tessdb_python3 }} -m venv'
     state              : latest
   notify: restart tessdb service
-  tags: [install]
+

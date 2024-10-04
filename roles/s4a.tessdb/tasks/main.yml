@@ -1,8 +1,18 @@
 ---
 # tasks file for roles/nto.tessdb
 
-- include_vars: '{{ ansible_distribution }}.yml'
+- include_vars: main.yml
+  tags: [install, config]
 
-- include: install.yml
-- include: config.yml
-- include: service.yml
+# use ansible_os_family instead of ansible_distribution
+- include_vars: '{{ ansible_os_family }}.yml'
+  tags: [install, config]
+
+- include_tasks: install.yml
+  tags: [install]
+
+- include_tasks: config.yml
+  tags: [config]
+
+- include_tasks: service.yml
+  tags: [service]

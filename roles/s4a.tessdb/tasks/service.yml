@@ -5,4 +5,5 @@
     name   : tessdb 
     state  : started 
     enabled: '{{ tessdb_service_enabled }}'
+    daemon-reload: yes
   tags: [service]

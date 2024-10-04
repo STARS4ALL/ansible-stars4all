@@ -131,6 +131,18 @@ secs_resolution = {{ tessdb_config.dbase.secs_resolution | default(1) }}
 # However, this can be disabled.
 auth_filter =  {{ tessdb_config.dbase.auth_filter | default(True) | ternary('yes','no') }}
 
+# Write Buffer size
+# Writes to database every N readings to improve I/O performance
+# Integer > 1
+# Reloadable property
+buffer_size = {{ tessdb_config.dbase.buffer_size | default(10) }}
+
+# ZP Low Limit
+# Due to a firmware bug, some ZP sends absurd low ZP values such as 2 or 0
+# This filters out all register messages with a ZP value below a thresold
+# Reloadable property
+zp_threshold = {{ tessdb_config.dbase.zp_threshold | default(5) }}
+
 # general dbase namespace log level (debug, info, warn, error, critical)
 # Reloadable property
 log_level = {{ tessdb_config.dbase.log_level | default('info') }}
@@ -138,4 +150,3 @@ log_level = {{ tessdb_config.dbase.log_level | default('info') }}
 # specific dbase registration log level (debug, info, warn, error, critical)
 # Reloadable property
 register_log_level = {{ tessdb_config.dbase.registry_log_level | default('info') }}
-
