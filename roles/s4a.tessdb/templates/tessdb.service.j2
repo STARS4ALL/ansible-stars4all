@@ -8,6 +8,6 @@ Type=simple
 # We use root to write to /var/log
 User=root
 KillMode=process
-ExecStart={{ tessdb_venv_dir }}/bin/tessdb --config {{ tessdb_etc_dir }}/config --log-file {{ tessdb_log_dir}}/tessdb.log
+ExecStart={{ tessdb_venv_dir }}/bin/tessdb --config {{ tessdb_etc_dir }}/config.toml --log-file {{ tessdb_log_dir}}/tessdb.log
 ExecReload=/bin/kill -s HUP -- $MAINPID
 EnvironmentFile={{ tessdb_etc_dir }}/tessdb.env

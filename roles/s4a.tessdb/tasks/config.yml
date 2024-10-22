@@ -13,7 +13,7 @@
 - name: copy tessdb main configuration file
   template:
     dest: '{{ tessdb_etc_dir }}/config'
-    src: config.j2
+    src: config.toml.j2
     owner: '{{ tessdb_runtime_user }}'
     group: '{{ tessdb_runtime_user }}'
     mode: '0644'
