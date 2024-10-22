@@ -2,7 +2,7 @@
 # tasks file for roles/nto.logrotate
 
 
-- name: ensure lograte package is at latest version
+- name: ensure logrotate package is at latest version
   package: name=logrotate state=latest
 
 - name: create alternate logrotate_astro.d

@@ -18,7 +18,7 @@ log_level = "{{ tessdb_config.tessdb.log_level | default('info') }}"
 # comma separated list of TESS instrument names.
 # Leave blank if not used
 # Reloadable property
-log_selected = [{{ tessdb_config.tessdb.tess_dbglist | default([]) | join(',') }}]
+log_selected = {{ tessdb_config.tessdb.tess_dbglist | default([]) }}
 
 #------------------------------------------------------------------------#
 [mqtt]
@@ -41,7 +41,7 @@ tess_topic_register = "{{ tessdb_config.mqtt.tess_topic_register | default('STAR
 
 # MQTT topics to subscribe for readings
 # Reloadable property
-tess_topics = [{{ tessdb_config.mqtt.tess_topics | default(['STARS4ALL/+/reading']) | join(',') }}]
+tess_topics = {{ tessdb_config.mqtt.tess_topics | default(['STARS4ALL/+/reading']) }}
 
 # Instrument White List.
 # Discards instruments readings and registrations 
@@ -50,7 +50,7 @@ tess_topics = [{{ tessdb_config.mqtt.tess_topics | default(['STARS4ALL/+/reading
 # MQTT topic with other TESS instruments
 # Leave blank if not used.
 # Reloadable property
-tess_whitelist = [{{ tessdb_config.mqtt.tess_whitelist | default([]) | join(',') }}]
+tess_whitelist = {{ tessdb_config.mqtt.tess_whitelist | default([]) }}
 
 # Instrument Black List.
 # Discards instruments readings and registrations 
@@ -59,7 +59,7 @@ tess_whitelist = [{{ tessdb_config.mqtt.tess_whitelist | default([]) | join(',')
 # with lots of readings
 # Leave blank if not used.
 # Reloadable property
-tess_blacklist = [{{ tessdb_config.mqtt.tess_blacklist | default([]) | join(',') }}]
+tess_blacklist = {{ tessdb_config.mqtt.tess_blacklist | default([]) }}
 
 # namespace log level (debug, info, warn, error, critical)
 # Reloadable property

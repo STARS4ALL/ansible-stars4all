@@ -24,6 +24,25 @@ tessdb_config:
       - Pru4cb
       - starsD1
       - Prueba
+      - pruebas1
+      - pruebas2
+      - pruebas3
+      - pruebas4 
+      - pruebas5 
+      - pruebas6
+      - pruebas7
+      - pruebas8
+      - pruebas9
+      - pruebas10
+      - pruebas01
+      - pruebas02
+      - pruebas03
+      - pruebas04
+      - pruebas05
+      - pruebas06
+      - pruebas07
+      - pruebas08
+      - pruebas09
     broker:        'tcp:{{ cred_tessdb_broker }}:{{ cred_tessdb_port }}'
     username:      '{{ cred_tessdb_username }}'
     password:      '{{ cred_tessdb_password }}'
