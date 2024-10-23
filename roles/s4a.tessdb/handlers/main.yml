@@ -1,8 +1,7 @@
 ---
 # handlers file for roles/nto.tessdb
 - name: restart tessdb service
-  command: /usr/local/bin/tessdb_restart
+  command: '{{ tessdb_venv_dir }}/bin/tessdb_restart'
 
 - name: reload tessdb service
   service: name=tessdb state=reloaded
-
