@@ -114,7 +114,7 @@ secs_resolution = {{ tessdb_config.dbase.secs_resolution | default(1) }}
 # The recommended use is to manually authorise it after the TESS photomenter
 # is in place and measuring properly
 # However, this can be disabled.
-auth_filter = "{{ tessdb_config.dbase.auth_filter | default(True) | ternary('true','false') }}"
+auth_filter = {{ tessdb_config.dbase.auth_filter | default(True) | ternary('true','false') }}
 
 # Write Buffer size
 # Writes to database every N readings to improve I/O performance
