@@ -1,0 +1,7 @@
+#!/bin/bash
+NICE=$(which nice)
+IONICE=$(which ionice)
+
+export VIRTUAL_ENV={{ new_ida_virtual_env }}
+echo "${NICE} -n 19 ${IONICE} -c3 ${VIRTUAL_ENV}/bin/{{ item.name }} $@"
+${NICE} -n 19 ${IONICE} -c3 ${VIRTUAL_ENV}/bin/{{ item.name }} "$@"

@@ -28,3 +28,13 @@
 	notifempty
 	compress
 }
+
+{{ new_ida_logs_dir }}/tess_geolist.log {
+	copytruncate
+	monthly
+	dateext
+	rotate 12
+	missingok
+	notifempty
+	compress
+}
