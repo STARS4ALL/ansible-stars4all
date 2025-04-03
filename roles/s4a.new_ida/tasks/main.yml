@@ -2,11 +2,11 @@
 # tasks file for roles/s4a.new_ida
 
 - include_vars: main.yml
-  tags: [install, config]
+  tags: [install, config, uninstall]
 
 # use ansible_os_family instead of ansible_distribution
 - include_vars: '{{ ansible_os_family }}.yml'
-  tags: [install, config]
+  tags: [install, config, uninstall]
 
 - include_tasks: install.yml
   tags: [install]
@@ -17,6 +17,6 @@
   when: not new_ida_uninstall
 
 - include_tasks: uninstall.yml
-  tags: [config]
+  tags: [config, uninstall]
   when: new_ida_uninstall
 
