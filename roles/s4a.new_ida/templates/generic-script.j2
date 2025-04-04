@@ -2,6 +2,13 @@
 NICE=$(which nice)
 IONICE=$(which ionice)
 
+log() {
+    level=$1
+    message=$2
+    tstamp=$(date '+%Y-%m-%d %H:%M:%S.%3N')
+    echo "${tstamp} [${level}] ${message}"
+}
+
 export VIRTUAL_ENV={{ new_ida_virtual_env }}
-echo "${NICE} -n 19 ${IONICE} -c3 ${VIRTUAL_ENV}/bin/{{ item.name }} $@"
+log DEBUG "${NICE} -n 19 ${IONICE} -c3 ${VIRTUAL_ENV}/bin/{{ item.name }} $@"
 ${NICE} -n 19 ${IONICE} -c3 ${VIRTUAL_ENV}/bin/{{ item.name }} "$@"
