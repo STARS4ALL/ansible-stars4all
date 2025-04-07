@@ -15,12 +15,11 @@
   tags: [install]
 
 # We install it as root because it copies files to /usr/local/bin
-- name: install tessdb-cmdline in a virtual environment
+- name: install tessdb-reports in a virtual environment
   become_user: '{{ new_ida_runtime_user }}'
   pip:
-    name               : git+http://github.com/STARS4ALL/tessdb-cmdline@master
+    name               : git+http://github.com/STARS4ALL/tessdb-reports@main
     virtualenv         : '{{ new_ida_virtual_env }}'
     virtualenv_command : '{{ global_python }} -m venv'
     state              : latest
   tags: [install]
-
