@@ -5,21 +5,21 @@
   become: yes
   vars:
 
-    # This prefix for testing inbstallation in another root directory
-    pfx: ''
+    # This prefix for testing installation in another root directory
+    pfx: '/home/rfg/testinst'
 
   roles:
 
-  - role: s4a.logrotate      
-    tags: [ common, logrotate ] 
 
-  - role: s4a.tessdb
-    tessdb_venv_dir       : '{{pfx}}/opt/stars4all40'
-    tessdb_dbase_dir      : '{{pfx}}/var/dbase'
-    tessdb_log_dir        : '{{pfx}}/var/log'
-    tessdb_etc_dir        : '{{pfx}}/etc/tessdb'
-    tessdb_service_dir    : '{{pfx}}/etc/systemd/system'
-    tessdb_runtime_user   : '{{ cred_tessdb_runtime_user }}'
-    tessdb_log_rotate     : 365   
-    tessdb_service_enabled: yes
+  - role: s4a.new_tessdb
+    new_tdb_venv_dir       : '{{pfx}}/opt/stars4all_py3.12'
+    new_tdb_dbase_dir      : '{{pfx}}/var/dbase'
+    new_tdb_log_dir        : '{{pfx}}/var/log'
+    new_tdb_etc_dir        : '{{pfx}}/etc/tessdb'
+    new_tdb_service_dir    : '{{pfx}}/etc/systemd/system'
+    new_tdb_runtime_user   : '{{ cred_tessdb_runtime_user }}'
+    new_tdb_log_rotate     : 365   
+    new_tdb_service_enabled: yes
+    new_tdb_config         : '{{ newtdb_config }}'
+    new_tdb_alarm_config   : '{{ newtdb_alarm_config }}'
     tags: [ tessdb ]

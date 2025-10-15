@@ -1,0 +1,25 @@
+---
+
+- name: create new tessdb virtual env directory if does not exists
+  file: 
+    path: '{{ new_tdb_venv_dir }}'
+    state: directory
+    owner: '{{ new_tdb_runtime_user }}'
+    group: '{{ new_tdb_runtime_user }}'
+    mode: '0755'
+
+- name: create python virtual env using uv
+  ansible.builtin.command: '{{new_tdb_uv}} venv --python 3.12'
+  become: yes
+  become_user: '{{ new_tdb_runtime_user }}'
+  args:
+    chdir: '{{ new_tdb_venv_dir }}'
+    creates: '{{ new_tdb_venv_dir }}/.venv'
+
+- name: install tessdb-server using uv
+  ansible.builtin.command: '{{new_tdb_uv}} pip install tessdb-api'
+  become: yes
+  become_user: '{{ new_tdb_runtime_user }}'
+  args:
+    chdir: '{{ new_tdb_venv_dir }}'
+  

@@ -72,6 +72,6 @@ fi
 
 export ANSIBLE_HOST_KEY_CHECKING=False
 #CMD="ansible-playbook -v ${PLAYBOOK} -i ${INVENTORY_DIRECTORY} --module-path=roles --vault-password-file .vault_pass.txt ${TAGS}"
-CMD="ansible-playbook -v ${PLAYBOOK} -i ${INVENTORY_DIRECTORY} --module-path=roles ${TAGS}"
+CMD="uv run ansible-playbook -v ${PLAYBOOK} -i ${INVENTORY_DIRECTORY} --module-path=roles ${TAGS}"
 echo "Executing ${CMD}"
 ${CMD}
