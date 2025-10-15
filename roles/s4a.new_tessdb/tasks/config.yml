@@ -32,6 +32,41 @@
     group: '{{ new_tdb_runtime_user }}'
     mode: '0644'
 
+- name: Makes sure {{ new_tdb_service_dir }} exists
+  file: 
+    path: '{{ new_tdb_service_dir }}'
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install tessdb service unit
+  template:
+    dest: '{{ new_tdb_service_dir }}/tessdb.service'
+    src: tessdb.service.j2
+    owner: root
+    group: root
+    mode: '0644'
+  register: new_tdb_systemd_changed
+
+- name: Install tdbalarm service unit
+  template:
+    dest: '{{ new_tdb_service_dir }}/tdbalarm.service'
+    src: tdbalarm.service.j2
+    owner: root
+    group: root
+    mode: '0644'
+  register: new_tdb_systemd_changed
+
+- name: Install tdbalarm timer unit
+  template:
+    dest: '{{ new_tdb_service_dir }}/tdbalarm.timer'
+    src: tdbalarm.timer.j2
+    owner: root
+    group: root
+    mode: '0644'
+  register: new_tdb_systemd_changed
+
 
 - name: create tessdb database directory if does not exists
   file: 
@@ -66,22 +101,8 @@
     group: root
     mode: '0644'
 
-- name: Makes sure {{ new_tdb_service_dir }} exists
-  file: 
-    path: '{{ new_tdb_service_dir }}'
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
 
-- name: Install a tessdb service unit
-  template:
-    dest: '{{ new_tdb_service_dir }}/tessdb.service'
-    src: tessdb.service.j2
-    owner: root
-    group: root
-    mode: '0644'
-  register: new_tdb_systemd_changed
+
 
 # This was necesary pre ansible 2.2
 #- name: systemd daemon reload  

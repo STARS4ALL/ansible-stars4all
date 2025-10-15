@@ -1,0 +1,10 @@
+[Unit]
+Description=TESS Database alarm service
+Documentation=https://github.com/STARS4ALL/tessdb-server
+
+[Service]
+Type=oneshot
+# We use root to write to /var/log
+User=root
+ExecStart={{ new_tdb_venv_dir }}/.venv/bin/tess-db-alarms --log-file {{ new_tdb_log_dir }}/tdbalarm.log
+EnvironmentFile={{ new_tdb_etc_dir }}/tdbalarm.env

@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Runs every {{ new_tdb_alarm_config.wait_minutes }} minutes
+
+[Timer]
+OnCalendar=*-*-* *:0/{{new_tdb_alarm_config.wait_minutes}}:00
+
+[Install]
+WantedBy=timers.target

@@ -23,3 +23,12 @@
   args:
     chdir: '{{ new_tdb_venv_dir }}'
   
+# - name: Create symbolic links
+#   file:
+#     src: '{{ new_tdb_venv_dir }}/.venv/bin/{{ item }}'
+#     dest: "/usr/local/bin/{{ item }}"
+#     state: link
+#   loop:
+#     - tessdb_pause
+#     - tessdb_resume
+#     - tessdb_reload
