@@ -10,10 +10,12 @@
 
 - include_tasks: install.yml
   tags: [install]
+  when: not new_tdb_run_service
 
 - include_tasks: config.yml
   tags: [config]
+  when: not new_tdb_run_service
 
 - include_tasks: service.yml
   tags: [config]
-  when: false
+  when: new_tdb_run_service
