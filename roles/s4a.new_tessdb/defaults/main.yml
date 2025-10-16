@@ -1,0 +1,37 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/s4a.new_tessdb
+
+# Default installation variables
+# for GitHub checkout
+new_tdb_uninstall: false
+new_tdb_install_user:  pi
+new_tdb_install_dir : /home/pi
+new_tdb_venv:  myvenv
+
+# run time user
+new_tdb_runtime_user: pi
+
+# Non-empty for testing installations
+# i.e: /home/pi/testinstall
+new_tdb_root: ''
+# Default tessdb Broker used
+# Non default data should be encrypted with Ansible Vault
+new_tdb_broker: test.mosquitto.org
+new_tdb_port:   1883
+new_tdb_dbase_dir: /var/dbase
+new_tdb_venv_dir : /home/pi/myvenv
+
+new_tdb_service_enabled: yes
+
+# log rotate configuration
+# how many copioes of backup logfiles
+new_tdb_log_rotate: 30
+
+# Default entries in the configuration file (except username/password)
+new_tdb_config:
+  tessdb: {}
+  log:    {}
+  mqtt:   {}
+  dbase:  {}
+  filter: {}

@@ -1,0 +1,19 @@
+---
+
+- name: Ensure tessdb.service is present and enabled
+  ansible.builtin.systemd_service:
+    name: tessdb.service
+    state: started
+    enabled: true
+
+- name: Ensure tdbalarm.service is present and enabled
+  ansible.builtin.systemd_service:
+    name: tdbalarm.service
+    state: started
+    enabled: true
+
+- name: Ensure tdbalarm.timer is present and enabled
+  ansible.builtin.systemd_service:
+    name: tdbalarm.timer
+    state: started
+    enabled: true

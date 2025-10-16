@@ -1,0 +1,19 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/s4a.new_tessdb
+- include_vars: main.yml
+  tags: [install, config, uninstall]
+
+# use ansible_os_family instead of ansible_distribution
+- include_vars: '{{ ansible_os_family }}.yml'
+  tags: [install, config, uninstall]
+
+- include_tasks: install.yml
+  tags: [install]
+
+- include_tasks: config.yml
+  tags: [config]
+
+- include_tasks: service.yml
+  tags: [config]
+  when: false

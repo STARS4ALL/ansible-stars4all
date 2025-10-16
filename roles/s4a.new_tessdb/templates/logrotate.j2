@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+{{ new_tdb_dbase_dir }}/tess.db {
+    su {{ new_tdb_runtime_user }} {{ new_tdb_runtime_user }}
+    copy
+    daily
+    dateext
+    rotate 1
+    missingok
+    notifempty
+    prerotate
+        {{ new_tdb_usr_local_bin }}/tessdb_pause > /dev/null 2>/dev/null || true
+        {{ new_tdb_sleep | default("/bin/sleep") }} 2 || true
+    endscript
+    postrotate
+        {{ new_tdb_usr_local_bin }}/tessdb_resume > /dev/null 2>/dev/null
+    endscript
+}
+
+{{ new_tdb_root }}/var/log/tessdb.log {
+    su root root
+    daily
+    dateext
+    rotate {{ new_tdb_log_rotate | default(30) }}
+    missingok
+    notifempty
+#   compress
+#   delaycompress
+    copytruncate
+}

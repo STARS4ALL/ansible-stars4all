@@ -1,0 +1,82 @@
+---
+# Default entries for the 
+# /etc/tessdb/config configuration file (except username/password)
+newtdb_alarm_config:
+  dbase:
+    connection_string: '"sqlite:////var/dbase/tdbalarm.db"'
+  wait_minutes: 20
+  smtp:
+    host: '{{ cred_alarms_smtp_host }}'
+    port: '{{ cred_alarms_smtp_port }}'
+    password: '{{ cred_alarms_smtp_password }}'
+    sender: '{{ cred_alarms_smtp_sender }}'
+    receivers: '{{ cred_alarms_smtp_receivers }}'
+  admin:
+    connect_addr: localhost
+    port: 8080
+
+
+newtdb_config:
+  tessdb: {}
+  log:    {}
+  dbase:
+    connection_string: '"sqlite+aiosqlite:////var/dbase/tess.db"'  
+    auth_filter      : no
+    buffer_size      : 50
+    zp_threshold     : 10
+  mqtt: 
+    tess_blacklist: 
+      - test5
+      - ema0
+      - ema1
+      - ema3
+      - pruebas2
+      - sqm-1738
+      - Pru4c
+      - Prub4c
+      - Pru4cb
+      - starsD1
+      - Prueba
+      - pruebas1
+      - pruebas2
+      - pruebas3
+      - pruebas4 
+      - pruebas5 
+      - pruebas6
+      - pruebas7
+      - pruebas8
+      - pruebas9
+      - pruebas10
+      - pruebas01
+      - pruebas02
+      - pruebas03
+      - pruebas04
+      - pruebas05
+      - pruebas06
+      - pruebas07
+      - pruebas08
+      - pruebas09
+    transport: tcp
+    port:          '{{ cred_tessdb_port }}'
+    broker:        '{{ cred_tessdb_broker }}'
+    username:      '{{ cred_tessdb_username }}'
+    password:      '{{ cred_tessdb_password }}'
+    client_id:      prod-tessdb
+  admin:
+    listen_addr: localhost
+    port: 8080
+  filter:
+    enabled : yes
+    depth   : 7
+    log_level: info
+    divisor:
+      - stars1: 2
+      - stars1267: 6
+      - stars1277: 6
+      - stars1421: 6
+    disabled_for: []
+#      - stars1267
+#      - stars1
+    loggers: []
+#      - stars1: info
+#      - stars1267: info
