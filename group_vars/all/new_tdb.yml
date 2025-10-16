@@ -3,14 +3,14 @@
 # /etc/tessdb/config configuration file (except username/password)
 newtdb_alarm_config:
   dbase:
-    connection_string: '"sqlite:////var/dbase/alarms.db"'
+    connection_string: '"sqlite:////var/dbase/tdbalarm.db"'
   wait_minutes: 20
   smtp:
-    host: localhost
-    port: 25
-    password: ""
-    sender: ""
-    receivers: rafael08@ucm.es
+    host: '{{ cred_alarms_smtp_host }}'
+    port: '{{ cred_alarms_smtp_port }}'
+    password: '{{ cred_alarms_smtp_password }}'
+    sender: '{{ cred_alarms_smtp_sender }}'
+    receivers: '{{ cred_alarms_smtp_receivers }}'
   admin:
     connect_addr: localhost
     port: 8080
