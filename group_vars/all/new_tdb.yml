@@ -74,9 +74,9 @@ newtdb_config:
       - stars1267: 6
       - stars1277: 6
       - stars1421: 6
-    disabled_for:
-      - stars1267
-      - stars1
-    loggers:
-      - stars1: info
-      - stars1267: info
+    disabled_for: []
+#      - stars1267
+#      - stars1
+    loggers: []
+#      - stars1: info
+#      - stars1267: info
