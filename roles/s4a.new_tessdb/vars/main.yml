@@ -3,4 +3,11 @@
 # vars file for roles/s4a.new_tessdb
 new_tdb_selinux_enabled: ansible_selinux is defined and ansible_selinux and ansible_selinux.status == 'enabled'
 
-new_tdb_uv: /home/{{new_tdb_runtime_user}}/.uv/uv
+new_tdb_uv             : /home/{{new_tdb_runtime_user}}/.uv/uv
+new_tdb_dbase_dir      : '{{ new_tdb_root }}/var/dbase'
+new_tdb_log_dir        : '{{ new_tdb_root }}/var/log'
+new_tdb_etc_dir        : '{{ new_tdb_root }}/etc/tessdb'
+new_tdb_service_dir    : '{{ new_tdb_root }}/etc/systemd/system'
+new_tdb_venv_dir       : '{{ new_tdb_root }}/opt/stars4all'
+new_tdb_logrotate_dir  : '{{ new_tdb_root }}/etc/logrotate_astro.d'
+new_tdb_usr_local_bin  : '{{ new_tdb_root }}/usr/local/bin'

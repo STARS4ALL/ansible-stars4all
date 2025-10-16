@@ -9,14 +9,8 @@
     pfx: '/home/rfg/testinst'
 
   roles:
-
-
   - role: s4a.new_tessdb
-    new_tdb_venv_dir       : '{{pfx}}/opt/stars4all_py3.12'
-    new_tdb_dbase_dir      : '{{pfx}}/var/dbase'
-    new_tdb_log_dir        : '{{pfx}}/var/log'
-    new_tdb_etc_dir        : '{{pfx}}/etc/tessdb'
-    new_tdb_service_dir    : '{{pfx}}/etc/systemd/system'
+    new_tdb_root           : '{{pfx}}'
     new_tdb_runtime_user   : '{{ cred_tessdb_runtime_user }}'
     new_tdb_log_rotate     : 365   
     new_tdb_service_enabled: yes

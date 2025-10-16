@@ -12,11 +12,13 @@ new_tdb_venv:  myvenv
 # run time user
 new_tdb_runtime_user: pi
 
+# Non-empty for testing installations
+# i.e: /home/pi/testinstall
+new_tdb_root: ''
 # Default tessdb Broker used
 # Non default data should be encrypted with Ansible Vault
 new_tdb_broker: test.mosquitto.org
 new_tdb_port:   1883
-
 new_tdb_dbase_dir: /var/dbase
 new_tdb_venv_dir : /home/pi/myvenv
 

@@ -10,17 +10,10 @@
 
 - include_tasks: install.yml
   tags: [install]
-  when: not new_tdb_uninstall
 
 - include_tasks: config.yml
   tags: [config]
-  when: not new_tdb_uninstall
 
 - include_tasks: service.yml
   tags: [config]
   when: false
-
-- include_tasks: uninstall.yml
-  tags: [config, uninstall]
-  when: new_tdb_uninstall
-
