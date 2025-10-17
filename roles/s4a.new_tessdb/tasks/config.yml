@@ -86,12 +86,12 @@
     setype: bin_t
     state: present
   register: new_tdb_selinux_venv_context
-  when: new_tdb_selinux_enabled 
+  when: true and new_tdb_selinux_enabled 
   tags: [config]
 
 - name: Apply SELinux context to {{ new_tdb_venv_dir }}/.venv/bin
   ansible.builtin.command: restorecon -irv {{ new_tdb_venv_dir | quote }}/.venv/bin
-  when: new_tdb_selinux_enabled and new_tdb_selinux_venv_context is changed 
+  when: true and new_tdb_selinux_enabled and new_tdb_selinux_venv_context is changed 
   tags: [config]
 
 
