@@ -6,7 +6,7 @@
   vars:
 
     # This prefix for testing installation in another root directory
-    pfx: '/home/rfg/testinst'
+    pfx: ''
 
   roles:
   - role: s4a.new_tessdb

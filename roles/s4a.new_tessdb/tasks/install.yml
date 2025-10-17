@@ -1,6 +1,6 @@
 ---
 
-- name: create new tessdb virtual env directory if does not exists
+- name: create new tessdb virtual env base directory {{ new_tdb_venv_dir }} if does not exists
   file: 
     path: '{{ new_tdb_venv_dir }}'
     state: directory
@@ -23,15 +23,16 @@
   args:
     chdir: '{{ new_tdb_venv_dir }}'
 
-- name: create {{ new_tdb_root }}/usr/local/bin if does not exists
+- name: create {{ new_tdb_usr_local_bin }} if does not exists
   file: 
-    path: '{{new_tdb_root}}/usr/local/bin'
+    path: '{{ new_tdb_usr_local_bin }}'
     state: directory
     owner: root
     group: root
     mode: '0755'
 
 - name: Create symbolic links
+  when: false
   file:
     src: '{{ new_tdb_venv_dir }}/.venv/bin/{{ item }}'
     dest: '{{ new_tdb_usr_local_bin }}/{{ item }}'
@@ -40,3 +41,18 @@
     - tessdb_pause
     - tessdb_resume
     - tessdb_reload
+
+
+- name: Manage the SELinux state of {{ new_tdb_venv_dir }}
+  community.general.sefcontext:
+    target: '{{ new_tdb_venv_dir }}(/.*)?'
+    setype: bin_t
+    state: present
+  register: new_tdb_selinux_venv_context
+  when: new_tdb_selinux_enabled
+  tags: [install]
+
+- name: Apply SELinux context to {{ new_tdb_venv_dir }}
+  ansible.builtin.command: restorecon -irv {{ new_tdb_venv_dir | quote }}
+  when: new_tdb_selinux_enabled
+  tags: [install]

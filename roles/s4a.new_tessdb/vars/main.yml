@@ -1,7 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # vars file for roles/s4a.new_tessdb
-new_tdb_selinux_enabled: ansible_selinux is defined and ansible_selinux and ansible_selinux.status == 'enabled'
+new_tdb_selinux_enabled: '{{ ansible_selinux is defined and ansible_selinux and ansible_selinux.status == "enabled" }}'
 
 new_tdb_uv             : /home/{{new_tdb_runtime_user}}/.uv/uv
 new_tdb_dbase_dir      : '{{ new_tdb_root }}/var/dbase'

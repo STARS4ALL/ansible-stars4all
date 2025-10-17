@@ -1,6 +1,7 @@
 ---
 
 - name: Ensure tessdb.service is present and enabled
+  when: false
   ansible.builtin.systemd_service:
     name: tessdb.service
     state: started

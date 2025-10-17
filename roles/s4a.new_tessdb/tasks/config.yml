@@ -1,6 +1,6 @@
 ---
 
-- name: create tessdb config directory if does not exists
+- name: create {{ new_tdb_etc_dir }} tessdb config directory if does not exists
   file: 
     path: '{{ new_tdb_etc_dir }}'
     state: directory
@@ -9,6 +9,7 @@
     mode: '0755'
 
 - name: copy tessdb config.toml file
+  when: false
   template:
     dest: '{{ new_tdb_etc_dir }}/config.toml'
     src: config.toml.j2
@@ -17,6 +18,7 @@
     mode: '0644'
 
 - name: install environment file for tess-db-server service unit
+  when: false
   template:
     dest: '{{ new_tdb_etc_dir }}/tessdb.env'
     src: tessdb.env.j2
@@ -40,7 +42,8 @@
     group: root
     mode: '0755'
 
-- name: Install tessdb service unit
+- name: Install tessdb service unit {{ new_tdb_service_dir }}/tessdb.service
+  when: false
   template:
     dest: '{{ new_tdb_service_dir }}/tessdb.service'
     src: tessdb.service.j2
@@ -49,7 +52,7 @@
     mode: '0644'
   register: new_tdb_systemd_changed
 
-- name: Install tdbalarm service unit
+- name: Install tdbalarm service unit {{ new_tdb_service_dir }}/tdbalarm.service
   template:
     dest: '{{ new_tdb_service_dir }}/tdbalarm.service'
     src: tdbalarm.service.j2
@@ -58,7 +61,7 @@
     mode: '0644'
   register: new_tdb_systemd_changed
 
-- name: Install tdbalarm timer unit
+- name: Install tdbalarm timer unit {{ new_tdb_service_dir }}/tdbalarm.timer
   template:
     dest: '{{ new_tdb_service_dir }}/tdbalarm.timer'
     src: tdbalarm.timer.j2
@@ -66,7 +69,6 @@
     group: root
     mode: '0644'
   register: new_tdb_systemd_changed
-
 
 - name: create tessdb database directory if does not exists
   file: 
@@ -84,12 +86,12 @@
     seuser: unconfined_u
     state: present
   register: new_tdb_selinux_context
-  when: new_tdb_selinux_enabled
+  when: false and new_tdb_selinux_enabled
   tags: [config]
 
 - name: Apply SELinux context changes
   command: restorecon -v {{ new_tdb_dbase_dir | quote }}
-  when: new_tdb_selinux_enabled and new_tdb_selinux_context is changed
+  when: false and new_tdb_selinux_enabled and new_tdb_selinux_context is changed
 
 - name: create {{ new_tdb_logrotate_dir }} if does not exists
   file: 
@@ -102,6 +104,7 @@
 # File owner for this logrotate spec should be root
 # as I discovered by manually running logrotate
 - name: Patches tessdb logrotate
+  when: false
   template: 
     dest: '{{ new_tdb_logrotate_dir }}/tessdb'
     src: logrotate.j2
