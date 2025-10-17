@@ -1,0 +1,17 @@
+
+rfg@calyx ~]$ sudo service tessdb status
+Redirecting to /bin/systemctl status tessdb.service
+× tessdb.service - TESS Quality Sky Meter database service
+     Loaded: loaded (/etc/systemd/system/tessdb.service; enabled; preset: disabled)
+     Active: failed (Result: exit-code) since Fri 2025-10-17 10:49:26 CEST; 11s ago
+   Duration: 1ms
+       Docs: https://github.com/STARS4ALL/tessdb-server
+    Process: 2565837 ExecStart=/opt/stars4all/.venv/bin/tess-db-server --config /etc/tessdb/config.toml --log-file /var/log/tessdb.log (code=exited, status=203/EXEC)
+   Main PID: 2565837 (code=exited, status=203/EXEC)
+        CPU: 1ms
+
+Oct 17 10:49:26 calyx.hst.ucm.es systemd[1]: Started TESS Quality Sky Meter database service.
+Oct 17 10:49:26 calyx.hst.ucm.es systemd[2565837]: tessdb.service: Failed to execute /opt/stars4all/.venv/bin/tess-db-server: Permission denied
+Oct 17 10:49:26 calyx.hst.ucm.es systemd[2565837]: tessdb.service: Failed at step EXEC spawning /opt/stars4all/.venv/bin/tess-db-server: Permission denied
+Oct 17 10:49:26 calyx.hst.ucm.es systemd[1]: tessdb.service: Main process exited, code=exited, status=203/EXEC
+Oct 17 10:49:26 calyx.hst.ucm.es systemd[1]: tessdb.service: Failed with result 'exit-code'.
