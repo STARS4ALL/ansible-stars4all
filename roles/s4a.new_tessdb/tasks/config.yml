@@ -2,15 +2,15 @@
 
 - name: copies STARS4ALL self-signed CA file to {{ new_tdb_venv_dir }}
   ansible.builtin.copy:
-    src: stars4all_cacert.pem
-    dest: '{{ new_tdb_venv_dir }}/stars4all_cacert.pem'
+    src: mail_server.pem
+    dest: '{{ new_tdb_venv_dir }}/mail_server.pem'
     owner: '{{ new_tdb_runtime_user }}'
     group: '{{ new_tdb_runtime_user }}'
     mode: '0644'
 
 - name: pateche python cacert.pem with our stars4all_cacert.pem
   ansible.builtin.shell: |
-    cat stars4all_cacert.pem >> {{ new_tdb_venv_dir | quote }}/.venv/lib/python3.12/site-packages/certifi/cacert.pem
+    cat mail_server.pem >> {{ new_tdb_venv_dir | quote }}/.venv/lib/python3.12/site-packages/certifi/cacert.pem
     touch patched_cacert.txt
   become: yes
   become_user: '{{ new_tdb_runtime_user }}'
@@ -105,12 +105,12 @@
     setype: bin_t
     state: present
   register: new_tdb_selinux_venv_context
-  when: true and new_tdb_selinux_enabled 
+  when: true #and new_tdb_selinux_enabled 
   tags: [config]
 
 - name: Apply SELinux context to {{ new_tdb_venv_dir }}/.venv/bin
   ansible.builtin.command: restorecon -irv {{ new_tdb_venv_dir | quote }}/.venv/bin
-  when: true and new_tdb_selinux_enabled and new_tdb_selinux_venv_context is changed 
+  when: new_tdb_selinux_enabled
   tags: [config]
 
 
@@ -127,7 +127,7 @@
 
 - name: Apply SELinux context changes to {{ new_tdb_dbase_dir }}
   ansible.builtin.command: restorecon -irv {{ new_tdb_dbase_dir | quote }}
-  when: new_tdb_selinux_enabled and new_tdb_selinux_db_context is changed
+  when: new_tdb_selinux_enabled
 
 - name: create {{ new_tdb_logrotate_dir }} if does not exists
   ansible.builtin.file: 
