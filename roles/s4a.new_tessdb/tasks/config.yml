@@ -1,7 +1,26 @@
 ---
 
+- name: copies STARS4ALL self-signed CA file to {{ new_tdb_venv_dir }}
+  ansible.builtin.copy:
+    src: stars4all_cacert.pem
+    dest: '{{ new_tdb_venv_dir }}/stars4all_cacert.pem'
+    owner: '{{ new_tdb_runtime_user }}'
+    group: '{{ new_tdb_runtime_user }}'
+    mode: '0644'
+
+- name: pateche python cacert.pem with our stars4all_cacert.pem
+  ansible.builtin.shell: |
+    cat stars4all_cacert.pem >> {{ new_tdb_venv_dir | quote }}/.venv/lib/python3.12/site-packages/certifi/cacert.pem
+    touch patched_cacert.txt
+  become: yes
+  become_user: '{{ new_tdb_runtime_user }}'
+  args:
+    executable: /bin/bash
+    chdir: '{{ new_tdb_venv_dir }}'
+    creates: '{{ new_tdb_venv_dir }}/patched_cacert.txt'
+
 - name: create {{ new_tdb_etc_dir }} tessdb config directory if does not exists
-  file: 
+  ansible.builtin.file: 
     path: '{{ new_tdb_etc_dir }}'
     state: directory
     owner: '{{ new_tdb_runtime_user }}'
@@ -10,7 +29,7 @@
 
 - name: copy tessdb config.toml file
   when: false
-  template:
+  ansible.builtin.template:
     dest: '{{ new_tdb_etc_dir }}/config.toml'
     src: config.toml.j2
     owner: '{{ new_tdb_runtime_user }}'
@@ -19,7 +38,7 @@
 
 - name: install environment file for tess-db-server service unit
   when: false
-  template:
+  ansible.builtin.template:
     dest: '{{ new_tdb_etc_dir }}/tessdb.env'
     src: tessdb.env.j2
     owner: '{{ new_tdb_runtime_user }}'
@@ -27,7 +46,7 @@
     mode: '0644'
 
 - name: install environment file for tess-db-alarm service unit
-  template:
+  ansible.builtin.template:
     dest: '{{ new_tdb_etc_dir }}/tdbalarm.env'
     src: tdbalarm.env.j2
     owner: '{{ new_tdb_runtime_user }}'
@@ -35,7 +54,7 @@
     mode: '0644'
 
 - name: Makes sure {{ new_tdb_service_dir }} exists
-  file: 
+  ansible.builtin.file: 
     path: '{{ new_tdb_service_dir }}'
     state: directory
     owner: root
@@ -44,7 +63,7 @@
 
 - name: Install tessdb service unit {{ new_tdb_service_dir }}/tessdb.service
   when: false
-  template:
+  ansible.builtin.template:
     dest: '{{ new_tdb_service_dir }}/tessdb.service'
     src: tessdb.service.j2
     owner: root
@@ -53,7 +72,7 @@
   register: new_tdb_systemd_changed
 
 - name: Install tdbalarm service unit {{ new_tdb_service_dir }}/tdbalarm.service
-  template:
+  ansible.builtin.template:
     dest: '{{ new_tdb_service_dir }}/tdbalarm.service'
     src: tdbalarm.service.j2
     owner: root
@@ -62,7 +81,7 @@
   register: new_tdb_systemd_changed
 
 - name: Install tdbalarm timer unit {{ new_tdb_service_dir }}/tdbalarm.timer
-  template:
+  ansible.builtin.template:
     dest: '{{ new_tdb_service_dir }}/tdbalarm.timer'
     src: tdbalarm.timer.j2
     owner: root
@@ -71,7 +90,7 @@
   register: new_tdb_systemd_changed
 
 - name: create tessdb database directory if does not exists
-  file: 
+  ansible.builtin.file: 
     path: '{{ new_tdb_dbase_dir }}'
     state: directory
     owner: '{{ new_tdb_runtime_user }}'
@@ -107,11 +126,11 @@
   tags: [config]
 
 - name: Apply SELinux context changes to {{ new_tdb_dbase_dir }}
-  command: restorecon -irv {{ new_tdb_dbase_dir | quote }}
+  ansible.builtin.command: restorecon -irv {{ new_tdb_dbase_dir | quote }}
   when: new_tdb_selinux_enabled and new_tdb_selinux_db_context is changed
 
 - name: create {{ new_tdb_logrotate_dir }} if does not exists
-  file: 
+  ansible.builtin.file: 
     path: '{{ new_tdb_logrotate_dir }}'
     state: directory
     owner: root
@@ -122,7 +141,7 @@
 # as I discovered by manually running logrotate
 - name: Patches tessdb logrotate
   when: false
-  template: 
+  ansible.builtin.template: 
     dest: '{{ new_tdb_logrotate_dir }}/tessdb'
     src: logrotate.j2
     owner: root

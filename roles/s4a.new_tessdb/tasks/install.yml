@@ -1,14 +1,14 @@
 ---
 
 - name: create new tessdb virtual env base directory {{ new_tdb_venv_dir }} if does not exists
-  file: 
+  ansible.builtin.file: 
     path: '{{ new_tdb_venv_dir }}'
     state: directory
     owner: '{{ new_tdb_runtime_user }}'
     group: '{{ new_tdb_runtime_user }}'
     mode: '0755'
 
-- name: create python virtual env using uv
+- name: create python virtual env using uv under {{new_tdb_uv}}/.venv
   ansible.builtin.command: '{{new_tdb_uv}} venv --python 3.12'
   become: yes
   become_user: '{{ new_tdb_runtime_user }}'
@@ -16,7 +16,7 @@
     chdir: '{{ new_tdb_venv_dir }}'
     creates: '{{ new_tdb_venv_dir }}/.venv'
 
-- name: install tessdb-server using uv
+- name: install/upgrade tessdb-server using uv
   ansible.builtin.command: '{{new_tdb_uv}} pip install -U tessdb-server'
   become: yes
   become_user: '{{ new_tdb_runtime_user }}'
@@ -24,7 +24,7 @@
     chdir: '{{ new_tdb_venv_dir }}'
 
 - name: create {{ new_tdb_usr_local_bin }} if does not exists
-  file: 
+  ansible.builtin.file: 
     path: '{{ new_tdb_usr_local_bin }}'
     state: directory
     owner: root
@@ -33,7 +33,7 @@
 
 - name: Create symbolic links
   when: false
-  file:
+  ansible.builtin.file:
     src: '{{ new_tdb_venv_dir }}/.venv/bin/{{ item }}'
     dest: '{{ new_tdb_usr_local_bin }}/{{ item }}'
     state: link
