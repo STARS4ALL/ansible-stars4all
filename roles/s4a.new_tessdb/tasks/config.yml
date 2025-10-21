@@ -1,23 +1,13 @@
 ---
 
-# - name: copies smtp self-signed CA file to {{ new_tdb_venv_dir }}
-#   ansible.builtin.copy:
-#     src: mail_server.pem
-#     dest: '{{ new_tdb_venv_dir }}/mail_server.pem'
-#     owner: '{{ new_tdb_runtime_user }}'
-#     group: '{{ new_tdb_runtime_user }}'
-#     mode: '0644'
-
-# - name: patches python cacert.pem with our stars4all_cacert.pem
-#   ansible.builtin.shell: |
-#     cat mail_server.pem >> {{ new_tdb_venv_dir | quote }}/.venv/lib/python3.12/site-packages/certifi/cacert.pem
-#     touch patched_cacert.txt
-#   become: yes
-#   become_user: '{{ new_tdb_runtime_user }}'
-#   args:
-#     executable: /bin/bash
-#     chdir: '{{ new_tdb_venv_dir }}'
-#     creates: '{{ new_tdb_venv_dir }}/patched_cacert.txt'
+- name: copies smtp self-signed CA file to {{ new_tdb_venv_dir }}
+  ansible.builtin.copy:
+    src: mail_server.pem
+    dest: '{{ new_tdb_venv_dir }}/mail_server.pem'
+    owner: '{{ new_tdb_runtime_user }}'
+    group: '{{ new_tdb_runtime_user }}'
+    mode: '0644'
+  when: new_tdb_ssl_mail_server
 
 - name: create {{ new_tdb_etc_dir }} tessdb config directory if does not exists
   ansible.builtin.file: 

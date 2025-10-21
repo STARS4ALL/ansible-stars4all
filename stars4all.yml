@@ -16,5 +16,6 @@
     new_tdb_service_enabled: yes
     new_tdb_config         : '{{ newtdb_config }}'
     new_tdb_alarm_config   : '{{ newtdb_alarm_config }}'
+    new_tdb_ssl_mail_server: false
     new_tdb_run_service    : false  
     tags: [ tessdb ]
