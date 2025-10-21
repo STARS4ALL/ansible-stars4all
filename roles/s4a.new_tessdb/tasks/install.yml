@@ -22,22 +22,3 @@
   become_user: '{{ new_tdb_runtime_user }}'
   args:
     chdir: '{{ new_tdb_venv_dir }}'
-
-- name: create {{ new_tdb_usr_local_bin }} if does not exists
-  ansible.builtin.file: 
-    path: '{{ new_tdb_usr_local_bin }}'
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-
-- name: Create symbolic links
-  when: false
-  ansible.builtin.file:
-    src: '{{ new_tdb_venv_dir }}/.venv/bin/{{ item }}'
-    dest: '{{ new_tdb_usr_local_bin }}/{{ item }}'
-    state: link
-  loop:
-    - tessdb_pause
-    - tessdb_resume
-    - tessdb_reload

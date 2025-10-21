@@ -11,6 +11,7 @@ newtdb_alarm_config:
     password: '{{ cred_alarms_smtp_password }}'
     sender: '{{ cred_alarms_smtp_sender }}'
     receivers: '{{ cred_alarms_smtp_receivers }}'
+    secure: false
   admin:
     connect_addr: localhost
     port: 8080
