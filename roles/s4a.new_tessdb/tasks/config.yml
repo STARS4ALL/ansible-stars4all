@@ -94,7 +94,7 @@
     group: '{{ new_tdb_runtime_user }}'
     mode: '0644'
 
-- name: copy tessdb config.toml file
+- name: copy {{ new_tdb_etc_dir }}/config.toml file
   #when: false
   ansible.builtin.template:
     dest: '{{ new_tdb_etc_dir }}/config.toml'

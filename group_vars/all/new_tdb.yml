@@ -3,7 +3,7 @@
 # /etc/tessdb/config configuration file (except username/password)
 newtdb_alarm_config:
   dbase:
-    connection_string: '"sqlite:////var/dbase/tdbalarm.db"'
+    connection_string: sqlite:////var/dbase/tdbalarm.db
   wait_minutes: 20
   smtp:
     host: '{{ cred_alarms_smtp_host }}'
@@ -21,7 +21,7 @@ newtdb_config:
   tessdb: {}
   log:    {}
   dbase:
-    connection_string: '"sqlite+aiosqlite:////var/dbase/tess.db"'  
+    connection_string: sqlite+aiosqlite:////var/dbase/tess.db 
     auth_filter      : no
     buffer_size      : 50
     zp_threshold     : 10
