@@ -103,12 +103,14 @@
     group: '{{ new_tdb_runtime_user }}'
     mode: '0644'
 
-- name: Create symbolic links
-  #when: false
-  ansible.builtin.file:
-    src: '{{ new_tdb_venv_dir }}/.venv/bin/{{ item }}'
+- name: Copy binaries to {{ new_tdb_usr_local_bin }}
+  ansible.builtin.copy:
     dest: '{{ new_tdb_usr_local_bin }}/{{ item }}'
-    state: link
+    src: '{{ new_tdb_venv_dir }}/.venv/bin/{{ item }}'
+    remote_src: yes
+    owner: root
+    group: root
+    mode: preserve
   loop:
     - tessdb_pause
     - tessdb_resume
