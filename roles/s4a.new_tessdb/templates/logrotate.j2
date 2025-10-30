@@ -8,11 +8,11 @@
     missingok
     notifempty
     prerotate
-        {{ new_tdb_usr_local_bin }}/tessdb_pause > /dev/null 2>/dev/null || true
+        /usr/bin/systemctl kill -s USR1 tessdb.service > /dev/null 2>/dev/null || true
         {{ new_tdb_sleep | default("/bin/sleep") }} 2 || true
     endscript
     postrotate
-        {{ new_tdb_usr_local_bin }}/tessdb_resume > /dev/null 2>/dev/null
+        /usr/bin/systemctl kill -s USR2 tessdb.service > /dev/null 2>/dev/null || true 
     endscript
 }
 

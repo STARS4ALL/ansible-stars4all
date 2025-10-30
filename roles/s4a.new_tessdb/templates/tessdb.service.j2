@@ -9,5 +9,5 @@ Type=simple
 User=root
 KillMode=process
 ExecStart={{ new_tdb_venv_dir }}/.venv/bin/tess-db-server --config {{ new_tdb_etc_dir }}/config.toml --log-file {{ new_tdb_log_dir}}/tessdb.log
-ExecReload={{ new_tdb_venv_dir }}/.venv/bin/tessdb_reload
+ExecReload=/bin/kill -s HUP -- $MAINPID
 EnvironmentFile={{ new_tdb_etc_dir }}/tessdb.env
