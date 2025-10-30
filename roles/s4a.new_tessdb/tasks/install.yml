@@ -7,6 +7,7 @@
     owner: '{{ new_tdb_runtime_user }}'
     group: '{{ new_tdb_runtime_user }}'
     mode: '0755'
+  tags: [install]
 
 - name: create python virtual env using uv under {{new_tdb_uv}}/.venv
   ansible.builtin.command: '{{new_tdb_uv}} venv --python 3.12'
@@ -15,6 +16,7 @@
   args:
     chdir: '{{ new_tdb_venv_dir }}'
     creates: '{{ new_tdb_venv_dir }}/.venv'
+  tags: [install]
 
 - name: install/upgrade tessdb-server using uv
   ansible.builtin.command: '{{new_tdb_uv}} pip install -U tessdb-server'
@@ -22,3 +24,4 @@
   become_user: '{{ new_tdb_runtime_user }}'
   args:
     chdir: '{{ new_tdb_venv_dir }}'
+  tags: [install]
