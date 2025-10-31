@@ -20,8 +20,6 @@
 
 - name: install/upgrade tessdb-server using uv
   ansible.builtin.command: '{{new_tdb_uv}} pip install -U tessdb-server'
-  become: yes
-  become_user: '{{ new_tdb_runtime_user }}'
   args:
     chdir: '{{ new_tdb_venv_dir }}'
   tags: [install]
