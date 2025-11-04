@@ -131,7 +131,7 @@
 
 # File owner for this logrotate spec should be root
 # as I discovered by manually running logrotate
-- name: Patches tessdb logrotate
+- name: Patches '{{ new_tdb_logrotate_dir }}/tessdb logrotate spec
   #when: false
   ansible.builtin.template: 
     dest: '{{ new_tdb_logrotate_dir }}/tessdb'
@@ -165,6 +165,17 @@
   community.general.sefcontext:
     target: '{{ new_tdb_dbase_dir }}'
     ftype: d
+    setype: var_log_t
+    seuser: unconfined_u
+    state: present
+  register: new_tdb_selinux_db_context
+  when: new_tdb_selinux_enabled and new_tdb_root == ''
+  tags: [config]
+
+- name: Manage the SELinux state of {{ new_tdb_dbase_dir }}/tess.db database directory
+  community.general.sefcontext:
+    target: '{{ new_tdb_dbase_dir }}/tess.db'
+    ftype: a
     setype: var_log_t
     seuser: unconfined_u
     state: present
