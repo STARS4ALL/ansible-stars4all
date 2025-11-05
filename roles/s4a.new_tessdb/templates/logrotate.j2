@@ -1,4 +1,14 @@
 # {{ ansible_managed }}
+{{ new_tdb_root }}/var/log/tessdb.log {
+    su root root
+    daily
+    dateext
+    rotate {{ new_tdb_log_rotate | default(30) }}
+    missingok
+    notifempty
+    copytruncate
+}
+
 {{ new_tdb_dbase_dir }}/tess.db {
 #    su {{ new_tdb_runtime_user }} {{ new_tdb_runtime_user }}
     copy
@@ -16,14 +26,3 @@
     endscript
 }
 
-{{ new_tdb_root }}/var/log/tessdb.log {
-    su root root
-    daily
-    dateext
-    rotate {{ new_tdb_log_rotate | default(30) }}
-    missingok
-    notifempty
-#   compress
-#   delaycompress
-    copytruncate
-}
