@@ -62,7 +62,7 @@
     owner: root
     group: root
     mode: '0644'
-  register: new_tdb_systemd_changed
+  notify: reload systemd service units
   tags: [config]
 
 - name: Install tdbalarm timer unit {{ new_tdb_service_dir }}/tdbalarm.timer
@@ -72,7 +72,7 @@
     owner: root
     group: root
     mode: '0644'
-  register: new_tdb_systemd_changed
+  notify: reload systemd service units
   tags: [config]
 
 - name: Install environment file for {{ new_tdb_service_dir }}/tdbalarm.service
@@ -85,18 +85,16 @@
   tags: [config]
 
 - name: Install tessdb service unit {{ new_tdb_service_dir }}/tessdb.service
-  #when: false
   ansible.builtin.template:
     dest: '{{ new_tdb_service_dir }}/tessdb.service'
     src: tessdb.service.j2
     owner: root
     group: root
     mode: '0644'
-  register: new_tdb_systemd_changed
+  notify: reload systemd service units
   tags: [config]
 
 - name: Install environment file for {{ new_tdb_service_dir }}/tessdb.service
-  #when: false
   ansible.builtin.template:
     dest: '{{ new_tdb_etc_dir }}/tessdb.env'
     src: tessdb.env.j2
@@ -106,7 +104,6 @@
   tags: [config]
 
 - name: copy {{ new_tdb_etc_dir }}/config.toml file
-  #when: false
   ansible.builtin.template:
     dest: '{{ new_tdb_etc_dir }}/config.toml'
     src: config.toml.j2
@@ -172,15 +169,19 @@
   when: new_tdb_selinux_enabled and new_tdb_root == ''
   tags: [config]
 
-- name: Manage the SELinux state of {{ new_tdb_dbase_dir }}/tess.db database directory
+- name: Manage the SELinux state of {{ new_tdb_dbase_dir }} databases
   community.general.sefcontext:
-    target: '{{ new_tdb_dbase_dir }}/tess.db'
+    target: '{{ new_tdb_dbase_dir }}/{{ item }}'
     ftype: a
     setype: var_log_t
     seuser: unconfined_u
     state: present
   register: new_tdb_selinux_db_context
   when: new_tdb_selinux_enabled and new_tdb_root == ''
+  loop:
+    - tess.db
+    - tessdb-stats.db
+    - tdbalarm.db
   tags: [config]
 
 - name: Apply SELinux context changes to {{ new_tdb_dbase_dir }}

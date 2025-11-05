@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 {{ new_tdb_dbase_dir }}/tess.db {
-    su {{ new_tdb_runtime_user }} {{ new_tdb_runtime_user }}
+#    su {{ new_tdb_runtime_user }} {{ new_tdb_runtime_user }}
     copy
     daily
     dateext
@@ -8,11 +8,11 @@
     missingok
     notifempty
     prerotate
-        /usr/bin/systemctl kill -s USR1 tessdb.service > /dev/null 2>/dev/null || true
+        /usr/bin/systemctl kill --no-ask-password -s USR1 tessdb.service > /dev/null 2>/dev/null || true
         {{ new_tdb_sleep | default("/bin/sleep") }} 2 || true
     endscript
     postrotate
-        /usr/bin/systemctl kill -s USR2 tessdb.service > /dev/null 2>/dev/null || true 
+        /usr/bin/systemctl kill --no-ask-password -s USR2 tessdb.service > /dev/null 2>/dev/null || true 
     endscript
 }
 
